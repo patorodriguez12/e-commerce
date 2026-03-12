@@ -1,20 +1,25 @@
-import Image from "next/image";
-import Link from "next/link";
-import { Product } from "@/types";
+'use client'
+
+import Image from 'next/image'
+import Link from 'next/link'
+import { Product } from '@/types'
+import { useCartStore } from '@/lib/store/cartStore'
 
 type Props = {
-  product: Product;
-};
+  product: Product
+}
 
 export default function ProductCard({ product }: Props) {
-  const formattedPrice = new Intl.NumberFormat("es-AR", {
-    style: "currency",
-    currency: "ARS",
-  }).format(product.price);
+  const addItem = useCartStore(state => state.addItem)
+
+  const formattedPrice = new Intl.NumberFormat('es-AR', {
+    style: 'currency',
+    currency: 'ARS',
+  }).format(product.price)
 
   return (
-    <Link href={`/products/${product.slug}`}>
-      <div className="group border rounded-xl overflow-hidden hover:shadow-lg transition-shadow duration-200">
+    <div className="group border rounded-xl overflow-hidden hover:shadow-lg transition-shadow duration-200">
+      <Link href={`/products/${product.slug}`}>
         <div className="relative aspect-square bg-gray-100">
           {product.image_url ? (
             <Image
@@ -35,15 +40,24 @@ export default function ProductCard({ product }: Props) {
               {product.categories.name}
             </span>
           )}
-          <h2 className="font-semibold mt-1 text-gray-900 group-hover:text-black">
-            {product.name}
-          </h2>
+          <h2 className="font-semibold mt-1 text-gray-900">{product.name}</h2>
           <p className="text-lg font-bold mt-2">{formattedPrice}</p>
           <p className="text-sm text-gray-500 mt-1">
-            {product.stock > 0 ? `${product.stock} disponibles` : "Sin stock"}
+            {product.stock > 0 ? `${product.stock} disponibles` : 'Sin stock'}
           </p>
         </div>
+      </Link>
+
+      {/* Botón fuera del Link para evitar navegación al hacer click */}
+      <div className="px-4 pb-4">
+        <button
+          onClick={() => addItem(product)}
+          disabled={product.stock === 0}
+          className="w-full bg-black text-white py-2 rounded-lg text-sm hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+        >
+          {product.stock === 0 ? 'Sin stock' : 'Agregar al carrito'}
+        </button>
       </div>
-    </Link>
-  );
+    </div>
+  )
 }
