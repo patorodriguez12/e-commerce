@@ -1,12 +1,11 @@
-import Link from "next/link";
-import { createClient } from "@/lib/supabase/server";
-import { logout } from "@/lib/supabase/actions";
+import Link from 'next/link'
+import { createClient } from '@/lib/supabase/server'
+import { logout } from '@/lib/supabase/actions'
+import CartButton from '@/components/cart/CartButton'
 
 export default async function Navbar() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
 
   return (
     <nav className="border-b px-4 py-3">
@@ -16,41 +15,31 @@ export default async function Navbar() {
         </Link>
 
         <div className="flex items-center gap-4">
+          <CartButton />
+
           {user ? (
             <>
-              <Link
-                href="/dashboard"
-                className="text-sm text-gray-600 hover:text-black"
-              >
-                Profile
+              <Link href="/dashboard" className="text-sm text-gray-600 hover:text-black">
+                Mi cuenta
               </Link>
               <form action={logout}>
-                <button
-                  type="submit"
-                  className="text-sm text-gray-600 hover:text-black"
-                >
-                  Logout
+                <button type="submit" className="text-sm text-gray-600 hover:text-black">
+                  Cerrar sesión
                 </button>
               </form>
             </>
           ) : (
             <>
-              <Link
-                href="/login"
-                className="text-sm text-gray-600 hover:text-black"
-              >
-                Login
+              <Link href="/login" className="text-sm text-gray-600 hover:text-black">
+                Ingresar
               </Link>
-              <Link
-                href="/register"
-                className="text-sm bg-black text-white px-3 py-1.5 rounded-lg hover:bg-gray-800 transition-colors"
-              >
-                Register
+              <Link href="/register" className="text-sm bg-black text-white px-3 py-1.5 rounded-lg hover:bg-gray-800 transition-colors">
+                Registrarse
               </Link>
             </>
           )}
         </div>
       </div>
     </nav>
-  );
+  )
 }

@@ -1,0 +1,70 @@
+'use client'
+
+import Image from 'next/image'
+import { useCartStore } from '@/lib/store/cartStore'
+import { CartItem as CartItemType } from '@/types'
+
+type Props = {
+  item: CartItemType
+}
+
+export default function CartItem({ item }: Props) {
+  const { removeItem, updateQuantity } = useCartStore()
+  const { product, quantity } = item
+
+  const formattedPrice = new Intl.NumberFormat('es-AR', {
+    style: 'currency',
+    currency: 'ARS',
+  }).format(product.price * quantity)
+
+  return (
+    <div className="flex gap-4 items-start">
+      {/* Imagen */}
+      <div className="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
+        {product.image_url ? (
+          <Image
+            src={product.image_url}
+            alt={product.name}
+            fill
+            className="object-cover"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs">
+            Sin imagen
+          </div>
+        )}
+      </div>
+
+      {/* Info */}
+      <div className="flex-1 min-w-0">
+        <p className="font-medium text-sm truncate">{product.name}</p>
+        <p className="text-sm text-gray-500 mt-0.5">{formattedPrice}</p>
+
+        {/* Controles de cantidad */}
+        <div className="flex items-center gap-2 mt-2">
+          <button
+            onClick={() => updateQuantity(product.id, quantity - 1)}
+            className="w-6 h-6 rounded border flex items-center justify-center text-sm hover:bg-gray-100"
+          >
+            −
+          </button>
+          <span className="text-sm w-4 text-center">{quantity}</span>
+          <button
+            onClick={() => updateQuantity(product.id, quantity + 1)}
+            className="w-6 h-6 rounded border flex items-center justify-center text-sm hover:bg-gray-100"
+          >
+            +
+          </button>
+        </div>
+      </div>
+
+      {/* Eliminar */}
+      <button
+        onClick={() => removeItem(product.id)}
+        className="text-gray-400 hover:text-red-500 transition-colors text-lg leading-none mt-1"
+      >
+        ×
+      </button>
+    </div>
+  )
+}
