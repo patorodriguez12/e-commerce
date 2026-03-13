@@ -3,6 +3,29 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import AddToCartButton from "@/components/products/AddToCartButton";
 
+// Dynamic products metadata
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const supabase = await createClient();
+
+  const { data: product } = await supabase
+    .from("products")
+    .select("name, description")
+    .eq("slug", slug)
+    .single();
+
+  if (!product) return {};
+
+  return {
+    title: product.name,
+    description: product.description ?? undefined,
+  };
+}
+
 export default async function ProductPage({
   params,
 }: {
