@@ -16,7 +16,7 @@ export default function LogoutButton() {
       onClick={handleLogout}
       className="text-sm text-gray-600 hover:text-black"
     >
-      Cerrar sesión
+      Logout
     </button>
   );
 }

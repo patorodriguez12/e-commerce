@@ -1,21 +1,21 @@
-'use client'
+"use client";
 
-import Image from 'next/image'
-import Link from 'next/link'
-import { Product } from '@/types'
-import { useCartStore } from '@/lib/store/cartStore'
+import Image from "next/image";
+import Link from "next/link";
+import { Product } from "@/types";
+import { useCartStore } from "@/lib/store/cartStore";
 
 type Props = {
-  product: Product
-}
+  product: Product;
+};
 
 export default function ProductCard({ product }: Props) {
-  const addItem = useCartStore(state => state.addItem)
+  const addItem = useCartStore((state) => state.addItem);
 
-  const formattedPrice = new Intl.NumberFormat('es-AR', {
-    style: 'currency',
-    currency: 'ARS',
-  }).format(product.price)
+  const formattedPrice = new Intl.NumberFormat("es-AR", {
+    style: "currency",
+    currency: "ARS",
+  }).format(product.price);
 
   return (
     <div className="group border rounded-xl overflow-hidden hover:shadow-lg transition-shadow duration-200">
@@ -30,7 +30,7 @@ export default function ProductCard({ product }: Props) {
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-gray-400">
-              Sin imagen
+              No image
             </div>
           )}
         </div>
@@ -43,21 +43,20 @@ export default function ProductCard({ product }: Props) {
           <h2 className="font-semibold mt-1 text-gray-900">{product.name}</h2>
           <p className="text-lg font-bold mt-2">{formattedPrice}</p>
           <p className="text-sm text-gray-500 mt-1">
-            {product.stock > 0 ? `${product.stock} disponibles` : 'Sin stock'}
+            {product.stock > 0 ? `${product.stock} available` : "Out of stock"}
           </p>
         </div>
       </Link>
 
-      {/* Botón fuera del Link para evitar navegación al hacer click */}
       <div className="px-4 pb-4">
         <button
           onClick={() => addItem(product)}
           disabled={product.stock === 0}
           className="w-full bg-black text-white py-2 rounded-lg text-sm hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
         >
-          {product.stock === 0 ? 'Sin stock' : 'Agregar al carrito'}
+          {product.stock === 0 ? "Out of stock" : "Add to cart"}
         </button>
       </div>
     </div>
-  )
+  );
 }

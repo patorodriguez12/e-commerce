@@ -9,9 +9,9 @@ export default function CheckoutPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const formattedTotal = new Intl.NumberFormat("es-AR", {
+  const formattedTotal = new Intl.NumberFormat("en-US", {
     style: "currency",
-    currency: "ARS",
+    currency: "USD",
   }).format(getTotalPrice());
 
   async function handleCheckout() {
@@ -28,14 +28,14 @@ export default function CheckoutPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || "Error al iniciar el pago");
+        setError(data.error || "Error starting payment");
         setLoading(false);
         return;
       }
 
       window.location.href = data.url;
     } catch {
-      setError("Error de conexión, intentá de nuevo");
+      setError("Connection error, please try again");
       setLoading(false);
     }
   }
@@ -43,14 +43,14 @@ export default function CheckoutPage() {
   if (items.length === 0) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-20 text-center">
-        <p className="text-gray-500 text-lg">Tu carrito está vacío.</p>
+        <p className="text-gray-500 text-lg">Your cart is empty.</p>
       </div>
     );
   }
 
   return (
     <main className="max-w-2xl mx-auto px-4 py-10">
-      <h1 className="text-2xl font-bold mb-8">Resumen del pedido</h1>
+      <h1 className="text-2xl font-bold mb-8">Order Summary</h1>
 
       <div className="space-y-4 mb-8">
         {items.map(({ product, quantity }) => (
@@ -70,12 +70,12 @@ export default function CheckoutPage() {
             </div>
             <div className="flex-1">
               <p className="font-medium">{product.name}</p>
-              <p className="text-sm text-gray-500">Cantidad: {quantity}</p>
+              <p className="text-sm text-gray-500">Quantity: {quantity}</p>
             </div>
             <p className="font-semibold">
-              {new Intl.NumberFormat("es-AR", {
+              {new Intl.NumberFormat("en-US", {
                 style: "currency",
-                currency: "ARS",
+                currency: "USD",
               }).format(product.price * quantity)}
             </p>
           </div>
@@ -96,7 +96,7 @@ export default function CheckoutPage() {
         disabled={loading}
         className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 disabled:opacity-50 transition-colors font-medium"
       >
-        {loading ? "Redirigiendo a Stripe..." : "Pagar ahora"}
+        {loading ? "Redirecting to Stripe..." : "Pay now"}
       </button>
     </main>
   );
