@@ -12,9 +12,9 @@ type Props = {
 export default function ProductCard({ product }: Props) {
   const addItem = useCartStore((state) => state.addItem);
 
-  const formattedPrice = new Intl.NumberFormat("es-AR", {
+  const formattedPrice = new Intl.NumberFormat("en-US", {
     style: "currency",
-    currency: "ARS",
+    currency: "USD",
   }).format(product.price);
 
   return (
