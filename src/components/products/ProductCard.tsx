@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Product } from "@/types";
 import { useCartStore } from "@/lib/store/cartStore";
 import { formatPrice } from "@/lib/utils/formatPrice";
+import { toast } from "sonner";
 
 type Props = {
   product: Product;
@@ -14,6 +15,10 @@ export default function ProductCard({ product }: Props) {
   const addItem = useCartStore((state) => state.addItem);
 
   const formattedPrice = formatPrice(product.price);
+  function handleAdd() {
+    addItem(product);
+    toast.success(`${product.name} added to cart`);
+  }
 
   return (
     <div className="group border rounded-xl overflow-hidden hover:shadow-lg transition-shadow duration-200">
@@ -48,7 +53,7 @@ export default function ProductCard({ product }: Props) {
 
       <div className="px-4 pb-4">
         <button
-          onClick={() => addItem(product)}
+          onClick={handleAdd}
           disabled={product.stock === 0}
           className="w-full bg-black text-white py-2 rounded-lg text-sm hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
         >
