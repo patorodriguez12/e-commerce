@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Product } from "@/types";
 import { useCartStore } from "@/lib/store/cartStore";
+import { formatPrice } from "@/lib/utils/formatPrice";
 
 type Props = {
   product: Product;
@@ -12,10 +13,7 @@ type Props = {
 export default function ProductCard({ product }: Props) {
   const addItem = useCartStore((state) => state.addItem);
 
-  const formattedPrice = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  }).format(product.price);
+  const formattedPrice = formatPrice(product.price);
 
   return (
     <div className="group border rounded-xl overflow-hidden hover:shadow-lg transition-shadow duration-200">

@@ -1,21 +1,19 @@
-'use client'
+"use client";
 
-import Image from 'next/image'
-import { useCartStore } from '@/lib/store/cartStore'
-import { CartItem as CartItemType } from '@/types'
+import Image from "next/image";
+import { useCartStore } from "@/lib/store/cartStore";
+import { CartItem as CartItemType } from "@/types";
+import { formatPrice } from "@/lib/utils/formatPrice";
 
 type Props = {
-  item: CartItemType
-}
+  item: CartItemType;
+};
 
 export default function CartItem({ item }: Props) {
-  const { removeItem, updateQuantity } = useCartStore()
-  const { product, quantity } = item
+  const { removeItem, updateQuantity } = useCartStore();
+  const { product, quantity } = item;
 
-  const formattedPrice = new Intl.NumberFormat('es-AR', {
-    style: 'currency',
-    currency: 'ARS',
-  }).format(product.price * quantity)
+  const formattedPrice = formatPrice(product.price);
 
   return (
     <div className="flex gap-4 items-start">
@@ -66,5 +64,5 @@ export default function CartItem({ item }: Props) {
         ×
       </button>
     </div>
-  )
+  );
 }

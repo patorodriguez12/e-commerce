@@ -2,17 +2,13 @@
 
 import { useState } from "react";
 import { useCartStore } from "@/lib/store/cartStore";
+import { formatPrice } from "@/lib/utils/formatPrice";
 import Image from "next/image";
 
 export default function CheckoutPage() {
   const { items, getTotalPrice } = useCartStore();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  const formattedTotal = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  }).format(getTotalPrice());
 
   async function handleCheckout() {
     setLoading(true);
@@ -73,10 +69,7 @@ export default function CheckoutPage() {
               <p className="text-sm text-gray-500">Quantity: {quantity}</p>
             </div>
             <p className="font-semibold">
-              {new Intl.NumberFormat("en-US", {
-                style: "currency",
-                currency: "USD",
-              }).format(product.price * quantity)}
+              {formatPrice(product.price * quantity)}
             </p>
           </div>
         ))}
@@ -85,7 +78,7 @@ export default function CheckoutPage() {
       <div className="border-t pt-4 mb-6">
         <div className="flex justify-between text-lg font-bold">
           <span>Total</span>
-          <span>{formattedTotal}</span>
+          <span>{formatPrice(getTotalPrice())}</span>
         </div>
       </div>
 
