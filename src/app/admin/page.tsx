@@ -7,7 +7,6 @@ export default async function AdminDashboard() {
   await requireAdmin();
   const supabase = await createClient();
 
-  // Métricas en paralelo
   const [{ count: totalProducts }, { count: totalUsers }, { data: orders }] =
     await Promise.all([
       supabase.from("products").select("*", { count: "exact", head: true }),
