@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useCartStore } from "@/lib/store/cartStore";
 import { Product } from "@/types";
+import { toast } from "sonner";
 
 type Props = {
   product: Product;
@@ -15,6 +16,7 @@ export default function AddToCartButton({ product }: Props) {
   function handleAdd() {
     addItem(product);
     setAdded(true);
+    toast.success(`${product.name} added to cart`);
     setTimeout(() => setAdded(false), 2000);
   }
 

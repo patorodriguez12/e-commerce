@@ -19,13 +19,14 @@ export type Product = {
 };
 
 export type Profile = {
-  id: string;
-  full_name: string | null;
-  avatar_url: string | null;
-  address: string | null;
-  phone: string | null;
-  updated_at: string;
-};
+  id: string
+  full_name: string | null
+  avatar_url: string | null
+  address: string | null
+  phone: string | null
+  role: 'customer' | 'admin'
+  updated_at: string
+}
 
 export type OrderStatus =
   | "pending"
