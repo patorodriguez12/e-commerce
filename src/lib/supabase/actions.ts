@@ -85,3 +85,45 @@ export async function removeFromWishlist(productId: string) {
   revalidatePath(`/products`);
   return { success: true };
 }
+
+export async function submitReview(productId: string, formData: FormData) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return { error: "Not authenticated" };
+
+  const rating = Number(formData.get("rating"));
+  const comment = formData.get("comment") as string;
+
+  if (!rating || rating < 1 || rating > 5) {
+    return { error: "Please select a rating" };
+  }
+
+  const { error } = await supabase.from("reviews").upsert(
+    {
+      user_id: user.id,
+      product_id: productId,
+      rating,
+      comment: comment || null,
+    },
+    {
+      onConflict: "user_id,product_id",
+    },
+  );
+
+  if (error) return { error: error.message };
+
+  const { data: product } = await supabase
+    .from("products")
+    .select("slug")
+    .eq("id", productId)
+    .single();
+
+  if (product?.slug) {
+    revalidatePath(`/products/${product.slug}`);
+  }
+
+  return { success: true };
+}

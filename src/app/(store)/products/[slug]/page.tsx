@@ -4,6 +4,7 @@ import Image from "next/image";
 import AddToCartButton from "@/components/products/AddToCartButton";
 import WishlistButton from "@/components/products/WishlistButton";
 import RelatedProducts from "@/components/products/RelatedProducts";
+import ReviewsSection from "@/components/products/ReviewsSection";
 import { formatPrice } from "@/lib/utils/formatPrice";
 
 export async function generateMetadata({
@@ -119,6 +120,8 @@ export default async function ProductPage({
           </div>
         </div>
       </main>
+
+      <ReviewsSection productId={product.id} />
 
       <RelatedProducts
         categoryId={product.category_id}
