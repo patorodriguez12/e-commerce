@@ -60,6 +60,13 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (orderError) {
+      if (orderError.code === "23505") {
+        console.log(
+          "Orden ya procesada, ignorando webhook duplicado:",
+          session.id,
+        );
+        return NextResponse.json({ received: true });
+      }
       console.error("Error creando orden:", orderError);
       return NextResponse.json(
         { error: "Error guardando orden" },
@@ -82,6 +89,28 @@ export async function POST(request: NextRequest) {
         { error: "Error guardando items" },
         { status: 500 },
       );
+    }
+
+    for (const item of items) {
+      console.log(
+        "Descontando stock:",
+        item.product_id,
+        "cantidad:",
+        item.quantity,
+      );
+      const { error: stockError } = await supabase.rpc("decrement_stock", {
+        product_id: item.product_id,
+        quantity: item.quantity,
+      });
+
+      console.log("Stock result:", stockError ?? "OK");
+
+      if (stockError) {
+        console.error(
+          `Error descontando stock de ${item.product_id}:`,
+          stockError,
+        );
+      }
     }
   }
 
