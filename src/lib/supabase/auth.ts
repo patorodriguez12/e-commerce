@@ -15,8 +15,6 @@ export async function requireAdmin() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  console.log("requireAdmin - user:", user?.id, user?.email);
-
   if (!user) {
     console.log("requireAdmin - no user, redirecting to login");
     redirect("/login");
@@ -27,9 +25,6 @@ export async function requireAdmin() {
     .select("role")
     .eq("id", user.id)
     .single();
-
-  console.log("requireAdmin - profile:", profile);
-  console.log("requireAdmin - error:", error);
 
   if (profile?.role !== "admin") {
     console.log("requireAdmin - not admin, redirecting to /");

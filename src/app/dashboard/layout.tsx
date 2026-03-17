@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -19,18 +20,24 @@ export default async function DashboardLayout({
         {/* Sidebar */}
         <aside className="w-48 flex-shrink-0">
           <nav className="space-y-1">
-            <a
+            <Link
               href="/dashboard"
               className="block px-3 py-2 rounded-lg text-sm hover:bg-gray-100 transition-colors"
             >
               My Account
-            </a>
-            <a
+            </Link>
+            <Link
               href="/dashboard/orders"
               className="block px-3 py-2 rounded-lg text-sm hover:bg-gray-100 transition-colors"
             >
               My Orders
-            </a>
+            </Link>
+            <Link
+              href="/dashboard/wishlist"
+              className="block px-3 py-2 rounded-lg text-sm hover:bg-gray-100 transition-colors"
+            >
+              My Wishlist
+            </Link>
           </nav>
         </aside>
 
