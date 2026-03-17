@@ -13,7 +13,7 @@ export default async function AdminDashboard() {
       supabase.from("profiles").select("*", { count: "exact", head: true }),
       supabase
         .from("orders")
-        .select("total, status, created_at")
+        .select("id, total, status, created_at")
         .order("created_at", { ascending: false }),
     ]);
 
