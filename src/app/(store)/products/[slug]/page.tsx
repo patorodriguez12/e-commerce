@@ -2,9 +2,10 @@ import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import AddToCartButton from "@/components/products/AddToCartButton";
+import WishlistButton from "@/components/products/WishlistButton";
 import RelatedProducts from "@/components/products/RelatedProducts";
+import { formatPrice } from "@/lib/utils/formatPrice";
 
-// Dynamic products metadata
 export async function generateMetadata({
   params,
 }: {
@@ -35,6 +36,10 @@ export default async function ProductPage({
   const { slug } = await params;
   const supabase = await createClient();
 
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   const { data: product } = await supabase
     .from("products")
     .select("*, categories(name, slug)")
@@ -43,10 +48,18 @@ export default async function ProductPage({
 
   if (!product) notFound();
 
-  const formattedPrice = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  }).format(product.price / 100);
+  // Verificar si está en wishlist
+  let isWishlisted = false;
+  if (user) {
+    const { data: wishlistItem } = await supabase
+      .from("wishlists")
+      .select("id")
+      .eq("user_id", user.id)
+      .eq("product_id", product.id)
+      .single();
+
+    isWishlisted = !!wishlistItem;
+  }
 
   return (
     <>
@@ -77,7 +90,9 @@ export default async function ProductPage({
               </span>
             )}
             <h1 className="text-3xl font-bold mb-3">{product.name}</h1>
-            <p className="text-2xl font-bold mb-4">{formattedPrice}</p>
+            <p className="text-2xl font-bold mb-4">
+              {formatPrice(product.price)}
+            </p>
 
             {product.description && (
               <p className="text-gray-600 mb-6 leading-relaxed">
@@ -91,14 +106,24 @@ export default async function ProductPage({
                 : "Out of stock"}
             </p>
 
-            <AddToCartButton product={product} />
+            <div className="flex gap-3">
+              <div className="flex-1">
+                <AddToCartButton product={product} />
+              </div>
+              <WishlistButton
+                productId={product.id}
+                initialIsWishlisted={isWishlisted}
+                isLoggedIn={!!user}
+              />
+            </div>
           </div>
         </div>
-        <RelatedProducts
-          categoryId={product.category_id}
-          currentProductId={product.id}
-        />
       </main>
+
+      <RelatedProducts
+        categoryId={product.category_id}
+        currentProductId={product.id}
+      />
     </>
   );
 }

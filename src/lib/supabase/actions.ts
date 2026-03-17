@@ -47,3 +47,41 @@ export async function logout() {
   revalidatePath("/", "layout");
   redirect("/login");
 }
+
+export async function addToWishlist(productId: string) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return { error: "Not authenticated" };
+
+  const { error } = await supabase
+    .from("wishlists")
+    .insert({ user_id: user.id, product_id: productId });
+
+  if (error) return { error: error.message };
+
+  revalidatePath(`/products`);
+  return { success: true };
+}
+
+export async function removeFromWishlist(productId: string) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return { error: "Not authenticated" };
+
+  const { error } = await supabase
+    .from("wishlists")
+    .delete()
+    .eq("user_id", user.id)
+    .eq("product_id", productId);
+
+  if (error) return { error: error.message };
+
+  revalidatePath(`/products`);
+  return { success: true };
+}

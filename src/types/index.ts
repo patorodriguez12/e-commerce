@@ -19,14 +19,14 @@ export type Product = {
 };
 
 export type Profile = {
-  id: string
-  full_name: string | null
-  avatar_url: string | null
-  address: string | null
-  phone: string | null
-  role: 'customer' | 'admin'
-  updated_at: string
-}
+  id: string;
+  full_name: string | null;
+  avatar_url: string | null;
+  address: string | null;
+  phone: string | null;
+  role: "customer" | "admin";
+  updated_at: string;
+};
 
 export type OrderStatus =
   | "pending"
@@ -58,4 +58,12 @@ export type OrderItem = {
 export type CartItem = {
   product: Product;
   quantity: number;
+};
+
+export type WishlistItem = {
+  id: string;
+  user_id: string;
+  product_id: string;
+  created_at: string;
+  products?: Product;
 };
