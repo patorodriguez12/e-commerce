@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { login } from "@/lib/supabase/actions";
+import OAuthButtons from "@/components/auth/OAuthButtons";
 
 export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
@@ -55,8 +56,19 @@ export default function LoginPage() {
           </button>
         </form>
 
+        <div className="relative my-4">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t" />
+          </div>
+          <div className="relative flex justify-center text-xs">
+            <span className="bg-white px-2 text-gray-400">or</span>
+          </div>
+        </div>
+
+        <OAuthButtons />
+
         <p className="text-center text-sm mt-4 text-gray-600">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link href="/register" className="font-medium underline text-black">
             Sign up
           </Link>
