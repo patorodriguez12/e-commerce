@@ -128,8 +128,9 @@ export async function submitReview(productId: string, formData: FormData) {
   return { success: true };
 }
 
-export async function signInWithGoogle() {
+export async function signInWithGoogle(formData: FormData) {
   const supabase = await createClient();
+
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
@@ -137,12 +138,17 @@ export async function signInWithGoogle() {
     },
   });
 
-  if (error) return { error: error.message };
+  if (error) {
+    console.error(error.message);
+    return;
+  }
+
   if (data.url) redirect(data.url);
 }
 
-export async function signInWithGitHub() {
+export async function signInWithGitHub(formData: FormData) {
   const supabase = await createClient();
+
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "github",
     options: {
@@ -150,6 +156,10 @@ export async function signInWithGitHub() {
     },
   });
 
-  if (error) return { error: error.message };
+  if (error) {
+    console.error(error.message);
+    return;
+  }
+
   if (data.url) redirect(data.url);
 }
