@@ -127,3 +127,39 @@ export async function submitReview(productId: string, formData: FormData) {
 
   return { success: true };
 }
+
+export async function signInWithGoogle(formData: FormData) {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
+    },
+  });
+
+  if (error) {
+    console.error(error.message);
+    return;
+  }
+
+  if (data.url) redirect(data.url);
+}
+
+export async function signInWithGitHub(formData: FormData) {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "github",
+    options: {
+      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
+    },
+  });
+
+  if (error) {
+    console.error(error.message);
+    return;
+  }
+
+  if (data.url) redirect(data.url);
+}
