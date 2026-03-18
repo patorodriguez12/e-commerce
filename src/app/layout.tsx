@@ -1,22 +1,20 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
-import { Toaster } from "sonner";
 import Navbar from "@/components/layout/Navbar";
+import { Toaster } from "sonner";
 
 const geist = Geist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    default: "Smartech — Modern E-commerce",
+    default: "Smartech — Premium Tech Store",
     template: "%s | Smartech",
   },
-  description:
-    "A modern e-commerce store built with Next.js, Supabase and Stripe.",
+  description: "Premium tech gear curated for creators and builders.",
   openGraph: {
     title: "Smartech",
-    description:
-      "A modern e-commerce store built with Next.js, Supabase and Stripe.",
+    description: "Premium tech gear curated for creators and builders.",
     type: "website",
   },
 };
@@ -30,8 +28,17 @@ export default function RootLayout({
     <html lang="en">
       <body className={geist.className}>
         <Navbar />
-        <Toaster position="bottom-right" richColors />
         {children}
+        <Toaster
+          position="bottom-right"
+          toastOptions={{
+            style: {
+              background: "#111111",
+              border: "0.5px solid #ffffff20",
+              color: "#fff",
+            },
+          }}
+        />
       </body>
     </html>
   );
