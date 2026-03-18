@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { Product } from "@/types";
 import FilterSidebar from "@/components/products/FilterSidebar";
 import ProductGrid from "@/components/products/ProductGrid";
+import Hero from "@/components/layout/Hero";
 import { SortOption } from "@/lib/hooks/useFilters";
 
 type Props = {
@@ -25,25 +26,10 @@ export default async function HomePage({ searchParams }: Props) {
 
   let query = supabase.from("products").select("*, categories(name, slug)");
 
-  // Category filter
-  if (category) {
-    query = query.eq("categories.slug", category);
-  }
-
-  // Search filter
-  if (q) {
-    query = query.ilike("name", `%${q}%`);
-  }
-
-  // Min price filter
-  if (min) {
-    query = query.gte("price", Number(min) * 100);
-  }
-
-  // Max price filter
-  if (max) {
-    query = query.lte("price", Number(max) * 100);
-  }
+  if (category) query = query.eq("categories.slug", category);
+  if (q) query = query.ilike("name", `%${q}%`);
+  if (min) query = query.gte("price", Number(min) * 100);
+  if (max) query = query.lte("price", Number(max) * 100);
 
   switch (sort) {
     case "price_asc":
@@ -60,21 +46,27 @@ export default async function HomePage({ searchParams }: Props) {
   }
 
   const { data: products, error } = await query;
-
   if (error) return <p>Error loading products.</p>;
 
   const filtered = category
-    ? (products ?? []).filter((p) => p.categories?.slug === category)
+    ? (products ?? []).filter((p) => (p.categories as any)?.slug === category)
     : (products ?? []);
 
   return (
-    <main className="max-w-6xl mx-auto px-4 py-10">
-      <h1 className="text-3xl font-bold mb-8">Catalog</h1>
-
-      <div className="flex gap-8 items-start">
-        <FilterSidebar categories={categories ?? []} />
-        <ProductGrid products={filtered as Product[]} total={filtered.length} />
+    <>
+      <Hero />
+      <div
+        id="catalog"
+        style={{ maxWidth: "1200px", margin: "0 auto", padding: "48px 24px" }}
+      >
+        <div style={{ display: "flex", gap: "48px", alignItems: "flex-start" }}>
+          <FilterSidebar categories={categories ?? []} />
+          <ProductGrid
+            products={filtered as Product[]}
+            total={filtered.length}
+          />
+        </div>
       </div>
-    </main>
+    </>
   );
 }
