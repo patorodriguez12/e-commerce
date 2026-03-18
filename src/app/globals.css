@@ -42,6 +42,11 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
 ::selection {
   background: var(--accent);
   color: #fff;
