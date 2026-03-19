@@ -2,6 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
+import { useLoadingStore } from "@/lib/store/loadingStore";
 
 export type SortOption = "newest" | "price_asc" | "price_desc" | "name_asc";
 
@@ -16,6 +17,7 @@ export type Filters = {
 export function useFilters() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const startLoading = useLoadingStore((state) => state.start);
 
   const filters: Filters = {
     category: searchParams.get("category"),
@@ -34,9 +36,10 @@ export function useFilters() {
         params.set(key, value);
       }
       params.delete("page");
+      startLoading();
       router.push(`/?${params.toString()}`, { scroll: false });
     },
-    [router, searchParams],
+    [router, searchParams, startLoading],
   );
 
   const setFilters = useCallback(
@@ -50,14 +53,16 @@ export function useFilters() {
         }
       });
       params.delete("page");
+      startLoading();
       router.push(`/?${params.toString()}`, { scroll: false });
     },
-    [router, searchParams],
+    [router, searchParams, startLoading],
   );
 
   const clearAll = useCallback(() => {
+    startLoading();
     router.push("/", { scroll: false });
-  }, [router]);
+  }, [router, startLoading]);
 
   const hasActiveFilters =
     !!filters.category ||

@@ -4,14 +4,11 @@ import { Review } from "@/types";
 import StarRating from "./StarRating";
 import ReviewForm from "./ReviewForm";
 
-type Props = {
-  productId: string;
-};
+type Props = { productId: string };
 
 export default async function ReviewsSection({ productId }: Props) {
   const supabase = await createClient();
   const adminSupabase = createAdminClient();
-
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -55,28 +52,58 @@ export default async function ReviewsSection({ productId }: Props) {
       .eq("orders.user_id", user.id)
       .eq("orders.status", "paid")
       .limit(1);
-
     hasPurchased = (data?.length ?? 0) > 0;
   }
 
   return (
-    <section className="max-w-5xl mx-auto px-4 py-12 border-t">
-      <div className="flex items-center gap-4 mb-8">
-        <h2 className="text-xl font-bold">Reviews</h2>
+    <section
+      style={{
+        maxWidth: "1200px",
+        margin: "0 auto",
+        padding: "48px 24px",
+        borderTop: "0.5px solid var(--border)",
+      }}
+    >
+      {/* Header */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "16px",
+          marginBottom: "32px",
+        }}
+      >
+        <h2 style={{ fontSize: "20px", fontWeight: "500" }}>Reviews</h2>
         {reviewsWithProfiles.length > 0 && (
-          <div className="flex items-center gap-2">
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <StarRating value={Math.round(averageRating)} readonly size="sm" />
-            <span className="text-sm text-gray-500">
-              {averageRating.toFixed(1)} ({reviewsWithProfiles.length}{" "}
-              {reviewsWithProfiles.length === 1 ? "review" : "reviews"})
+            <span style={{ fontSize: "13px", color: "var(--text-muted)" }}>
+              {averageRating.toFixed(1)} · {reviewsWithProfiles.length}{" "}
+              {reviewsWithProfiles.length === 1 ? "review" : "reviews"}
             </span>
           </div>
         )}
       </div>
 
+      {/* Formulario */}
       {user && hasPurchased && (
-        <div className="border rounded-xl p-6 mb-8 bg-gray-50">
-          <h3 className="font-semibold mb-4">
+        <div
+          style={{
+            background: "var(--bg-card)",
+            border: "0.5px solid var(--border)",
+            borderRadius: "12px",
+            padding: "24px",
+            marginBottom: "32px",
+          }}
+        >
+          <h3
+            style={{
+              fontSize: "14px",
+              fontWeight: "500",
+              marginBottom: "16px",
+              color: "var(--text-secondary)",
+            }}
+          >
             {userReview ? "Edit your review" : "Write a review"}
           </h3>
           <ReviewForm
@@ -87,36 +114,93 @@ export default async function ReviewsSection({ productId }: Props) {
       )}
 
       {user && !hasPurchased && !userReview && (
-        <p className="text-sm text-gray-500 mb-8 border rounded-xl p-4">
+        <div
+          style={{
+            background: "var(--bg-card)",
+            border: "0.5px solid var(--border)",
+            borderRadius: "12px",
+            padding: "16px 20px",
+            marginBottom: "32px",
+            fontSize: "13px",
+            color: "var(--text-muted)",
+          }}
+        >
           Only verified buyers can leave a review.
-        </p>
+        </div>
       )}
 
+      {/* Lista */}
       {reviewsWithProfiles.length === 0 ? (
-        <p className="text-gray-500 text-center py-8">
-          No reviews yet. Be the first to review this product.
+        <p
+          style={{
+            color: "var(--text-muted)",
+            fontSize: "14px",
+            textAlign: "center",
+            padding: "32px 0",
+          }}
+        >
+          No reviews yet.
         </p>
       ) : (
-        <div className="space-y-6">
+        <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
           {reviewsWithProfiles.map((review: Review & { profiles: any }) => (
-            <div key={review.id} className="border-b pb-6 last:border-0">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-3">
-                  <p className="font-medium text-sm">
+            <div
+              key={review.id}
+              style={{
+                padding: "20px 0",
+                borderBottom: "0.5px solid var(--border)",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  marginBottom: "8px",
+                }}
+              >
+                <div
+                  style={{ display: "flex", alignItems: "center", gap: "10px" }}
+                >
+                  <div
+                    style={{
+                      width: "28px",
+                      height: "28px",
+                      borderRadius: "50%",
+                      background: "var(--accent-bg)",
+                      border: "0.5px solid var(--accent-border)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "11px",
+                      color: "var(--accent-text)",
+                      fontWeight: "500",
+                    }}
+                  >
+                    {(review.profiles?.full_name ?? "A")[0].toUpperCase()}
+                  </div>
+                  <span style={{ fontSize: "13px", fontWeight: "500" }}>
                     {review.profiles?.full_name ?? "Anonymous"}
-                  </p>
+                  </span>
                   <StarRating value={review.rating} readonly size="sm" />
                 </div>
-                <p className="text-xs text-gray-400">
+                <span style={{ fontSize: "11px", color: "var(--text-muted)" }}>
                   {new Date(review.created_at).toLocaleDateString("en-US", {
                     month: "short",
                     day: "numeric",
                     year: "numeric",
                   })}
-                </p>
+                </span>
               </div>
               {review.comment && (
-                <p className="text-sm text-gray-600 leading-relaxed">
+                <p
+                  style={{
+                    fontSize: "14px",
+                    color: "var(--text-secondary)",
+                    lineHeight: "1.7",
+                    paddingLeft: "38px",
+                  }}
+                >
                   {review.comment}
                 </p>
               )}

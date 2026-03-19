@@ -1,31 +1,110 @@
-import { ProductGridSkeleton } from "@/components/ui/Skeleton";
+import {
+  FilterSidebarSkeleton,
+  ProductGridSkeleton,
+} from "@/components/ui/Skeleton";
 
 export default function Loading() {
   return (
-    <main className="max-w-6xl mx-auto px-4 py-10">
-      <div className="h-9 w-32 bg-gray-200 rounded-lg animate-pulse mb-8" />
-      <div className="flex gap-8 items-start">
-        {/* Sidebar skeleton */}
-        <aside className="w-56 flex-shrink-0 space-y-6">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="space-y-2">
-              <div className="h-3 w-20 bg-gray-200 rounded animate-pulse" />
-              {Array.from({ length: 3 }).map((_, j) => (
-                <div
-                  key={j}
-                  className="h-8 w-full bg-gray-200 rounded-lg animate-pulse"
-                />
-              ))}
-            </div>
-          ))}
-        </aside>
+    <>
+      {/* Hero skeleton */}
+      <div
+        style={{
+          borderBottom: "0.5px solid var(--border)",
+          padding: "80px 24px 72px",
+          maxWidth: "1200px",
+          margin: "0 auto",
+          display: "flex",
+          flexDirection: "column",
+          gap: "20px",
+        }}
+      >
+        <div
+          style={{
+            height: "24px",
+            width: "140px",
+            background: "#1a1a1a",
+            borderRadius: "20px",
+            animation: "shimmer 1.5s infinite",
+            backgroundSize: "200% 100%",
+            backgroundImage:
+              "linear-gradient(90deg, #1a1a1a 25%, #222 50%, #1a1a1a 75%)",
+          }}
+        />
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+          <div
+            style={{
+              height: "48px",
+              width: "55%",
+              background: "#1a1a1a",
+              borderRadius: "6px",
+              backgroundImage:
+                "linear-gradient(90deg, #1a1a1a 25%, #222 50%, #1a1a1a 75%)",
+              backgroundSize: "200% 100%",
+              animation: "shimmer 1.5s infinite",
+            }}
+          />
+          <div
+            style={{
+              height: "48px",
+              width: "40%",
+              background: "#1a1a1a",
+              borderRadius: "6px",
+              backgroundImage:
+                "linear-gradient(90deg, #1a1a1a 25%, #222 50%, #1a1a1a 75%)",
+              backgroundSize: "200% 100%",
+              animation: "shimmer 1.5s infinite",
+            }}
+          />
+        </div>
+        <div
+          style={{
+            height: "14px",
+            width: "320px",
+            background: "#1a1a1a",
+            borderRadius: "6px",
+            backgroundImage:
+              "linear-gradient(90deg, #1a1a1a 25%, #222 50%, #1a1a1a 75%)",
+            backgroundSize: "200% 100%",
+            animation: "shimmer 1.5s infinite",
+          }}
+        />
+        <div style={{ display: "flex", gap: "10px" }}>
+          <div
+            style={{
+              height: "40px",
+              width: "100px",
+              background: "#1a1a1a",
+              borderRadius: "8px",
+              backgroundImage:
+                "linear-gradient(90deg, #1a1a1a 25%, #222 50%, #1a1a1a 75%)",
+              backgroundSize: "200% 100%",
+              animation: "shimmer 1.5s infinite",
+            }}
+          />
+          <div
+            style={{
+              height: "40px",
+              width: "100px",
+              background: "#1a1a1a",
+              borderRadius: "8px",
+              backgroundImage:
+                "linear-gradient(90deg, #1a1a1a 25%, #222 50%, #1a1a1a 75%)",
+              backgroundSize: "200% 100%",
+              animation: "shimmer 1.5s infinite",
+            }}
+          />
+        </div>
+      </div>
 
-        {/* Grid skeleton */}
-        <div className="flex-1">
-          <div className="h-4 w-28 bg-gray-200 rounded animate-pulse mb-4" />
+      {/* Catalog skeleton */}
+      <div
+        style={{ maxWidth: "1200px", margin: "0 auto", padding: "48px 24px" }}
+      >
+        <div style={{ display: "flex", gap: "48px", alignItems: "flex-start" }}>
+          <FilterSidebarSkeleton />
           <ProductGridSkeleton />
         </div>
       </div>
-    </main>
+    </>
   );
 }

@@ -10,22 +10,58 @@ export default async function Navbar() {
   } = await supabase.auth.getUser();
 
   return (
-    <nav className="border-b px-4 py-3">
-      <div className="max-w-6xl mx-auto flex items-center justify-between">
-        <Link href="/" className="text-xl font-bold">
+    <nav
+      style={{
+        borderBottom: "0.5px solid var(--border)",
+        background: "var(--bg-primary)",
+        position: "sticky",
+        top: 0,
+        zIndex: 30,
+        backdropFilter: "blur(12px)",
+      }}
+    >
+      <div
+        style={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+          padding: "0 24px",
+          height: "56px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Link
+          href="/"
+          style={{
+            fontSize: "16px",
+            fontWeight: "500",
+            letterSpacing: "-0.5px",
+            color: "var(--text-primary)",
+            textDecoration: "none",
+          }}
+        >
           Smartech
         </Link>
 
-        <div className="flex items-center gap-4">
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <CartButton />
 
           {user ? (
             <>
               <Link
                 href="/dashboard"
-                className="text-sm text-gray-600 hover:text-black"
+                style={{
+                  fontSize: "13px",
+                  color: "var(--text-secondary)",
+                  textDecoration: "none",
+                  padding: "6px 12px",
+                  borderRadius: "6px",
+                  border: "0.5px solid var(--border)",
+                  transition: "all 0.15s",
+                }}
               >
-                My profile
+                My account
               </Link>
               <LogoutButton />
             </>
@@ -33,13 +69,26 @@ export default async function Navbar() {
             <>
               <Link
                 href="/login"
-                className="text-sm text-gray-600 hover:text-black"
+                style={{
+                  fontSize: "13px",
+                  color: "var(--text-secondary)",
+                  textDecoration: "none",
+                  padding: "6px 12px",
+                }}
               >
                 Sign in
               </Link>
               <Link
                 href="/register"
-                className="text-sm bg-black text-white px-3 py-1.5 rounded-lg hover:bg-gray-800 transition-colors"
+                style={{
+                  fontSize: "13px",
+                  color: "#000",
+                  background: "#fff",
+                  textDecoration: "none",
+                  padding: "6px 14px",
+                  borderRadius: "6px",
+                  fontWeight: "500",
+                }}
               >
                 Sign up
               </Link>

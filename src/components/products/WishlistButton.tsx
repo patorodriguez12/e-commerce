@@ -24,18 +24,12 @@ export default function WishlistButton({
       router.push("/login");
       return;
     }
-
     setLoading(true);
     setIsWishlisted((prev) => !prev);
-
     const result = isWishlisted
       ? await removeFromWishlist(productId)
       : await addToWishlist(productId);
-
-    if (result.error) {
-      setIsWishlisted((prev) => !prev);
-    }
-
+    if (result.error) setIsWishlisted((prev) => !prev);
     setLoading(false);
   }
 
@@ -43,17 +37,38 @@ export default function WishlistButton({
     <button
       onClick={handleToggle}
       disabled={loading}
-      className={`flex items-center gap-2 px-4 py-3 rounded-xl border transition-colors disabled:opacity-50 ${
-        isWishlisted
-          ? "bg-red-50 border-red-200 text-red-500 hover:bg-red-100"
-          : "hover:bg-gray-50 text-gray-500"
-      }`}
       title={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
+      style={{
+        padding: "13px 16px",
+        borderRadius: "8px",
+        border: "0.5px solid",
+        borderColor: isWishlisted ? "var(--coral-border)" : "var(--border)",
+        background: isWishlisted ? "var(--coral-bg)" : "transparent",
+        cursor: "pointer",
+        transition: "all 0.15s",
+        fontSize: "18px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+      onMouseEnter={(e) => {
+        if (!isWishlisted) {
+          (e.currentTarget as HTMLButtonElement).style.borderColor =
+            "var(--coral-border)";
+          (e.currentTarget as HTMLButtonElement).style.background =
+            "var(--coral-bg)";
+        }
+      }}
+      onMouseLeave={(e) => {
+        if (!isWishlisted) {
+          (e.currentTarget as HTMLButtonElement).style.borderColor =
+            "var(--border)";
+          (e.currentTarget as HTMLButtonElement).style.background =
+            "transparent";
+        }
+      }}
     >
-      <span className="text-lg">{isWishlisted ? "❤️" : "🤍"}</span>
-      <span className="text-sm font-medium">
-        {isWishlisted ? "Wishlisted" : "Wishlist"}
-      </span>
+      {isWishlisted ? "❤️" : "🤍"}
     </button>
   );
 }
