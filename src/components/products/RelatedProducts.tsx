@@ -14,7 +14,6 @@ export default async function RelatedProducts({
   if (!categoryId) return null;
 
   const supabase = await createClient();
-
   const { data: products } = await supabase
     .from("products")
     .select("*, categories(name, slug)")
@@ -25,9 +24,31 @@ export default async function RelatedProducts({
   if (!products || products.length === 0) return null;
 
   return (
-    <section className="max-w-5xl mx-auto px-4 py-12 border-t">
-      <h2 className="text-xl font-bold mb-6">Related products</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+    <section
+      style={{
+        maxWidth: "1200px",
+        margin: "0 auto",
+        padding: "48px 24px",
+        borderTop: "0.5px solid var(--border)",
+      }}
+    >
+      <h2
+        style={{
+          fontSize: "18px",
+          fontWeight: "500",
+          marginBottom: "24px",
+          letterSpacing: "-0.3px",
+        }}
+      >
+        Related products
+      </h2>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+          gap: "16px",
+        }}
+      >
         {products.map((product: Product) => (
           <ProductCard key={product.id} product={product} />
         ))}
