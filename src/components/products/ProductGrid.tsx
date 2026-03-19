@@ -4,9 +4,14 @@ import ProductCard from "./ProductCard";
 type Props = {
   products: Product[];
   total: number;
+  hideTotalLabel?: boolean;
 };
 
-export default function ProductGrid({ products, total }: Props) {
+export default function ProductGrid({
+  products,
+  total,
+  hideTotalLabel = false,
+}: Props) {
   if (products.length === 0) {
     return (
       <div className="flex-1 flex flex-col items-center justify-center py-24 text-center">
@@ -20,11 +25,25 @@ export default function ProductGrid({ products, total }: Props) {
   }
 
   return (
-    <div className="flex-1 min-w-0">
-      <p className="text-sm text-gray-500 mb-4">
-        {total} {total === 1 ? "product" : "products"} found
-      </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div style={{ flex: 1, minWidth: 0 }}>
+      {!hideTotalLabel && (
+        <p
+          style={{
+            fontSize: "13px",
+            color: "var(--text-muted)",
+            marginBottom: "16px",
+          }}
+        >
+          {total} {total === 1 ? "product" : "products"} found
+        </p>
+      )}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))",
+          gap: "16px",
+        }}
+      >
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
