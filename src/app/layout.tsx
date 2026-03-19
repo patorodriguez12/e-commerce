@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
+import CartDrawer from "@/components/cart/CartDrawer";
 import { Toaster } from "sonner";
 
 const geist = Geist({ subsets: ["latin"] });
@@ -12,11 +13,6 @@ export const metadata: Metadata = {
     template: "%s | Smartech",
   },
   description: "Premium tech gear curated for creators and builders.",
-  openGraph: {
-    title: "Smartech",
-    description: "Premium tech gear curated for creators and builders.",
-    type: "website",
-  },
 };
 
 export default function RootLayout({
@@ -29,6 +25,7 @@ export default function RootLayout({
       <body className={geist.className}>
         <Navbar />
         {children}
+        <CartDrawer />
         <Toaster
           position="bottom-right"
           toastOptions={{

@@ -1,50 +1,66 @@
 "use client";
 
+import { useEffect } from "react";
 import { useCartStore } from "@/lib/store/cartStore";
+import { useCartDrawer } from "@/lib/store/cartDrawerStore";
 import CartItem from "./CartItem";
 import Link from "next/link";
 import { formatPrice } from "@/lib/utils/formatPrice";
 
-type Props = {
-  isOpen: boolean;
-  onClose: () => void;
-};
-
-export default function CartDrawer({ isOpen, onClose }: Props) {
+export default function CartDrawer() {
   const { items, getTotalPrice, clearCart } = useCartStore();
+  const { isOpen, close } = useCartDrawer();
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === "Escape") close();
+    }
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [close]);
 
   return (
     <>
-      {isOpen && (
-        <div
-          onClick={onClose}
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "rgba(0,0,0,0.7)",
-            zIndex: 40,
-            backdropFilter: "blur(4px)",
-          }}
-        />
-      )}
+      {/* Overlay */}
+      <div
+        onClick={close}
+        style={{
+          position: "fixed",
+          inset: 0,
+          background: "rgba(0,0,0,0.75)",
+          zIndex: 998,
+          opacity: isOpen ? 1 : 0,
+          pointerEvents: isOpen ? "auto" : "none",
+          transition: "opacity 0.25s ease",
+        }}
+      />
 
+      {/* Drawer */}
       <div
         style={{
           position: "fixed",
           top: 0,
           right: 0,
-          height: "100%",
-          width: "100%",
-          maxWidth: "420px",
+          height: "100dvh",
+          width: "min(420px, 100vw)",
           background: "#0f0f0f",
           borderLeft: "0.5px solid var(--border)",
-          zIndex: 50,
+          zIndex: 999,
           display: "flex",
           flexDirection: "column",
           transform: isOpen ? "translateX(0)" : "translateX(100%)",
           transition: "transform 0.3s cubic-bezier(0.32, 0.72, 0, 1)",
+          overscrollBehavior: "contain",
         }}
       >
+        {/* Header */}
         <div
           style={{
             display: "flex",
@@ -52,10 +68,19 @@ export default function CartDrawer({ isOpen, onClose }: Props) {
             justifyContent: "space-between",
             padding: "20px 24px",
             borderBottom: "0.5px solid var(--border)",
+            flexShrink: 0,
           }}
         >
           <div>
-            <h2 style={{ fontSize: "16px", fontWeight: "500" }}>Your cart</h2>
+            <h2
+              style={{
+                fontSize: "16px",
+                fontWeight: "500",
+                color: "var(--text-primary)",
+              }}
+            >
+              Your cart
+            </h2>
             {items.length > 0 && (
               <p
                 style={{
@@ -69,7 +94,7 @@ export default function CartDrawer({ isOpen, onClose }: Props) {
             )}
           </div>
           <button
-            onClick={onClose}
+            onClick={close}
             style={{
               background: "var(--bg-subtle)",
               border: "0.5px solid var(--border)",
@@ -81,14 +106,23 @@ export default function CartDrawer({ isOpen, onClose }: Props) {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: "18px",
+              fontSize: "20px",
+              lineHeight: 1,
             }}
           >
             ×
           </button>
         </div>
 
-        <div style={{ flex: 1, overflowY: "auto", padding: "20px 24px" }}>
+        {/* Items */}
+        <div
+          style={{
+            flex: 1,
+            overflowY: "auto",
+            padding: "20px 24px",
+            overscrollBehavior: "contain",
+          }}
+        >
           {items.length === 0 ? (
             <div
               style={{
@@ -96,8 +130,9 @@ export default function CartDrawer({ isOpen, onClose }: Props) {
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                height: "200px",
+                height: "100%",
                 gap: "12px",
+                minHeight: "200px",
               }}
             >
               <svg
@@ -127,6 +162,7 @@ export default function CartDrawer({ isOpen, onClose }: Props) {
           )}
         </div>
 
+        {/* Footer */}
         {items.length > 0 && (
           <div
             style={{
@@ -135,6 +171,7 @@ export default function CartDrawer({ isOpen, onClose }: Props) {
               display: "flex",
               flexDirection: "column",
               gap: "12px",
+              flexShrink: 0,
             }}
           >
             <div
@@ -155,7 +192,7 @@ export default function CartDrawer({ isOpen, onClose }: Props) {
             </div>
             <Link
               href="/checkout"
-              onClick={onClose}
+              onClick={close}
               style={{
                 display: "block",
                 background: "#fff",
@@ -166,7 +203,6 @@ export default function CartDrawer({ isOpen, onClose }: Props) {
                 textDecoration: "none",
                 fontSize: "14px",
                 fontWeight: "500",
-                transition: "opacity 0.15s",
               }}
             >
               Checkout
