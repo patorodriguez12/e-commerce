@@ -3,7 +3,10 @@ import { Geist } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import CartDrawer from "@/components/cart/CartDrawer";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import NavigationProvider from "@/components/ui/NavigationProvider";
 import { Toaster } from "sonner";
+import { Suspense } from "react";
 
 const geist = Geist({ subsets: ["latin"] });
 
@@ -23,9 +26,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={geist.className}>
+        <Suspense>
+          <NavigationProvider />
+        </Suspense>
         <Navbar />
         {children}
         <CartDrawer />
+        <LoadingSpinner />
         <Toaster
           position="bottom-right"
           toastOptions={{
