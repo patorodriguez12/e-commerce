@@ -18,57 +18,149 @@ export default async function WishlistPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">My Wishlist</h1>
+      <h1
+        style={{
+          fontSize: "22px",
+          fontWeight: "500",
+          letterSpacing: "-0.5px",
+          marginBottom: "24px",
+        }}
+      >
+        My Wishlist
+      </h1>
 
       {!items || items.length === 0 ? (
-        <div className="text-center py-16 text-gray-500">
-          <p className="text-4xl mb-4">🤍</p>
-          <p className="mb-4">Your wishlist is empty.</p>
+        <div
+          style={{
+            textAlign: "center",
+            padding: "64px 24px",
+            background: "var(--bg-card)",
+            border: "0.5px solid var(--border)",
+            borderRadius: "12px",
+          }}
+        >
+          <p style={{ fontSize: "32px", marginBottom: "12px" }}>🤍</p>
+          <p
+            style={{
+              color: "var(--text-muted)",
+              marginBottom: "20px",
+              fontSize: "14px",
+            }}
+          >
+            Your wishlist is empty.
+          </p>
           <Link
             href="/"
-            className="bg-black text-white px-6 py-2 rounded-lg hover:bg-gray-800 transition-colors"
+            style={{
+              background: "#fff",
+              color: "#000",
+              padding: "10px 24px",
+              borderRadius: "8px",
+              textDecoration: "none",
+              fontSize: "13px",
+              fontWeight: "500",
+            }}
           >
             Browse products
           </Link>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
           {items.map((item: any) => (
             <div
               key={item.id}
-              className="flex items-center gap-4 border rounded-xl p-4"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "16px",
+                background: "var(--bg-card)",
+                border: "0.5px solid var(--border)",
+                borderRadius: "12px",
+                padding: "16px",
+              }}
             >
               <Link href={`/products/${item.products?.slug}`}>
-                <div className="relative w-20 h-20 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+                <div
+                  style={{
+                    position: "relative",
+                    width: "64px",
+                    height: "64px",
+                    flexShrink: 0,
+                    borderRadius: "8px",
+                    overflow: "hidden",
+                    background: "var(--bg-subtle)",
+                  }}
+                >
                   {item.products?.image_url && (
                     <Image
                       src={item.products.image_url}
                       alt={item.products.name}
                       fill
-                      className="object-cover"
+                      style={{ objectFit: "cover" }}
                     />
                   )}
                 </div>
               </Link>
 
-              <div className="flex-1">
-                <Link href={`/products/${item.products?.slug}`}>
-                  <p className="font-medium hover:underline">
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <Link
+                  href={`/products/${item.products?.slug}`}
+                  style={{ textDecoration: "none" }}
+                >
+                  <p
+                    style={{
+                      fontSize: "14px",
+                      fontWeight: "500",
+                      color: "var(--text-primary)",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
                     {item.products?.name}
                   </p>
                 </Link>
-                <p className="text-sm text-gray-500">
+                <p
+                  style={{
+                    fontSize: "12px",
+                    color: "var(--text-muted)",
+                    marginTop: "2px",
+                  }}
+                >
                   {item.products?.categories?.name}
                 </p>
-                <p className="font-bold mt-1">
+                <p
+                  style={{
+                    fontSize: "14px",
+                    fontWeight: "500",
+                    marginTop: "4px",
+                  }}
+                >
                   {formatPrice(item.products?.price ?? 0)}
                 </p>
               </div>
 
-              <div className="flex flex-col gap-2 items-end">
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "8px",
+                  alignItems: "flex-end",
+                  flexShrink: 0,
+                }}
+              >
                 <Link
                   href={`/products/${item.products?.slug}`}
-                  className="text-sm bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors"
+                  style={{
+                    background: "#fff",
+                    color: "#000",
+                    padding: "7px 16px",
+                    borderRadius: "6px",
+                    textDecoration: "none",
+                    fontSize: "12px",
+                    fontWeight: "500",
+                    whiteSpace: "nowrap",
+                  }}
                 >
                   View product
                 </Link>
@@ -80,7 +172,14 @@ export default async function WishlistPage() {
                 >
                   <button
                     type="submit"
-                    className="text-sm text-red-500 hover:text-red-700 transition-colors"
+                    style={{
+                      background: "transparent",
+                      border: "none",
+                      color: "var(--text-muted)",
+                      fontSize: "12px",
+                      cursor: "pointer",
+                      padding: "4px",
+                    }}
                   >
                     Remove
                   </button>

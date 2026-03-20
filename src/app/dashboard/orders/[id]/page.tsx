@@ -1,14 +1,35 @@
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
+import { formatPrice } from "@/lib/utils/formatPrice";
 import Image from "next/image";
 import Link from "next/link";
 
-const STATUS_STYLES: Record<string, string> = {
-  paid: "bg-green-100 text-green-700",
-  pending: "bg-yellow-100 text-yellow-700",
-  shipped: "bg-blue-100 text-blue-700",
-  delivered: "bg-purple-100 text-purple-700",
-  cancelled: "bg-red-100 text-red-700",
+const STATUS_STYLES: Record<string, React.CSSProperties> = {
+  paid: {
+    background: "var(--green-bg)",
+    color: "var(--green-text)",
+    border: "0.5px solid var(--green-border)",
+  },
+  pending: {
+    background: "#BA751718",
+    color: "#EF9F27",
+    border: "0.5px solid #BA751740",
+  },
+  shipped: {
+    background: "#185FA518",
+    color: "#378ADD",
+    border: "0.5px solid #185FA540",
+  },
+  delivered: {
+    background: "var(--accent-bg)",
+    color: "var(--accent-text)",
+    border: "0.5px solid var(--accent-border)",
+  },
+  cancelled: {
+    background: "var(--coral-bg)",
+    color: "var(--coral-text)",
+    border: "0.5px solid var(--coral-border)",
+  },
 };
 
 export default async function OrderDetailPage({
@@ -32,24 +53,64 @@ export default async function OrderDetailPage({
   if (!order) notFound();
 
   return (
-    <div>
-      <div className="flex items-center gap-3 mb-6">
+    <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+      {/* Header */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "12px",
+          marginBottom: "8px",
+        }}
+      >
         <Link
           href="/dashboard/orders"
-          className="text-gray-400 hover:text-black transition-colors"
+          style={{
+            fontSize: "13px",
+            color: "var(--text-muted)",
+            textDecoration: "none",
+            transition: "color 0.15s",
+          }}
         >
-          ← Back
+          ← Orders
         </Link>
-        <h1 className="text-2xl font-bold">
-          Order #{order.id.slice(0, 8).toUpperCase()}
+        <span style={{ color: "var(--border)" }}>/</span>
+        <h1
+          style={{
+            fontSize: "16px",
+            fontWeight: "500",
+            fontFamily: "monospace",
+            color: "var(--text-primary)",
+          }}
+        >
+          #{order.id.slice(0, 8).toUpperCase()}
         </h1>
       </div>
 
-      {/* Header de la orden */}
-      <div className="border rounded-xl p-5 mb-6 flex justify-between items-start">
-        <div>
-          <p className="text-sm text-gray-500 mb-1">Date</p>
-          <p className="font-medium">
+      {/* Info card */}
+      <div
+        style={{
+          background: "var(--bg-card)",
+          border: "0.5px solid var(--border)",
+          borderRadius: "12px",
+          padding: "20px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+          <p
+            style={{
+              fontSize: "11px",
+              color: "var(--text-muted)",
+              textTransform: "uppercase",
+              letterSpacing: "0.5px",
+            }}
+          >
+            Date
+          </p>
+          <p style={{ fontSize: "14px", color: "var(--text-primary)" }}>
             {new Date(order.created_at).toLocaleDateString("en-US", {
               year: "numeric",
               month: "long",
@@ -57,10 +118,32 @@ export default async function OrderDetailPage({
             })}
           </p>
         </div>
-        <div className="text-right">
-          <p className="text-sm text-gray-500 mb-1">Status</p>
+        <div
+          style={{
+            textAlign: "right",
+            display: "flex",
+            flexDirection: "column",
+            gap: "4px",
+          }}
+        >
+          <p
+            style={{
+              fontSize: "11px",
+              color: "var(--text-muted)",
+              textTransform: "uppercase",
+              letterSpacing: "0.5px",
+            }}
+          >
+            Status
+          </p>
           <span
-            className={`text-xs px-2 py-1 rounded-full font-medium ${STATUS_STYLES[order.status] ?? "bg-gray-100 text-gray-600"}`}
+            style={{
+              fontSize: "11px",
+              fontWeight: "500",
+              padding: "3px 10px",
+              borderRadius: "20px",
+              ...(STATUS_STYLES[order.status] ?? {}),
+            }}
           >
             {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
           </span>
@@ -68,32 +151,94 @@ export default async function OrderDetailPage({
       </div>
 
       {/* Items */}
-      <div className="border rounded-xl overflow-hidden mb-6">
-        <div className="px-5 py-3 border-b bg-gray-50">
-          <p className="text-sm font-medium text-gray-600">Products</p>
+      <div
+        style={{
+          background: "var(--bg-card)",
+          border: "0.5px solid var(--border)",
+          borderRadius: "12px",
+          overflow: "hidden",
+        }}
+      >
+        <div
+          style={{
+            padding: "14px 20px",
+            borderBottom: "0.5px solid var(--border)",
+          }}
+        >
+          <p
+            style={{
+              fontSize: "11px",
+              color: "var(--text-muted)",
+              textTransform: "uppercase",
+              letterSpacing: "0.5px",
+            }}
+          >
+            Products
+          </p>
         </div>
-        <div className="divide-y">
-          {order.order_items?.map((item: any) => (
-            <div key={item.id} className="flex items-center gap-4 px-5 py-4">
-              <div className="relative w-14 h-14 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
+        <div>
+          {order.order_items?.map((item: any, i: number) => (
+            <div
+              key={item.id}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "16px",
+                padding: "16px 20px",
+                borderBottom:
+                  i < order.order_items.length - 1
+                    ? "0.5px solid var(--border)"
+                    : "none",
+              }}
+            >
+              <div
+                style={{
+                  position: "relative",
+                  width: "52px",
+                  height: "52px",
+                  flexShrink: 0,
+                  borderRadius: "8px",
+                  overflow: "hidden",
+                  background: "var(--bg-subtle)",
+                }}
+              >
                 {item.products?.image_url && (
                   <Image
                     src={item.products.image_url}
                     alt={item.products.name}
                     fill
-                    className="object-cover"
+                    style={{ objectFit: "cover" }}
                   />
                 )}
               </div>
-              <div className="flex-1">
-                <p className="font-medium">{item.products?.name}</p>
-                <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
+              <div style={{ flex: 1 }}>
+                <p
+                  style={{
+                    fontSize: "14px",
+                    fontWeight: "500",
+                    color: "var(--text-primary)",
+                  }}
+                >
+                  {item.products?.name}
+                </p>
+                <p
+                  style={{
+                    fontSize: "12px",
+                    color: "var(--text-muted)",
+                    marginTop: "2px",
+                  }}
+                >
+                  Qty: {item.quantity}
+                </p>
               </div>
-              <p className="font-semibold">
-                {new Intl.NumberFormat("en-US", {
-                  style: "currency",
-                  currency: "USD",
-                }).format((item.unit_price * item.quantity) / 100)}
+              <p
+                style={{
+                  fontSize: "14px",
+                  fontWeight: "500",
+                  color: "var(--text-primary)",
+                }}
+              >
+                {formatPrice(item.unit_price * item.quantity)}
               </p>
             </div>
           ))}
@@ -101,16 +246,23 @@ export default async function OrderDetailPage({
       </div>
 
       {/* Total */}
-      <div className="border rounded-xl p-5">
-        <div className="flex justify-between font-bold text-lg">
-          <span>Total</span>
-          <span>
-            {new Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: "USD",
-            }).format(order.total / 100)}
-          </span>
-        </div>
+      <div
+        style={{
+          background: "var(--bg-card)",
+          border: "0.5px solid var(--border)",
+          borderRadius: "12px",
+          padding: "20px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <span style={{ fontSize: "14px", color: "var(--text-secondary)" }}>
+          Total
+        </span>
+        <span style={{ fontSize: "20px", fontWeight: "500" }}>
+          {formatPrice(order.total)}
+        </span>
       </div>
     </div>
   );

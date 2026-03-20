@@ -1,6 +1,13 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import LogoutButton from "@/components/layout/LogoutButton";
+
+const NAV_ITEMS = [
+  { href: "/dashboard", label: "My Account" },
+  { href: "/dashboard/orders", label: "My Orders" },
+  { href: "/dashboard/wishlist", label: "My Wishlist" },
+];
 
 export default async function DashboardLayout({
   children,
@@ -11,38 +18,91 @@ export default async function DashboardLayout({
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
   if (!user) redirect("/login");
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-10">
-      <div className="flex gap-8">
+    <div
+      style={{
+        maxWidth: "1000px",
+        margin: "0 auto",
+        padding: "48px 24px",
+      }}
+    >
+      <div style={{ display: "flex", gap: "48px", alignItems: "flex-start" }}>
         {/* Sidebar */}
-        <aside className="w-48 flex-shrink-0">
-          <nav className="space-y-1">
-            <Link
-              href="/dashboard"
-              className="block px-3 py-2 rounded-lg text-sm hover:bg-gray-100 transition-colors"
+        <aside style={{ width: "180px", flexShrink: 0 }}>
+          <div
+            style={{
+              background: "var(--bg-card)",
+              border: "0.5px solid var(--border)",
+              borderRadius: "12px",
+              overflow: "hidden",
+            }}
+          >
+            <div
+              style={{
+                padding: "16px 20px",
+                borderBottom: "0.5px solid var(--border)",
+              }}
             >
-              My Account
-            </Link>
-            <Link
-              href="/dashboard/orders"
-              className="block px-3 py-2 rounded-lg text-sm hover:bg-gray-100 transition-colors"
+              <p
+                style={{
+                  fontSize: "11px",
+                  color: "var(--text-muted)",
+                  textTransform: "uppercase",
+                  letterSpacing: "1px",
+                }}
+              >
+                Account
+              </p>
+            </div>
+            <nav style={{ padding: "8px" }}>
+              {NAV_ITEMS.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  style={{
+                    display: "block",
+                    padding: "8px 12px",
+                    borderRadius: "6px",
+                    fontSize: "13px",
+                    color: "var(--text-secondary)",
+                    textDecoration: "none",
+                    transition: "all 0.15s",
+                  }}
+                  onMouseEnter={undefined}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+            <div
+              style={{
+                padding: "8px",
+                borderTop: "0.5px solid var(--border)",
+              }}
             >
-              My Orders
-            </Link>
-            <Link
-              href="/dashboard/wishlist"
-              className="block px-3 py-2 rounded-lg text-sm hover:bg-gray-100 transition-colors"
-            >
-              My Wishlist
-            </Link>
-          </nav>
+              <Link
+                href="/"
+                style={{
+                  display: "block",
+                  padding: "8px 12px",
+                  borderRadius: "6px",
+                  fontSize: "13px",
+                  color: "var(--text-muted)",
+                  textDecoration: "none",
+                  marginBottom: "2px",
+                }}
+              >
+                ← Store
+              </Link>
+              <LogoutButton />
+            </div>
+          </div>
         </aside>
 
-        {/* Contenido */}
-        <main className="flex-1 min-w-0">{children}</main>
+        {/* Content */}
+        <main style={{ flex: 1, minWidth: 0 }}>{children}</main>
       </div>
     </div>
   );
