@@ -12,26 +12,102 @@ export default function SuccessPage() {
   }, [clearCart]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
-      <div className="text-center max-w-md">
-        <div className="text-6xl mb-4">✅</div>
-        <h1 className="text-2xl font-bold mb-2">¡Pago exitoso!</h1>
-        <p className="text-gray-600 mb-8">
-          Tu pedido fue registrado correctamente. Podés verlo en tu panel de
-          usuario.
-        </p>
-        <div className="flex gap-3 justify-center">
+    <div
+      style={{
+        minHeight: "80dvh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "24px",
+      }}
+    >
+      <div
+        style={{
+          textAlign: "center",
+          maxWidth: "420px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "16px",
+        }}
+      >
+        {/* Checkmark */}
+        <div
+          style={{
+            width: "64px",
+            height: "64px",
+            borderRadius: "50%",
+            background: "var(--green-bg)",
+            border: "0.5px solid var(--green-border)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "28px",
+            marginBottom: "8px",
+          }}
+        >
+          ✓
+        </div>
+
+        <div>
+          <h1
+            style={{
+              fontSize: "24px",
+              fontWeight: "500",
+              letterSpacing: "-0.5px",
+              marginBottom: "8px",
+            }}
+          >
+            Payment successful
+          </h1>
+          <p
+            style={{
+              fontSize: "14px",
+              color: "var(--text-secondary)",
+              lineHeight: "1.7",
+            }}
+          >
+            Your order has been placed successfully. You can track it from your
+            dashboard.
+          </p>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            gap: "10px",
+            marginTop: "8px",
+            flexWrap: "wrap",
+            justifyContent: "center",
+          }}
+        >
           <Link
             href="/dashboard/orders"
-            className="bg-black text-white px-6 py-2 rounded-lg hover:bg-gray-800 transition-colors"
+            style={{
+              background: "#fff",
+              color: "#000",
+              padding: "10px 24px",
+              borderRadius: "8px",
+              textDecoration: "none",
+              fontSize: "13px",
+              fontWeight: "500",
+            }}
           >
-            Ver mis órdenes
+            View my orders
           </Link>
           <Link
             href="/"
-            className="border px-6 py-2 rounded-lg hover:bg-gray-50 transition-colors"
+            style={{
+              background: "transparent",
+              color: "var(--text-secondary)",
+              padding: "10px 24px",
+              borderRadius: "8px",
+              textDecoration: "none",
+              fontSize: "13px",
+              border: "0.5px solid var(--border)",
+            }}
           >
-            Seguir comprando
+            Continue shopping
           </Link>
         </div>
       </div>
