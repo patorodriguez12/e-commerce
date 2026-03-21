@@ -9,6 +9,17 @@ const NAV_ITEMS = [
   { href: "/admin/users", label: "👥 Users" },
 ];
 
+const navLink: React.CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  padding: "8px 12px",
+  borderRadius: "6px",
+  fontSize: "13px",
+  color: "var(--text-secondary)",
+  textDecoration: "none",
+  transition: "all 0.15s",
+};
+
 export default async function AdminLayout({
   children,
 }: {
@@ -17,37 +28,80 @@ export default async function AdminLayout({
   await requireAdmin();
 
   return (
-    <div className="min-h-screen flex">
+    <div style={{ minHeight: "100dvh", display: "flex" }}>
       {/* Sidebar */}
-      <aside className="w-56 border-r bg-gray-50 flex flex-col">
-        <div className="px-6 py-5 border-b">
-          <p className="font-bold text-sm">Admin Panel</p>
-          <p className="text-xs text-gray-500 mt-0.5">Smartech</p>
+      <aside
+        style={{
+          width: "220px",
+          flexShrink: 0,
+          borderRight: "0.5px solid var(--border)",
+          display: "flex",
+          flexDirection: "column",
+          background: "#0d0d0d",
+        }}
+      >
+        <div
+          style={{
+            padding: "20px 20px 16px",
+            borderBottom: "0.5px solid var(--border)",
+          }}
+        >
+          <p
+            style={{
+              fontSize: "14px",
+              fontWeight: "500",
+              color: "var(--text-primary)",
+            }}
+          >
+            Admin Panel
+          </p>
+          <p
+            style={{
+              fontSize: "11px",
+              color: "var(--text-muted)",
+              marginTop: "2px",
+            }}
+          >
+            Smartech
+          </p>
         </div>
 
-        <nav className="flex-1 px-3 py-4 space-y-1">
+        <nav style={{ flex: 1, padding: "8px" }}>
           {NAV_ITEMS.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="flex items-center px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-200 hover:text-black transition-colors"
-            >
+            <Link key={item.href} href={item.href} style={navLink}>
               {item.label}
             </Link>
           ))}
         </nav>
 
-        <div className="px-3 py-4 border-t space-y-1">
+        <div
+          style={{
+            padding: "8px",
+            borderTop: "0.5px solid var(--border)",
+          }}
+        >
           <Link
             href="/"
-            className="flex items-center px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-200 transition-colors"
+            style={{
+              ...navLink,
+              color: "var(--text-muted)",
+              marginBottom: "2px",
+            }}
           >
             ← Back to store
           </Link>
           <form action={logout}>
             <button
               type="submit"
-              className="w-full text-left flex items-center px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-200 transition-colors"
+              style={{
+                ...navLink,
+                width: "100%",
+                background: "transparent",
+                border: "none",
+                cursor: "pointer",
+                textAlign: "left",
+                color: "var(--text-muted)",
+              }}
             >
               Sign out
             </button>
@@ -55,9 +109,13 @@ export default async function AdminLayout({
         </div>
       </aside>
 
-      {/* Contenido */}
-      <main className="flex-1 overflow-auto">
-        <div className="max-w-6xl mx-auto px-8 py-8">{children}</div>
+      {/* Content */}
+      <main style={{ flex: 1, overflowX: "auto" }}>
+        <div
+          style={{ maxWidth: "1100px", margin: "0 auto", padding: "40px 32px" }}
+        >
+          {children}
+        </div>
       </main>
     </div>
   );

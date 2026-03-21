@@ -3,6 +3,34 @@ import { createClient } from "@/lib/supabase/server";
 import { formatPrice } from "@/lib/utils/formatPrice";
 import Link from "next/link";
 
+const STATUS_STYLES: Record<string, React.CSSProperties> = {
+  paid: {
+    background: "var(--green-bg)",
+    color: "var(--green-text)",
+    border: "0.5px solid var(--green-border)",
+  },
+  pending: {
+    background: "#BA751718",
+    color: "#EF9F27",
+    border: "0.5px solid #BA751740",
+  },
+  shipped: {
+    background: "#185FA518",
+    color: "#378ADD",
+    border: "0.5px solid #185FA540",
+  },
+  delivered: {
+    background: "var(--accent-bg)",
+    color: "var(--accent-text)",
+    border: "0.5px solid var(--accent-border)",
+  },
+  cancelled: {
+    background: "var(--coral-bg)",
+    color: "var(--coral-text)",
+    border: "0.5px solid var(--coral-border)",
+  },
+};
+
 export default async function AdminDashboard() {
   await requireAdmin();
   const supabase = await createClient();
@@ -21,111 +49,219 @@ export default async function AdminDashboard() {
     orders
       ?.filter((o) => o.status === "paid")
       .reduce((acc, o) => acc + o.total, 0) ?? 0;
-
   const totalOrders = orders?.length ?? 0;
   const pendingOrders =
     orders?.filter((o) => o.status === "pending").length ?? 0;
+  const recentOrders = orders?.slice(0, 5) ?? [];
 
   const METRICS = [
     {
-      label: "Total Revenue",
+      label: "Revenue",
       value: formatPrice(totalRevenue),
-      color: "bg-green-50 border-green-200",
+      accent: "var(--green-text)",
+      bg: "var(--green-bg)",
+      border: "var(--green-border)",
     },
     {
-      label: "Total Orders",
+      label: "Orders",
       value: totalOrders,
-      color: "bg-blue-50 border-blue-200",
+      accent: "#378ADD",
+      bg: "#185FA518",
+      border: "#185FA540",
     },
     {
-      label: "Pending Orders",
+      label: "Pending",
       value: pendingOrders,
-      color: "bg-yellow-50 border-yellow-200",
+      accent: "#EF9F27",
+      bg: "#BA751718",
+      border: "#BA751740",
     },
     {
       label: "Products",
       value: totalProducts ?? 0,
-      color: "bg-purple-50 border-purple-200",
+      accent: "var(--accent-text)",
+      bg: "var(--accent-bg)",
+      border: "var(--accent-border)",
     },
     {
       label: "Users",
       value: totalUsers ?? 0,
-      color: "bg-gray-50 border-gray-200",
+      accent: "var(--text-secondary)",
+      bg: "var(--bg-subtle)",
+      border: "var(--border)",
     },
   ];
 
-  // Últimas 5 órdenes
-  const recentOrders = orders?.slice(0, 5) ?? [];
-
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-8">Dashboard</h1>
+      <h1
+        style={{
+          fontSize: "22px",
+          fontWeight: "500",
+          letterSpacing: "-0.5px",
+          marginBottom: "32px",
+        }}
+      >
+        Dashboard
+      </h1>
 
-      {/* Métricas */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-10">
-        {METRICS.map((metric) => (
+      {/* Metrics */}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+          gap: "12px",
+          marginBottom: "32px",
+        }}
+      >
+        {METRICS.map((m) => (
           <div
-            key={metric.label}
-            className={`border rounded-xl p-4 ${metric.color}`}
+            key={m.label}
+            style={{
+              background: m.bg,
+              border: `0.5px solid ${m.border}`,
+              borderRadius: "10px",
+              padding: "16px",
+            }}
           >
-            <p className="text-xs text-gray-500 mb-1">{metric.label}</p>
-            <p className="text-2xl font-bold">{metric.value}</p>
+            <p
+              style={{
+                fontSize: "11px",
+                color: "var(--text-muted)",
+                textTransform: "uppercase",
+                letterSpacing: "0.5px",
+                marginBottom: "8px",
+              }}
+            >
+              {m.label}
+            </p>
+            <p style={{ fontSize: "24px", fontWeight: "500", color: m.accent }}>
+              {m.value}
+            </p>
           </div>
         ))}
       </div>
 
-      {/* Órdenes recientes */}
-      <div className="border rounded-xl overflow-hidden">
-        <div className="flex items-center justify-between px-6 py-4 border-b bg-gray-50">
-          <h2 className="font-semibold">Recent Orders</h2>
+      {/* Recent Orders */}
+      <div
+        style={{
+          background: "var(--bg-card)",
+          border: "0.5px solid var(--border)",
+          borderRadius: "12px",
+          overflow: "hidden",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "16px 20px",
+            borderBottom: "0.5px solid var(--border)",
+          }}
+        >
+          <h2 style={{ fontSize: "14px", fontWeight: "500" }}>Recent orders</h2>
           <Link
             href="/admin/orders"
-            className="text-sm text-gray-500 hover:text-black transition-colors"
+            style={{
+              fontSize: "12px",
+              color: "var(--text-muted)",
+              textDecoration: "none",
+              transition: "color 0.15s",
+            }}
           >
             View all →
           </Link>
         </div>
 
         {recentOrders.length === 0 ? (
-          <p className="text-center text-gray-500 py-10">No orders yet</p>
+          <p
+            style={{
+              textAlign: "center",
+              color: "var(--text-muted)",
+              padding: "40px",
+              fontSize: "13px",
+            }}
+          >
+            No orders yet
+          </p>
         ) : (
-          <table className="w-full text-sm">
-            <thead className="border-b">
-              <tr className="text-left text-gray-500">
-                <th className="px-6 py-3 font-medium">Order</th>
-                <th className="px-6 py-3 font-medium">Date</th>
-                <th className="px-6 py-3 font-medium">Status</th>
-                <th className="px-6 py-3 font-medium text-right">Total</th>
+          <table
+            style={{
+              width: "100%",
+              borderCollapse: "collapse",
+              fontSize: "13px",
+            }}
+          >
+            <thead>
+              <tr style={{ borderBottom: "0.5px solid var(--border)" }}>
+                {["Order", "Date", "Status", "Total"].map((h) => (
+                  <th
+                    key={h}
+                    style={{
+                      padding: "10px 20px",
+                      textAlign: h === "Total" ? "right" : "left",
+                      fontSize: "11px",
+                      color: "var(--text-muted)",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.5px",
+                      fontWeight: "500",
+                    }}
+                  >
+                    {h}
+                  </th>
+                ))}
               </tr>
             </thead>
-            <tbody className="divide-y">
+            <tbody>
               {recentOrders.map((order: any) => (
                 <tr
                   key={order.id}
-                  className="hover:bg-gray-50 transition-colors"
+                  style={{ borderBottom: "0.5px solid var(--border)" }}
                 >
-                  <td className="px-6 py-3 font-mono text-xs">
+                  <td
+                    style={{
+                      padding: "12px 20px",
+                      fontFamily: "monospace",
+                      fontSize: "12px",
+                      color: "var(--text-secondary)",
+                    }}
+                  >
                     #{order.id.slice(0, 8).toUpperCase()}
                   </td>
-                  <td className="px-6 py-3 text-gray-500">
+                  <td
+                    style={{
+                      padding: "12px 20px",
+                      color: "var(--text-muted)",
+                      fontSize: "12px",
+                    }}
+                  >
                     {new Date(order.created_at).toLocaleDateString("en-US", {
                       month: "short",
                       day: "numeric",
                       year: "numeric",
                     })}
                   </td>
-                  <td className="px-6 py-3">
+                  <td style={{ padding: "12px 20px" }}>
                     <span
-                      className={`text-xs px-2 py-1 rounded-full font-medium ${
-                        order.status === "paid"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-yellow-100 text-yellow-700"
-                      }`}
+                      style={{
+                        fontSize: "11px",
+                        fontWeight: "500",
+                        padding: "3px 10px",
+                        borderRadius: "20px",
+                        ...(STATUS_STYLES[order.status] ?? {}),
+                      }}
                     >
                       {order.status}
                     </span>
                   </td>
-                  <td className="px-6 py-3 text-right font-semibold">
+                  <td
+                    style={{
+                      padding: "12px 20px",
+                      textAlign: "right",
+                      fontWeight: "500",
+                    }}
+                  >
                     {formatPrice(order.total)}
                   </td>
                 </tr>
