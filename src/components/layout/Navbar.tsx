@@ -1,13 +1,23 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import CartButton from "@/components/cart/CartButton";
-import LogoutButton from "@/components/layout/LogoutButton";
+import UserMenu from "@/components/layout/UserMenu";
 
 export default async function Navbar() {
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  let fullName: string | null = null;
+  if (user) {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("full_name")
+      .eq("id", user.id)
+      .single();
+    fullName = profile?.full_name ?? user.email?.split("@")[0] ?? "Account";
+  }
 
   return (
     <nav
@@ -48,23 +58,7 @@ export default async function Navbar() {
           <CartButton />
 
           {user ? (
-            <>
-              <Link
-                href="/dashboard"
-                style={{
-                  fontSize: "13px",
-                  color: "var(--text-secondary)",
-                  textDecoration: "none",
-                  padding: "6px 12px",
-                  borderRadius: "6px",
-                  border: "0.5px solid var(--border)",
-                  transition: "all 0.15s",
-                }}
-              >
-                My account
-              </Link>
-              <LogoutButton />
-            </>
+            <UserMenu fullName={fullName!} />
           ) : (
             <>
               <Link

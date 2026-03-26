@@ -15,8 +15,26 @@ export default async function DashboardPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">My Account</h1>
-      <ProfileForm profile={profile} userId={user!.id} />
+      <h1
+        style={{
+          fontSize: "22px",
+          fontWeight: "500",
+          letterSpacing: "-0.5px",
+          marginBottom: "24px",
+        }}
+      >
+        My Account
+      </h1>
+      <div
+        style={{
+          background: "var(--bg-card)",
+          border: "0.5px solid var(--border)",
+          borderRadius: "12px",
+          padding: "28px",
+        }}
+      >
+        <ProfileForm profile={profile} userId={user!.id} />
+      </div>
     </div>
   );
 }

@@ -38,56 +38,191 @@ export default function CheckoutPage() {
 
   if (items.length === 0) {
     return (
-      <div className="max-w-2xl mx-auto px-4 py-20 text-center">
-        <p className="text-gray-500 text-lg">Your cart is empty.</p>
+      <div
+        style={{
+          minHeight: "60dvh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "column",
+          gap: "16px",
+        }}
+      >
+        <p style={{ color: "var(--text-muted)", fontSize: "15px" }}>
+          Your cart is empty.
+        </p>
       </div>
     );
   }
 
   return (
-    <main className="max-w-2xl mx-auto px-4 py-10">
-      <h1 className="text-2xl font-bold mb-8">Order Summary</h1>
+    <main style={{ maxWidth: "560px", margin: "0 auto", padding: "48px 24px" }}>
+      <h1
+        style={{
+          fontSize: "22px",
+          fontWeight: "500",
+          letterSpacing: "-0.5px",
+          marginBottom: "32px",
+        }}
+      >
+        Order summary
+      </h1>
 
-      <div className="space-y-4 mb-8">
-        {items.map(({ product, quantity }) => (
+      {/* Items */}
+      <div
+        style={{
+          background: "var(--bg-card)",
+          border: "0.5px solid var(--border)",
+          borderRadius: "12px",
+          overflow: "hidden",
+          marginBottom: "16px",
+        }}
+      >
+        {items.map(({ product, quantity }, i) => (
           <div
             key={product.id}
-            className="flex gap-4 items-center border rounded-xl p-4"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "16px",
+              padding: "16px 20px",
+              borderBottom:
+                i < items.length - 1 ? "0.5px solid var(--border)" : "none",
+            }}
           >
-            <div className="relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
+            <div
+              style={{
+                position: "relative",
+                width: "52px",
+                height: "52px",
+                flexShrink: 0,
+                borderRadius: "8px",
+                overflow: "hidden",
+                background: "var(--bg-subtle)",
+              }}
+            >
               {product.image_url && (
                 <Image
                   src={product.image_url}
                   alt={product.name}
                   fill
-                  className="object-cover"
+                  style={{ objectFit: "cover" }}
                 />
               )}
             </div>
-            <div className="flex-1">
-              <p className="font-medium">{product.name}</p>
-              <p className="text-sm text-gray-500">Quantity: {quantity}</p>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <p
+                style={{
+                  fontSize: "14px",
+                  fontWeight: "500",
+                  color: "var(--text-primary)",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {product.name}
+              </p>
+              <p
+                style={{
+                  fontSize: "12px",
+                  color: "var(--text-muted)",
+                  marginTop: "2px",
+                }}
+              >
+                Qty: {quantity}
+              </p>
             </div>
-            <p className="font-semibold">
+            <p style={{ fontSize: "14px", fontWeight: "500", flexShrink: 0 }}>
               {formatPrice(product.price * quantity)}
             </p>
           </div>
         ))}
       </div>
 
-      <div className="border-t pt-4 mb-6">
-        <div className="flex justify-between text-lg font-bold">
-          <span>Total</span>
-          <span>{formatPrice(getTotalPrice())}</span>
-        </div>
+      {/* Total */}
+      <div
+        style={{
+          background: "var(--bg-card)",
+          border: "0.5px solid var(--border)",
+          borderRadius: "12px",
+          padding: "16px 20px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "24px",
+        }}
+      >
+        <span style={{ fontSize: "14px", color: "var(--text-secondary)" }}>
+          Total
+        </span>
+        <span style={{ fontSize: "20px", fontWeight: "500" }}>
+          {formatPrice(getTotalPrice())}
+        </span>
       </div>
 
-      {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+      {/* Info */}
+      <div
+        style={{
+          background: "var(--bg-card)",
+          border: "0.5px solid var(--border)",
+          borderRadius: "12px",
+          padding: "16px 20px",
+          marginBottom: "24px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "10px",
+        }}
+      >
+        {[
+          { icon: "🔒", text: "Secure checkout powered by Stripe" },
+          { icon: "🚚", text: "Free shipping on orders over $99" },
+          { icon: "↩️", text: "30-day return policy" },
+        ].map((item) => (
+          <div
+            key={item.text}
+            style={{ display: "flex", alignItems: "center", gap: "10px" }}
+          >
+            <span style={{ fontSize: "14px" }}>{item.icon}</span>
+            <span style={{ fontSize: "12px", color: "var(--text-secondary)" }}>
+              {item.text}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {error && (
+        <div
+          style={{
+            background: "var(--coral-bg)",
+            border: "0.5px solid var(--coral-border)",
+            borderRadius: "8px",
+            padding: "10px 14px",
+            fontSize: "13px",
+            color: "var(--coral-text)",
+            marginBottom: "16px",
+          }}
+        >
+          {error}
+        </div>
+      )}
 
       <button
         onClick={handleCheckout}
         disabled={loading}
-        className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 disabled:opacity-50 transition-colors font-medium"
+        style={{
+          width: "100%",
+          background: "#fff",
+          color: "#000",
+          border: "none",
+          borderRadius: "10px",
+          padding: "14px",
+          fontSize: "15px",
+          fontWeight: "500",
+          cursor: loading ? "not-allowed" : "pointer",
+          opacity: loading ? 0.6 : 1,
+          transition: "opacity 0.15s",
+        }}
       >
         {loading ? "Redirecting to Stripe..." : "Pay now"}
       </button>

@@ -9,6 +9,25 @@ type Props = {
   userId: string;
 };
 
+const inputStyle: React.CSSProperties = {
+  width: "100%",
+  background: "var(--bg-subtle)",
+  border: "0.5px solid var(--border)",
+  borderRadius: "8px",
+  padding: "10px 14px",
+  fontSize: "14px",
+  color: "var(--text-primary)",
+  outline: "none",
+  transition: "border-color 0.15s",
+};
+
+const labelStyle: React.CSSProperties = {
+  display: "block",
+  fontSize: "12px",
+  color: "var(--text-secondary)",
+  marginBottom: "6px",
+};
+
 export default function ProfileForm({ profile, userId }: Props) {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -36,54 +55,115 @@ export default function ProfileForm({ profile, userId }: Props) {
     } else {
       setSuccess(true);
     }
-
     setLoading(false);
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 max-w-md">
-      <div>
-        <label className="block text-sm font-medium mb-1">Full name</label>
-        <input
-          name="full_name"
-          type="text"
-          defaultValue={profile?.full_name ?? ""}
-          className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
-        />
+    <form
+      onSubmit={handleSubmit}
+      style={{ display: "flex", flexDirection: "column", gap: "18px" }}
+    >
+      <div
+        style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}
+      >
+        <div>
+          <label style={labelStyle}>Full name</label>
+          <input
+            name="full_name"
+            type="text"
+            defaultValue={profile?.full_name ?? ""}
+            style={inputStyle}
+            onFocus={(e) =>
+              (e.currentTarget.style.borderColor = "var(--accent)")
+            }
+            onBlur={(e) =>
+              (e.currentTarget.style.borderColor = "var(--border)")
+            }
+          />
+        </div>
+        <div>
+          <label style={labelStyle}>Phone</label>
+          <input
+            name="phone"
+            type="text"
+            defaultValue={profile?.phone ?? ""}
+            style={inputStyle}
+            onFocus={(e) =>
+              (e.currentTarget.style.borderColor = "var(--accent)")
+            }
+            onBlur={(e) =>
+              (e.currentTarget.style.borderColor = "var(--border)")
+            }
+          />
+        </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1">Phone</label>
-        <input
-          name="phone"
-          type="text"
-          defaultValue={profile?.phone ?? ""}
-          className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
-        />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium mb-1">Address</label>
+        <label style={labelStyle}>Address</label>
         <textarea
           name="address"
           rows={3}
           defaultValue={profile?.address ?? ""}
-          className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black resize-none"
+          style={{
+            ...inputStyle,
+            resize: "none",
+            fontFamily: "inherit",
+          }}
+          onFocus={(e) => (e.currentTarget.style.borderColor = "var(--accent)")}
+          onBlur={(e) => (e.currentTarget.style.borderColor = "var(--border)")}
         />
       </div>
 
-      {error && <p className="text-red-500 text-sm">{error}</p>}
-      {success && (
-        <p className="text-green-600 text-sm">Changes saved successfully</p>
+      {error && (
+        <div
+          style={{
+            background: "var(--coral-bg)",
+            border: "0.5px solid var(--coral-border)",
+            borderRadius: "8px",
+            padding: "10px 14px",
+            fontSize: "13px",
+            color: "var(--coral-text)",
+          }}
+        >
+          {error}
+        </div>
       )}
 
-      <button
-        type="submit"
-        disabled={loading}
-        className="bg-black text-white px-6 py-2 rounded-lg hover:bg-gray-800 disabled:opacity-50 transition-colors"
-      >
-        {loading ? "Saving..." : "Save changes"}
-      </button>
+      {success && (
+        <div
+          style={{
+            background: "var(--green-bg)",
+            border: "0.5px solid var(--green-border)",
+            borderRadius: "8px",
+            padding: "10px 14px",
+            fontSize: "13px",
+            color: "var(--green-text)",
+          }}
+        >
+          Changes saved successfully
+        </div>
+      )}
+
+      <div>
+        <button
+          type="submit"
+          disabled={loading}
+          style={{
+            background: "#fff",
+            color: "#000",
+            border: "none",
+            borderRadius: "8px",
+            padding: "10px 24px",
+            fontSize: "13px",
+            fontWeight: "500",
+            cursor: loading ? "not-allowed" : "pointer",
+            opacity: loading ? 0.6 : 1,
+            transition: "opacity 0.15s",
+          }}
+        >
+          {loading ? "Saving..." : "Save changes"}
+        </button>
+      </div>
     </form>
   );
 }

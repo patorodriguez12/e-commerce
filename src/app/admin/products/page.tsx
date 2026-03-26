@@ -16,72 +16,166 @@ export default async function AdminProductsPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl font-bold">Products</h1>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          marginBottom: "32px",
+        }}
+      >
+        <h1
+          style={{
+            fontSize: "22px",
+            fontWeight: "500",
+            letterSpacing: "-0.5px",
+          }}
+        >
+          Products
+        </h1>
         <Link
           href="/admin/products/new"
-          className="bg-black text-white px-4 py-2 rounded-lg text-sm hover:bg-gray-800 transition-colors"
+          style={{
+            background: "#fff",
+            color: "#000",
+            padding: "8px 16px",
+            borderRadius: "8px",
+            textDecoration: "none",
+            fontSize: "13px",
+            fontWeight: "500",
+          }}
         >
           + New product
         </Link>
       </div>
 
-      <div className="border rounded-xl overflow-hidden">
-        <table className="w-full text-sm">
-          <thead className="border-b bg-gray-50">
-            <tr className="text-left text-gray-500">
-              <th className="px-6 py-3 font-medium">Product</th>
-              <th className="px-6 py-3 font-medium">Category</th>
-              <th className="px-6 py-3 font-medium">Price</th>
-              <th className="px-6 py-3 font-medium">Stock</th>
-              <th className="px-6 py-3 font-medium">Actions</th>
+      <div
+        style={{
+          background: "var(--bg-card)",
+          border: "0.5px solid var(--border)",
+          borderRadius: "12px",
+          overflow: "hidden",
+        }}
+      >
+        <table
+          style={{
+            width: "100%",
+            borderCollapse: "collapse",
+            fontSize: "13px",
+          }}
+        >
+          <thead>
+            <tr style={{ borderBottom: "0.5px solid var(--border)" }}>
+              {["Product", "Category", "Price", "Stock", "Actions"].map((h) => (
+                <th
+                  key={h}
+                  style={{
+                    padding: "12px 20px",
+                    textAlign: "left",
+                    fontSize: "11px",
+                    color: "var(--text-muted)",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.5px",
+                    fontWeight: "500",
+                  }}
+                >
+                  {h}
+                </th>
+              ))}
             </tr>
           </thead>
-          <tbody className="divide-y">
+          <tbody>
             {products?.map((product: any) => (
               <tr
                 key={product.id}
-                className="hover:bg-gray-50 transition-colors"
+                style={{ borderBottom: "0.5px solid var(--border)" }}
               >
-                <td className="px-6 py-4">
-                  <div className="flex items-center gap-3">
-                    <div className="relative w-10 h-10 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+                <td style={{ padding: "14px 20px" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "12px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        position: "relative",
+                        width: "36px",
+                        height: "36px",
+                        flexShrink: 0,
+                        borderRadius: "6px",
+                        overflow: "hidden",
+                        background: "var(--bg-subtle)",
+                      }}
+                    >
                       {product.image_url && (
                         <Image
                           src={product.image_url}
                           alt={product.name}
                           fill
-                          className="object-cover"
+                          style={{ objectFit: "cover" }}
                         />
                       )}
                     </div>
-                    <span className="font-medium">{product.name}</span>
+                    <span
+                      style={{
+                        fontWeight: "500",
+                        color: "var(--text-primary)",
+                      }}
+                    >
+                      {product.name}
+                    </span>
                   </div>
                 </td>
-                <td className="px-6 py-4 text-gray-500">
+                <td
+                  style={{ padding: "14px 20px", color: "var(--text-muted)" }}
+                >
                   {product.categories?.name ?? "—"}
                 </td>
-                <td className="px-6 py-4 font-medium">
+                <td style={{ padding: "14px 20px", fontWeight: "500" }}>
                   {formatPrice(product.price)}
                 </td>
-                <td className="px-6 py-4">
+                <td style={{ padding: "14px 20px" }}>
                   <span
-                    className={`text-xs px-2 py-1 rounded-full font-medium ${
-                      product.stock > 0
-                        ? "bg-green-100 text-green-700"
-                        : "bg-red-100 text-red-700"
-                    }`}
+                    style={{
+                      fontSize: "11px",
+                      fontWeight: "500",
+                      padding: "3px 10px",
+                      borderRadius: "20px",
+                      ...(product.stock > 0
+                        ? {
+                            background: "var(--green-bg)",
+                            color: "var(--green-text)",
+                            border: "0.5px solid var(--green-border)",
+                          }
+                        : {
+                            background: "var(--coral-bg)",
+                            color: "var(--coral-text)",
+                            border: "0.5px solid var(--coral-border)",
+                          }),
+                    }}
                   >
                     {product.stock > 0
                       ? `${product.stock} units`
                       : "Out of stock"}
                   </span>
                 </td>
-                <td className="px-6 py-4">
-                  <div className="flex items-center gap-3">
+                <td style={{ padding: "14px 20px" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "16px",
+                    }}
+                  >
                     <Link
                       href={`/admin/products/${product.id}/edit`}
-                      className="text-sm text-blue-600 hover:text-blue-800 transition-colors"
+                      style={{
+                        fontSize: "12px",
+                        color: "var(--accent-text)",
+                        textDecoration: "none",
+                      }}
                     >
                       Edit
                     </Link>
@@ -93,7 +187,16 @@ export default async function AdminProductsPage() {
                     >
                       <button
                         type="submit"
-                        className="text-sm text-red-500 hover:text-red-700 transition-colors"
+                        className="remove-btn"
+                        style={{
+                          background: "transparent",
+                          border: "none",
+                          color: "var(--text-muted)",
+                          fontSize: "12px",
+                          cursor: "pointer",
+                          padding: 0,
+                          transition: "color 0.15s",
+                        }}
                       >
                         Delete
                       </button>

@@ -77,3 +77,7 @@ body {
     background-position: -200% 0;
   }
 }
+
+.remove-btn:hover {
+  color: var(--coral-text) !important;
+}
