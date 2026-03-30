@@ -8,7 +8,6 @@ A full-stack e-commerce application built with Next.js 14, Supabase, and Stripe.
 
 ## Preview
 
-> Add a screenshot or GIF of the project here.
 > ![Smartech Preview](./public/preview.gif)
 
 ---
