@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 import CartDrawer from "@/components/cart/CartDrawer";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import NavigationProvider from "@/components/ui/NavigationProvider";
@@ -25,12 +26,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={geist.className}>
+      <body
+        className={geist.className}
+      >
         <Suspense>
           <NavigationProvider />
         </Suspense>
         <Navbar />
         {children}
+        <Footer />
         <CartDrawer />
         <LoadingSpinner />
         <Toaster
