@@ -1,13 +1,17 @@
 "use client";
 
-import { useEffect } from "react";
-import { useFilters, SortOption } from "@/lib/hooks/useFilters";
-import { Category } from "@/types";
-import { useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
+import { Category } from "@/types";
+import { Filters, SortOption } from "@/lib/hooks/useFilters";
 
 type Props = {
   categories: Category[];
+  filters: Filters;
+  hasActiveFilters: boolean;
+  setFilter: (key: string, value: string | null) => void;
+  setFilters: (updates: Record<string, string | null>) => void;
+  clearAll: () => void;
   isOpen: boolean;
   onClose: () => void;
 };
@@ -44,9 +48,16 @@ const filterBtn = (active: boolean): React.CSSProperties => ({
   fontWeight: active ? "500" : "400",
 });
 
-export default function FilterDrawer({ categories, isOpen, onClose }: Props) {
-  const { filters, setFilter, setFilters, clearAll, hasActiveFilters } =
-    useFilters();
+export default function FilterDrawer({
+  categories,
+  filters,
+  hasActiveFilters,
+  setFilter,
+  setFilters,
+  clearAll,
+  isOpen,
+  onClose,
+}: Props) {
   const [searchInput, setSearchInput] = useState(filters.q);
   const [minInput, setMinInput] = useState(filters.min?.toString() ?? "");
   const [maxInput, setMaxInput] = useState(filters.max?.toString() ?? "");
@@ -97,7 +108,6 @@ export default function FilterDrawer({ categories, isOpen, onClose }: Props) {
 
   return (
     <>
-      {/* Overlay */}
       <div
         onClick={onClose}
         style={{
@@ -111,7 +121,6 @@ export default function FilterDrawer({ categories, isOpen, onClose }: Props) {
         }}
       />
 
-      {/* Drawer desde abajo */}
       <div
         style={{
           position: "fixed",
@@ -129,7 +138,6 @@ export default function FilterDrawer({ categories, isOpen, onClose }: Props) {
           transition: "transform 0.3s cubic-bezier(0.32, 0.72, 0, 1)",
         }}
       >
-        {/* Handle */}
         <div
           style={{ padding: "12px", display: "flex", justifyContent: "center" }}
         >
@@ -143,7 +151,6 @@ export default function FilterDrawer({ categories, isOpen, onClose }: Props) {
           />
         </div>
 
-        {/* Header */}
         <div
           style={{
             display: "flex",
@@ -193,7 +200,6 @@ export default function FilterDrawer({ categories, isOpen, onClose }: Props) {
           </div>
         </div>
 
-        {/* Contenido scrolleable */}
         <div
           style={{
             flex: 1,
@@ -205,7 +211,6 @@ export default function FilterDrawer({ categories, isOpen, onClose }: Props) {
             overscrollBehavior: "contain",
           }}
         >
-          {/* Search */}
           <div>
             <span style={sectionLabel}>Search</span>
             <input
@@ -217,7 +222,6 @@ export default function FilterDrawer({ categories, isOpen, onClose }: Props) {
             />
           </div>
 
-          {/* Categories */}
           <div>
             <span style={sectionLabel}>Category</span>
             <div
@@ -241,7 +245,6 @@ export default function FilterDrawer({ categories, isOpen, onClose }: Props) {
             </div>
           </div>
 
-          {/* Sort */}
           <div>
             <span style={sectionLabel}>Sort by</span>
             <div
@@ -259,7 +262,6 @@ export default function FilterDrawer({ categories, isOpen, onClose }: Props) {
             </div>
           </div>
 
-          {/* Price */}
           <div>
             <span style={sectionLabel}>Price range (USD)</span>
             <div style={{ display: "flex", gap: "8px", marginBottom: "10px" }}>
@@ -315,7 +317,6 @@ export default function FilterDrawer({ categories, isOpen, onClose }: Props) {
           </div>
         </div>
 
-        {/* Footer con botón Apply */}
         <div
           style={{
             padding: "16px 20px",

@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useTransition } from "react";
 import { Category, Product } from "@/types";
 import FilterSidebar from "./FilterSidebar";
 import FilterDrawer from "./FilterDrawer";
 import ProductGrid from "./ProductGrid";
+import { ProductGridSkeleton } from "@/components/ui/Skeleton";
 import { useFilters } from "@/lib/hooks/useFilters";
 
 type Props = {
@@ -16,7 +17,38 @@ type Props = {
 export default function CatalogLayout({ categories, products, total }: Props) {
   const [isMobile, setIsMobile] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const { hasActiveFilters, filters } = useFilters();
+  const [isPending, startTransition] = useTransition();
+  const {
+    filters,
+    setFilter: originalSetFilter,
+    setFilters: originalSetFilters,
+    clearAll: originalClearAll,
+    hasActiveFilters,
+  } = useFilters();
+
+  const setFilter = useCallback(
+    (key: string, value: string | null) => {
+      startTransition(() => {
+        originalSetFilter(key, value);
+      });
+    },
+    [originalSetFilter],
+  );
+
+  const setFilters = useCallback(
+    (updates: Record<string, string | null>) => {
+      startTransition(() => {
+        originalSetFilters(updates);
+      });
+    },
+    [originalSetFilters],
+  );
+
+  const clearAll = useCallback(() => {
+    startTransition(() => {
+      originalClearAll();
+    });
+  }, [originalClearAll]);
 
   useEffect(() => {
     function check() {
@@ -27,7 +59,6 @@ export default function CatalogLayout({ categories, products, total }: Props) {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Contar filtros activos para el badge
   const activeCount = [
     filters.category,
     filters.sort !== "newest" ? filters.sort : null,
@@ -39,7 +70,6 @@ export default function CatalogLayout({ categories, products, total }: Props) {
   if (isMobile) {
     return (
       <div>
-        {/* Barra superior mobile */}
         <div
           style={{
             display: "flex",
@@ -102,10 +132,19 @@ export default function CatalogLayout({ categories, products, total }: Props) {
           </button>
         </div>
 
-        <ProductGrid products={products} total={total} hideTotalLabel />
+        {isPending ? (
+          <ProductGridSkeleton />
+        ) : (
+          <ProductGrid products={products} total={total} hideTotalLabel />
+        )}
 
         <FilterDrawer
           categories={categories}
+          filters={filters}
+          hasActiveFilters={hasActiveFilters}
+          setFilter={setFilter}
+          setFilters={setFilters}
+          clearAll={clearAll}
           isOpen={drawerOpen}
           onClose={() => setDrawerOpen(false)}
         />
@@ -115,8 +154,19 @@ export default function CatalogLayout({ categories, products, total }: Props) {
 
   return (
     <div style={{ display: "flex", gap: "32px", alignItems: "flex-start" }}>
-      <FilterSidebar categories={categories} />
-      <ProductGrid products={products} total={total} />
+      <FilterSidebar
+        categories={categories}
+        filters={filters}
+        hasActiveFilters={hasActiveFilters}
+        setFilter={setFilter}
+        setFilters={setFilters}
+        clearAll={clearAll}
+      />
+      {isPending ? (
+        <ProductGridSkeleton />
+      ) : (
+        <ProductGrid products={products} total={total} />
+      )}
     </div>
   );
 }
