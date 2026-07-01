@@ -47,6 +47,10 @@ export default async function HomePage({ searchParams }: Props) {
   const { data: products, error } = await query;
   if (error) return <p>Error loading products.</p>;
 
+  const filtered = category
+    ? (products ?? []).filter((p) => p.categories?.slug === category)
+    : (products ?? []);
+
   return (
     <>
       <Hero />
@@ -56,8 +60,8 @@ export default async function HomePage({ searchParams }: Props) {
       >
         <CatalogLayout
           categories={categories ?? []}
-          products={(products ?? []) as Product[]}
-          total={products?.length ?? 0}
+          products={filtered as Product[]}
+          total={filtered.length}
         />
       </div>
     </>
