@@ -33,7 +33,6 @@ export function useFilters() {
       } else {
         params.set(key, value);
       }
-      params.delete("page");
       router.push(`/?${params.toString()}`, { scroll: false });
     },
     [router, searchParams],
@@ -49,7 +48,6 @@ export function useFilters() {
           params.set(key, value);
         }
       });
-      params.delete("page");
       router.push(`/?${params.toString()}`, { scroll: false });
     },
     [router, searchParams],
