@@ -54,6 +54,19 @@ export async function deleteProduct(id: string) {
   await requireAdmin();
   const supabase = await createClient();
 
+  const { data: product } = await supabase
+    .from("products")
+    .select("image_url")
+    .eq("id", id)
+    .single();
+
+  if (product?.image_url) {
+    const filename = product.image_url.split("/").pop();
+    if (filename) {
+      await supabase.storage.from("products").remove([filename]);
+    }
+  }
+
   const { error } = await supabase.from("products").delete().eq("id", id);
 
   if (error) return { error: error.message };
