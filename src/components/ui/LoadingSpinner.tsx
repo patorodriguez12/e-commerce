@@ -16,7 +16,7 @@ export default function LoadingSpinner() {
         alignItems: "center",
         justifyContent: "center",
         zIndex: 9999,
-        pointerEvents: "none",
+        pointerEvents: "auto",
         background: "rgba(10, 10, 10, 0.6)",
         backdropFilter: "blur(4px)",
       }}
