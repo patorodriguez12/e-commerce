@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Category, Product } from "@/types";
@@ -35,6 +35,7 @@ const labelStyle: React.CSSProperties = {
 
 export default function ProductForm({ categories, product }: Props) {
   const router = useRouter();
+  const slugRef = useRef<HTMLInputElement>(null);
   const [imageUrl, setImageUrl] = useState(product?.image_url ?? "");
   const [uploading, setUploading] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -194,10 +195,8 @@ export default function ProductForm({ categories, product }: Props) {
             defaultValue={product?.name}
             style={inputStyle}
             onChange={(e) => {
-              const slugInput =
-                document.querySelector<HTMLInputElement>('[name="slug"]');
-              if (slugInput && !product)
-                slugInput.value = generateSlug(e.target.value);
+              if (slugRef.current && !product)
+                slugRef.current.value = generateSlug(e.target.value);
             }}
             onFocus={(e) =>
               (e.currentTarget.style.borderColor = "var(--accent)")
@@ -210,6 +209,7 @@ export default function ProductForm({ categories, product }: Props) {
         <div>
           <label style={labelStyle}>Slug</label>
           <input
+            ref={slugRef}
             name="slug"
             type="text"
             required

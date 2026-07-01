@@ -106,7 +106,6 @@ export default async function OrdersPage() {
                 textDecoration: "none",
                 transition: "border-color 0.15s",
               }}
-              onMouseEnter={undefined}
             >
               <div
                 style={{

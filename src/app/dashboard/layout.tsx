@@ -70,7 +70,6 @@ export default async function DashboardLayout({
                     textDecoration: "none",
                     transition: "all 0.15s",
                   }}
-                  onMouseEnter={undefined}
                 >
                   {item.label}
                 </Link>

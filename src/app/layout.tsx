@@ -4,10 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import CartDrawer from "@/components/cart/CartDrawer";
-import LoadingSpinner from "@/components/ui/LoadingSpinner";
-import NavigationProvider from "@/components/ui/NavigationProvider";
 import { Toaster } from "sonner";
-import { Suspense } from "react";
 
 const geist = Geist({ subsets: ["latin"] });
 
@@ -29,14 +26,10 @@ export default function RootLayout({
       <body
         className={geist.className}
       >
-        <Suspense>
-          <NavigationProvider />
-        </Suspense>
         <Navbar />
         {children}
         <Footer />
         <CartDrawer />
-        <LoadingSpinner />
         <Toaster
           position="bottom-right"
           toastOptions={{

@@ -138,7 +138,6 @@ export default function Footer() {
                 transition: "color 0.15s",
                 width: "fit-content",
               }}
-              onMouseEnter={undefined}
             >
               {link.label}
             </Link>
