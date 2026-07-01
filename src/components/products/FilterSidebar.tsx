@@ -1,12 +1,17 @@
 "use client";
 
-import { useFilters, SortOption } from "@/lib/hooks/useFilters";
-import { Category } from "@/types";
 import { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
+import { Category } from "@/types";
+import { Filters, SortOption } from "@/lib/hooks/useFilters";
 
 type Props = {
   categories: Category[];
+  filters: Filters;
+  hasActiveFilters: boolean;
+  setFilter: (key: string, value: string | null) => void;
+  setFilters: (updates: Record<string, string | null>) => void;
+  clearAll: () => void;
 };
 
 const SORT_OPTIONS: { value: SortOption; label: string }[] = [
@@ -53,9 +58,14 @@ const inputStyle: React.CSSProperties = {
   transition: "border-color 0.15s",
 };
 
-export default function FilterSidebar({ categories }: Props) {
-  const { filters, setFilter, setFilters, clearAll, hasActiveFilters } =
-    useFilters();
+export default function FilterSidebar({
+  categories,
+  filters,
+  hasActiveFilters,
+  setFilter,
+  setFilters,
+  clearAll,
+}: Props) {
   const [minInput, setMinInput] = useState(filters.min?.toString() ?? "");
   const [maxInput, setMaxInput] = useState(filters.max?.toString() ?? "");
   const [searchInput, setSearchInput] = useState(filters.q);

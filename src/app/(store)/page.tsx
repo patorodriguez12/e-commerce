@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createClient } from "@/lib/supabase/server";
 import { Product } from "@/types";
 import Hero from "@/components/layout/Hero";
@@ -49,7 +48,7 @@ export default async function HomePage({ searchParams }: Props) {
   if (error) return <p>Error loading products.</p>;
 
   const filtered = category
-    ? (products ?? []).filter((p) => (p.categories as any)?.slug === category)
+    ? (products ?? []).filter((p) => p.categories?.slug === category)
     : (products ?? []);
 
   return (
