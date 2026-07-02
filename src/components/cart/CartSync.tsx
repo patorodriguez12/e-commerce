@@ -5,21 +5,6 @@ import { useCartStore } from "@/lib/store/cartStore";
 import { createClient } from "@/lib/supabase/client";
 import { syncCart, getCart } from "@/lib/supabase/actions";
 
-const SYNCED_FLAG = "cart-synced";
-
-function isSynced() {
-  if (typeof window === "undefined") return false;
-  return localStorage.getItem(SYNCED_FLAG) === "true";
-}
-
-function markSynced() {
-  localStorage.setItem(SYNCED_FLAG, "true");
-}
-
-function clearSynced() {
-  localStorage.removeItem(SYNCED_FLAG);
-}
-
 export default function CartSync() {
   const items = useCartStore((s) => s.items);
   const mergeWithServer = useCartStore((s) => s.mergeWithServer);
@@ -32,62 +17,74 @@ export default function CartSync() {
     const supabase = createClient();
     let alive = true;
 
-    async function doInitialSync() {
+    async function syncToServer() {
+      const currentItems = useCartStore.getState().items;
+      if (currentItems.length === 0) return;
+
+      await syncCart(
+        currentItems.map((i) => ({
+          product_id: i.product.id,
+          quantity: i.quantity,
+        })),
+      );
+    }
+
+    async function handleAuthSession() {
       if (initialSyncing.current) return;
       initialSyncing.current = true;
-
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-
-      if (!alive) return;
-      if (!session) {
-        clearSynced();
-        initialSyncing.current = false;
-        return;
-      }
 
       const serverItems = await getCart();
       if (!alive) return;
 
-      const wasSynced = isSynced();
-      if (wasSynced) {
-        replaceItems(serverItems);
-      } else {
-        if (serverItems.length > 0 || items.length > 0) {
-          mergeWithServer(serverItems);
-        }
+      if (serverItems.length > 0 || useCartStore.getState().items.length > 0) {
+        mergeWithServer(serverItems);
       }
 
-      const merged = useCartStore.getState().items;
-      if (merged.length > 0) {
-        await syncCart(
-          merged.map((i) => ({
-            product_id: i.product.id,
-            quantity: i.quantity,
-          })),
-        );
-        if (!alive) return;
-      }
+      await syncToServer();
+      if (!alive) return;
 
-      markSynced();
       readyForSync.current = true;
       initialSyncing.current = false;
     }
-
-    doInitialSync();
 
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event) => {
       if (event === "SIGNED_IN") {
         readyForSync.current = false;
-        doInitialSync();
+        handleAuthSession();
       }
       if (event === "SIGNED_OUT") {
-        clearSynced();
+        readyForSync.current = false;
+        initialSyncing.current = false;
       }
     });
+
+    async function init() {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!alive) return;
+
+      if (session) {
+        if (initialSyncing.current) return;
+        initialSyncing.current = true;
+
+        const serverItems = await getCart();
+        if (!alive) return;
+
+        replaceItems(serverItems);
+
+        await syncToServer();
+        if (!alive) return;
+
+        readyForSync.current = true;
+        initialSyncing.current = false;
+      }
+    }
+
+    init();
 
     return () => {
       alive = false;
@@ -120,7 +117,6 @@ export default function CartSync() {
         })),
       );
 
-      markSynced();
       syncing.current = false;
     }
 

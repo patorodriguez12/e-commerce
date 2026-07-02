@@ -89,7 +89,7 @@ export const useCartStore = create<CartStore>()(
           if (existing) {
             merged.set(item.product.id, {
               product: existing.product,
-              quantity: existing.quantity + item.quantity,
+              quantity: Math.max(existing.quantity, item.quantity),
             });
           } else {
             merged.set(item.product.id, item);
