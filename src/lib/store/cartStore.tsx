@@ -10,6 +10,8 @@ type CartStore = {
   clearCart: () => void;
   getTotalItems: () => number;
   getTotalPrice: () => number;
+  mergeWithServer: (serverItems: CartItem[]) => void;
+  replaceItems: (items: CartItem[]) => void;
 };
 
 export const useCartStore = create<CartStore>()(
@@ -63,9 +65,46 @@ export const useCartStore = create<CartStore>()(
           0,
         );
       },
+
+      mergeWithServer: (serverItems) => {
+        const localItems = get().items;
+
+        if (serverItems.length === 0 && localItems.length > 0) {
+          return;
+        }
+
+        if (serverItems.length > 0 && localItems.length === 0) {
+          set({ items: serverItems });
+          return;
+        }
+
+        const merged = new Map<string, CartItem>();
+
+        for (const item of serverItems) {
+          merged.set(item.product.id, item);
+        }
+
+        for (const item of localItems) {
+          const existing = merged.get(item.product.id);
+          if (existing) {
+            merged.set(item.product.id, {
+              product: existing.product,
+              quantity: existing.quantity + item.quantity,
+            });
+          } else {
+            merged.set(item.product.id, item);
+          }
+        }
+
+        set({ items: Array.from(merged.values()) });
+      },
+
+      replaceItems: (items) => {
+        set({ items });
+      },
     }),
     {
-      name: "cart-storage", // name in localStorage
+      name: "cart-storage",
     },
   ),
 );
