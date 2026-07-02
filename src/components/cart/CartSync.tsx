@@ -81,7 +81,6 @@ export default function CartSync() {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event) => {
       if (event === "SIGNED_IN") {
-        clearSynced();
         readyForSync.current = false;
         doInitialSync();
       }
