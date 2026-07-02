@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import CartDrawer from "@/components/cart/CartDrawer";
+import CartSync from "@/components/cart/CartSync";
 import { Toaster } from "sonner";
 
 const geist = Geist({ subsets: ["latin"] });
@@ -29,6 +30,7 @@ export default function RootLayout({
         <Navbar />
         {children}
         <Footer />
+        <CartSync />
         <CartDrawer />
         <Toaster
           position="bottom-right"

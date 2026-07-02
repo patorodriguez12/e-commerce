@@ -60,6 +60,11 @@ export type CartItem = {
   quantity: number;
 };
 
+export type CartItemInput = {
+  product_id: string;
+  quantity: number;
+};
+
 export type WishlistItem = {
   id: string;
   user_id: string;
