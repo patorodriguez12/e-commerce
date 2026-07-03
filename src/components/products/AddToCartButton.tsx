@@ -11,9 +11,16 @@ type Props = { product: Product };
 export default function AddToCartButton({ product }: Props) {
   const addItem = useCartStore((state) => state.addItem);
   const openDrawer = useCartDrawer((state) => state.open);
+  const cartQuantity = useCartStore(
+    (state) => state.items.find((i) => i.product.id === product.id)?.quantity ?? 0,
+  );
   const [added, setAdded] = useState(false);
 
+  const isOutOfStock = product.stock === 0;
+  const isMaxReached = !isOutOfStock && cartQuantity >= product.stock;
+
   function handleAdd() {
+    if (isOutOfStock || isMaxReached) return;
     addItem(product);
     setAdded(true);
     toast.success(`${product.name} added to cart`);
@@ -26,29 +33,29 @@ export default function AddToCartButton({ product }: Props) {
   return (
     <button
       onClick={handleAdd}
-      disabled={product.stock === 0}
+      disabled={isOutOfStock || isMaxReached}
       style={{
         width: "100%",
         padding: "13px 24px",
         borderRadius: "8px",
         fontSize: "14px",
         fontWeight: "500",
-        cursor: product.stock === 0 ? "not-allowed" : "pointer",
+        cursor: isOutOfStock || isMaxReached ? "not-allowed" : "pointer",
         transition: "all 0.15s",
         background: added
           ? "var(--accent)"
-          : product.stock === 0
+          : isOutOfStock || isMaxReached
             ? "#ffffff10"
             : "#fff",
         color: added
           ? "#fff"
-          : product.stock === 0
+          : isOutOfStock || isMaxReached
             ? "var(--text-muted)"
             : "#000",
         border: "none",
       }}
     >
-      {product.stock === 0 ? "Out of stock" : added ? "✓ Added" : "Add to cart"}
+      {isOutOfStock ? "Out of stock" : isMaxReached ? "Max reached" : added ? "✓ Added" : "Add to cart"}
     </button>
   );
 }
