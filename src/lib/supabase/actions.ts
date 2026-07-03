@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import type { CartItem, CartItemInput, Product } from "@/types";
 
 export async function login(formData: FormData) {
   const supabase = await createClient();
@@ -126,6 +127,56 @@ export async function submitReview(productId: string, formData: FormData) {
   }
 
   return { success: true };
+}
+
+export async function syncCart(items: CartItemInput[]) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return { error: "Not authenticated" };
+
+  const { error: deleteError } = await supabase
+    .from("cart_items")
+    .delete()
+    .eq("user_id", user.id);
+
+  if (deleteError) return { error: deleteError.message };
+
+  if (items.length === 0) return { success: true };
+
+  const { error } = await supabase.from("cart_items").insert(
+    items.map((i) => ({
+      user_id: user.id,
+      product_id: i.product_id,
+      quantity: i.quantity,
+    })),
+  );
+
+  if (error) return { error: error.message };
+  return { success: true };
+}
+
+export async function getCart(): Promise<CartItem[]> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return [];
+
+  const { data } = await supabase
+    .from("cart_items")
+    .select("product_id, quantity, products(*)")
+    .eq("user_id", user.id);
+
+  if (!data) return [];
+
+  return data.map((item: Record<string, unknown>) => ({
+    product: (item as { products: Product }).products,
+    quantity: item.quantity as number,
+  }));
 }
 
 export async function signInWithGoogle(formData: FormData) {
