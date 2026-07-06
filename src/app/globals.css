@@ -1,19 +1,21 @@
 @import "tailwindcss";
 
 :root {
-  --bg-primary: #0a0a0a;
-  --bg-card: #111111;
-  --bg-card-hover: #161616;
-  --bg-subtle: #1a1a1a;
-  --border: #ffffff12;
-  --border-hover: #ffffff25;
-  --text-primary: #ffffff;
-  --text-secondary: #ffffff80;
-  --text-muted: #ffffff35;
-  --accent: #7f77dd;
-  --accent-bg: #7f77dd18;
-  --accent-border: #7f77dd40;
-  --accent-text: #afa9ec;
+  --bg: #0c0b09;
+  --surface: #151412;
+  --elevated: #1d1c19;
+  --border: #262522;
+  --border-hover: #3a3732;
+  --text: #ece9e2;
+  --text-secondary: #95928a;
+  --text-muted: #5a5750;
+  --accent: #ce7a54;
+  --accent-bg: #ce7a5412;
+  --accent-border: #ce7a542e;
+  --accent-text: #e8a482;
+  --gold: #b38d5a;
+  --gold-bg: #b38d5a14;
+  --gold-border: #b38d5a2e;
   --green: #639922;
   --green-bg: #63992218;
   --green-border: #63992240;
@@ -22,6 +24,12 @@
   --coral-bg: #d85a3018;
   --coral-border: #d85a3040;
   --coral-text: #f0997b;
+
+  --bg-primary: var(--bg);
+  --bg-card: var(--surface);
+  --bg-subtle: var(--elevated);
+  --bg-card-hover: var(--elevated);
+  --text-primary: var(--text);
 }
 
 * {
@@ -31,13 +39,13 @@
 }
 
 html {
-  background: var(--bg-primary);
-  color: var(--text-primary);
+  background: var(--bg);
+  color: var(--text);
 }
 
 body {
-  background: var(--bg-primary);
-  color: var(--text-primary);
+  background: var(--bg);
+  color: var(--text);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -56,7 +64,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-primary);
+  background: var(--bg);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -81,6 +89,30 @@ body {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Diamond ◆ ornament for section headings */
+.heading-signature {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.heading-signature::before {
+  content: "◆";
+  font-size: 0.4em;
+  color: var(--gold);
+  opacity: 0.7;
+}
+
+/* Copper underline on hover for cards / interactive elements */
+.copper-hover {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.copper-hover:hover {
+  border-color: var(--accent-border);
+  box-shadow: inset 0 -1.5px 0 0 var(--accent);
 }
 
 .remove-btn:hover {
