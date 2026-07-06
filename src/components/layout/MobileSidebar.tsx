@@ -154,8 +154,25 @@ export default function MobileSidebar({ isOpen, onClose, user, fullName, isAdmin
               borderBottom: "0.5px solid var(--border)",
             }}
           >
-            <p style={{ fontSize: "14px", fontWeight: "500", color: "var(--text)" }}>
+            <p style={{ fontSize: "14px", fontWeight: "500", color: "var(--text)", display: "flex", alignItems: "center", gap: "8px" }}>
               {fullName ?? "Account"}
+              {isAdmin && (
+                <span
+                  style={{
+                    fontSize: "9px",
+                    fontWeight: "600",
+                    letterSpacing: "0.3px",
+                    color: "var(--gold)",
+                    background: "var(--gold-bg)",
+                    border: "0.5px solid var(--gold-border)",
+                    borderRadius: "4px",
+                    padding: "1px 5px",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Admin
+                </span>
+              )}
             </p>
             {user.email && (
               <p style={{ fontSize: "12px", color: "var(--text-muted)", marginTop: "2px" }}>

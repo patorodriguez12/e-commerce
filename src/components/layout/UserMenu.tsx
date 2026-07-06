@@ -6,17 +6,20 @@ import { ChevronDown, User, ShoppingBag, Heart, LogOut } from "lucide-react";
 import { useCartStore } from "@/lib/store/cartStore";
 import { logout } from "@/lib/supabase/actions";
 
+import { Shield } from "lucide-react";
+
 type Props = {
   fullName: string;
+  isAdmin?: boolean;
 };
 
 const MENU_ITEMS = [
-  { href: "/dashboard", label: "My Account", icon: User },
+  { href: "/dashboard", label: "Dashboard", icon: User },
   { href: "/dashboard/orders", label: "My Orders", icon: ShoppingBag },
   { href: "/dashboard/wishlist", label: "My Wishlist", icon: Heart },
 ];
 
-export default function UserMenu({ fullName }: Props) {
+export default function UserMenu({ fullName, isAdmin }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [pending, setPending] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -128,9 +131,30 @@ export default function UserMenu({ fullName }: Props) {
               fontSize: "13px",
               fontWeight: "500",
               color: "var(--text-primary)",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
             }}
           >
             {fullName}
+            {isAdmin && (
+              <span
+                style={{
+                  fontSize: "10px",
+                  fontWeight: "600",
+                  letterSpacing: "0.3px",
+                  color: "var(--gold)",
+                  background: "var(--gold-bg)",
+                  border: "0.5px solid var(--gold-border)",
+                  borderRadius: "4px",
+                  padding: "1px 6px",
+                  textTransform: "uppercase",
+                }}
+              >
+                <Shield size={10} style={{ display: "inline", marginRight: 3, verticalAlign: "middle" }} />
+                Admin
+              </span>
+            )}
           </p>
         </div>
 
@@ -171,8 +195,37 @@ export default function UserMenu({ fullName }: Props) {
           ))}
         </div>
 
+        {isAdmin && (
+          <div style={{ padding: "6px 6px 0", borderTop: "0.5px solid var(--border)" }}>
+            <Link
+              href="/admin"
+              onClick={() => setIsOpen(false)}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                padding: "9px 10px",
+                borderRadius: "6px",
+                fontSize: "13px",
+                color: "var(--gold)",
+                textDecoration: "none",
+                transition: "all 0.1s",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLAnchorElement).style.background = "var(--gold-bg)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
+              }}
+            >
+              <Shield size={14} style={{ flexShrink: 0 }} />
+              Admin panel
+            </Link>
+          </div>
+        )}
+
         {/* Sign out */}
-        <div style={{ padding: "6px", borderTop: "0.5px solid var(--border)" }}>
+        <div style={{ padding: "6px", borderTop: isAdmin ? "0" : "0.5px solid var(--border)" }}>
           <button
             onClick={handleLogout}
             disabled={pending}
