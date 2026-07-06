@@ -328,8 +328,8 @@ export default function ProductForm({ categories, product }: Props) {
           type="submit"
           disabled={loading || uploading}
           style={{
-            background: "#fff",
-            color: "#000",
+            background: "var(--accent)",
+            color: "#fff",
             border: "none",
             borderRadius: "8px",
             padding: "9px 24px",

@@ -79,8 +79,8 @@ export default async function OrdersPage() {
           <Link
             href="/"
             style={{
-              background: "#fff",
-              color: "#000",
+              background: "var(--accent)",
+              color: "#fff",
               padding: "10px 24px",
               borderRadius: "8px",
               textDecoration: "none",

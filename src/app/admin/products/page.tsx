@@ -36,8 +36,8 @@ export default async function AdminProductsPage() {
         <Link
           href="/admin/products/new"
           style={{
-            background: "#fff",
-            color: "#000",
+            background: "var(--accent)",
+            color: "#fff",
             padding: "8px 16px",
             borderRadius: "8px",
             textDecoration: "none",

@@ -285,8 +285,8 @@ export default function FilterDrawer({
                 onClick={handlePriceApply}
                 style={{
                   flex: 1,
-                  background: "#fff",
-                  color: "#000",
+                  background: "var(--accent)",
+                  color: "#fff",
                   border: "none",
                   borderRadius: "6px",
                   padding: "9px",
@@ -328,8 +328,8 @@ export default function FilterDrawer({
             onClick={onClose}
             style={{
               width: "100%",
-              background: "#fff",
-              color: "#000",
+              background: "var(--accent)",
+              color: "#fff",
               border: "none",
               borderRadius: "8px",
               padding: "13px",

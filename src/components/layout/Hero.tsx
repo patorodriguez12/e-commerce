@@ -5,45 +5,48 @@ export default function Hero() {
     <section
       style={{
         borderBottom: "0.5px solid var(--border)",
-        padding: "80px 24px 72px",
+        padding: "100px 24px 88px",
         maxWidth: "1200px",
         margin: "0 auto",
       }}
     >
+      {/* Gold diamond + label */}
       <div
         style={{
           display: "inline-flex",
           alignItems: "center",
           gap: "8px",
-          fontSize: "12px",
-          color: "var(--accent-text)",
-          background: "var(--accent-bg)",
-          border: "0.5px solid var(--accent-border)",
-          borderRadius: "20px",
-          padding: "4px 14px",
-          marginBottom: "28px",
+          fontSize: "11px",
+          color: "var(--gold)",
+          textTransform: "uppercase",
+          letterSpacing: "1.5px",
+          marginBottom: "32px",
         }}
       >
-        <span
-          style={{
-            width: "6px",
-            height: "6px",
-            borderRadius: "50%",
-            background: "var(--accent)",
-            display: "inline-block",
-          }}
-        />
+        <span style={{ fontSize: "10px", opacity: 0.7 }}>◆</span>
         New arrivals 2026
       </div>
 
+      {/* Copper accent line */}
+      <div
+        style={{
+          width: "48px",
+          height: "1.5px",
+          background: "var(--accent)",
+          borderRadius: "1px",
+          marginBottom: "28px",
+        }}
+      />
+
       <h1
         style={{
-          fontSize: "clamp(36px, 6vw, 64px)",
+          fontSize: "clamp(40px, 6vw, 72px)",
           fontWeight: "500",
           lineHeight: "1.05",
           letterSpacing: "-2px",
-          marginBottom: "20px",
-          maxWidth: "600px",
+          marginBottom: "24px",
+          maxWidth: "680px",
+          fontFamily: "var(--font-sora)",
         }}
       >
         The gear that{" "}
@@ -55,8 +58,8 @@ export default function Hero() {
           fontSize: "15px",
           color: "var(--text-secondary)",
           lineHeight: "1.7",
-          maxWidth: "420px",
-          marginBottom: "36px",
+          maxWidth: "440px",
+          marginBottom: "40px",
         }}
       >
         Premium tech, curated for creators and builders. Free shipping on orders
@@ -68,13 +71,13 @@ export default function Hero() {
           href="#catalog"
           style={{
             fontSize: "14px",
-            color: "#000",
-            background: "#fff",
+            color: "#fff",
+            background: "var(--accent)",
             textDecoration: "none",
-            padding: "10px 24px",
+            padding: "11px 28px",
             borderRadius: "8px",
             fontWeight: "500",
-            transition: "opacity 0.15s",
+            transition: "all 0.2s ease",
           }}
         >
           Shop now
@@ -85,10 +88,10 @@ export default function Hero() {
             fontSize: "14px",
             color: "var(--text-secondary)",
             textDecoration: "none",
-            padding: "10px 24px",
+            padding: "11px 28px",
             borderRadius: "8px",
             border: "0.5px solid var(--border-hover)",
-            transition: "all 0.15s",
+            transition: "all 0.2s ease",
           }}
         >
           View deals

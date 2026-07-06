@@ -23,7 +23,7 @@ export default async function Navbar() {
     <nav
       style={{
         borderBottom: "0.5px solid var(--border)",
-        background: "var(--bg-primary)",
+        background: "var(--bg)",
         position: "sticky",
         top: 0,
         zIndex: 30,
@@ -76,8 +76,8 @@ export default async function Navbar() {
                 href="/register"
                 style={{
                   fontSize: "13px",
-                  color: "#000",
-                  background: "#fff",
+                  color: "#fff",
+                  background: "var(--accent)",
                   textDecoration: "none",
                   padding: "6px 14px",
                   borderRadius: "6px",

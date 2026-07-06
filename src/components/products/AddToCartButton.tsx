@@ -41,17 +41,17 @@ export default function AddToCartButton({ product }: Props) {
         fontSize: "14px",
         fontWeight: "500",
         cursor: isOutOfStock || isMaxReached ? "not-allowed" : "pointer",
-        transition: "all 0.15s",
+        transition: "all 0.2s ease",
         background: added
           ? "var(--accent)"
           : isOutOfStock || isMaxReached
-            ? "#ffffff10"
-            : "#fff",
+            ? "var(--elevated)"
+            : "var(--accent)",
         color: added
           ? "#fff"
           : isOutOfStock || isMaxReached
             ? "var(--text-muted)"
-            : "#000",
+            : "#fff",
         border: "none",
       }}
     >

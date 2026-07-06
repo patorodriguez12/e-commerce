@@ -84,8 +84,8 @@ export default function SuccessPage() {
           <Link
             href="/dashboard/orders"
             style={{
-              background: "#fff",
-              color: "#000",
+              background: "var(--accent)",
+              color: "#fff",
               padding: "10px 24px",
               borderRadius: "8px",
               textDecoration: "none",

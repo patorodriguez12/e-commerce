@@ -196,8 +196,8 @@ export default function FilterSidebar({
             onClick={handlePriceApply}
             style={{
               flex: 1,
-              background: "#fff",
-              color: "#000",
+              background: "var(--accent)",
+              color: "#fff",
               border: "none",
               borderRadius: "6px",
               padding: "7px",
