@@ -65,7 +65,7 @@ export default function NavContent({ user, fullName, isAdmin }: Props) {
             {/* Desktop user menu */}
             <div className="desktop-only" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               {user ? (
-                <UserMenu fullName={fullName ?? "Account"} />
+                <UserMenu fullName={fullName ?? "Account"} isAdmin={isAdmin} />
               ) : (
                 <>
                   <Link
