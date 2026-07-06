@@ -77,6 +77,12 @@ export const useCartStore = create<CartStore>()(
         const localItems = get().items;
 
         if (serverItems.length === 0 && localItems.length > 0) {
+          set({
+            items: localItems.map((i) => ({
+              ...i,
+              quantity: Math.min(i.quantity, i.product.stock),
+            })),
+          });
           return;
         }
 
@@ -96,7 +102,10 @@ export const useCartStore = create<CartStore>()(
           if (existing) {
             merged.set(item.product.id, {
               product: existing.product,
-              quantity: Math.max(existing.quantity, item.quantity),
+              quantity: Math.min(
+                Math.max(existing.quantity, item.quantity),
+                existing.product.stock,
+              ),
             });
           } else {
             merged.set(item.product.id, item);
