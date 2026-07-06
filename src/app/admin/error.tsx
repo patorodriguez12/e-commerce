@@ -64,8 +64,8 @@ export default function AdminError({
       <button
         onClick={reset}
         style={{
-          background: "#fff",
-          color: "#000",
+          background: "var(--accent)",
+          color: "#fff",
           border: "none",
           padding: "8px 20px",
           borderRadius: "6px",

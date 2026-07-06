@@ -30,8 +30,8 @@ function Spinner() {
       style={{
         width: 14,
         height: 14,
-        border: "2px solid #00000030",
-        borderTopColor: "#000",
+        border: "2px solid #ffffff40",
+        borderTopColor: "#fff",
         borderRadius: "50%",
         display: "inline-block",
         animation: "spin 0.6s linear infinite",
@@ -193,8 +193,8 @@ export default function LoginPage() {
               disabled={pending}
               style={{
                 width: "100%",
-                background: "#fff",
-                color: "#000",
+                background: pending ? "var(--accent)" : "var(--accent)",
+                color: "#fff",
                 border: "none",
                 borderRadius: "8px",
                 padding: "11px",

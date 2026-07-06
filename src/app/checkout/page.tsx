@@ -212,8 +212,8 @@ export default function CheckoutPage() {
         disabled={loading}
         style={{
           width: "100%",
-          background: "#fff",
-          color: "#000",
+          background: "var(--accent)",
+          color: "#fff",
           border: "none",
           borderRadius: "10px",
           padding: "14px",

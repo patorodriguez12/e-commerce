@@ -50,7 +50,7 @@ export default function CartDrawer() {
           right: 0,
           height: "100dvh",
           width: "min(420px, 100vw)",
-          background: "#0f0f0f",
+          background: "var(--surface)",
           borderLeft: "0.5px solid var(--border)",
           zIndex: 999,
           display: "flex",
@@ -195,8 +195,8 @@ export default function CartDrawer() {
               onClick={close}
               style={{
                 display: "block",
-                background: "#fff",
-                color: "#000",
+                background: "var(--accent)",
+                color: "#fff",
                 textAlign: "center",
                 padding: "12px",
                 borderRadius: "8px",

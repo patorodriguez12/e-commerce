@@ -25,9 +25,9 @@ function getProductBadge(product: Product) {
 
 const BADGE_STYLES: Record<string, React.CSSProperties> = {
   new: {
-    background: "var(--accent-bg)",
-    color: "var(--accent-text)",
-    border: "0.5px solid var(--accent-border)",
+    background: "var(--gold-bg)",
+    color: "var(--gold)",
+    border: "0.5px solid var(--gold-border)",
   },
   low: {
     background: "var(--coral-bg)",
@@ -64,14 +64,14 @@ export default function ProductCard({ product }: Props) {
         style={{
           background: "var(--bg-card)",
           border: "0.5px solid var(--border)",
-          borderRadius: "12px",
+          borderRadius: "10px",
           overflow: "hidden",
-          transition: "border-color 0.2s, transform 0.2s",
+          transition: "border-color 0.2s ease, transform 0.2s ease",
           cursor: "pointer",
         }}
         onMouseEnter={(e) => {
           (e.currentTarget as HTMLDivElement).style.borderColor =
-            "var(--border-hover)";
+            "var(--accent-border)";
           (e.currentTarget as HTMLDivElement).style.transform =
             "translateY(-2px)";
         }}
@@ -137,7 +137,7 @@ export default function ProductCard({ product }: Props) {
           )}
         </div>
 
-        {/* Info */}
+          {/* Info */}
         <div style={{ padding: "14px" }}>
           {product.categories && (
             <p
@@ -156,6 +156,7 @@ export default function ProductCard({ product }: Props) {
             style={{
               fontSize: "14px",
               fontWeight: "500",
+              fontFamily: "var(--font-sora)",
               color: "var(--text-primary)",
               marginBottom: "12px",
               whiteSpace: "nowrap",
@@ -197,18 +198,23 @@ export default function ProductCard({ product }: Props) {
                 borderRadius: "6px",
                 padding: "5px 12px",
                 cursor: isOutOfStock || isMaxReached ? "not-allowed" : "pointer",
-                transition: "all 0.15s",
+                transition: "all 0.2s ease",
               }}
               onMouseEnter={(e) => {
                 if (!isOutOfStock && !isMaxReached) {
                   (e.currentTarget as HTMLButtonElement).style.background =
-                    "#ffffff15";
-                  (e.currentTarget as HTMLButtonElement).style.color = "#fff";
+                    "var(--accent-bg)";
+                  (e.currentTarget as HTMLButtonElement).style.borderColor =
+                    "var(--accent-border)";
+                  (e.currentTarget as HTMLButtonElement).style.color =
+                    "var(--accent-text)";
                 }
               }}
               onMouseLeave={(e) => {
                 (e.currentTarget as HTMLButtonElement).style.background =
                   "var(--bg-subtle)";
+                (e.currentTarget as HTMLButtonElement).style.borderColor =
+                  "var(--border)";
                 (e.currentTarget as HTMLButtonElement).style.color =
                   "var(--text-secondary)";
               }}

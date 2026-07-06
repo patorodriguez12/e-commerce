@@ -52,8 +52,8 @@ export default async function WishlistPage() {
           <Link
             href="/"
             style={{
-              background: "#fff",
-              color: "#000",
+              background: "var(--accent)",
+              color: "#fff",
               padding: "10px 24px",
               borderRadius: "8px",
               textDecoration: "none",
@@ -152,8 +152,9 @@ export default async function WishlistPage() {
                 <Link
                   href={`/products/${item.products?.slug}`}
                   style={{
-                    background: "#fff",
-                    color: "#000",
+                    background: "transparent",
+                    color: "var(--accent)",
+                    border: "1px solid var(--accent)",
                     padding: "7px 16px",
                     borderRadius: "6px",
                     textDecoration: "none",

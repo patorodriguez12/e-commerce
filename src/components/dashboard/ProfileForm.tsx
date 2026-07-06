@@ -149,8 +149,8 @@ export default function ProfileForm({ profile, userId }: Props) {
           type="submit"
           disabled={loading}
           style={{
-            background: "#fff",
-            color: "#000",
+            background: "var(--accent)",
+            color: "#fff",
             border: "none",
             borderRadius: "8px",
             padding: "10px 24px",
