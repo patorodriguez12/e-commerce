@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState } from "react";
 import Link from "next/link";
 import { login } from "@/lib/supabase/actions";
 import OAuthButtons from "@/components/auth/OAuthButtons";
@@ -24,19 +24,30 @@ const labelStyle: React.CSSProperties = {
   marginBottom: "6px",
 };
 
-export default function LoginPage() {
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+function Spinner() {
+  return (
+    <span
+      style={{
+        width: 14,
+        height: 14,
+        border: "2px solid #00000030",
+        borderTopColor: "#000",
+        borderRadius: "50%",
+        display: "inline-block",
+        animation: "spin 0.6s linear infinite",
+      }}
+    />
+  );
+}
 
-  async function handleSubmit(formData: FormData) {
-    setLoading(true);
-    setError(null);
-    const result = await login(formData);
-    if (result?.error) {
-      setError(result.error);
-      setLoading(false);
-    }
-  }
+export default function LoginPage() {
+  const [error, formAction, pending] = useActionState(
+    async (_prev: unknown, formData: FormData) => {
+      const result = await login(formData);
+      return result?.error ?? null;
+    },
+    null,
+  );
 
   return (
     <div
@@ -92,7 +103,7 @@ export default function LoginPage() {
             gap: "16px",
           }}
         >
-          <OAuthButtons />
+          <OAuthButtons disabled={pending} />
 
           {/* Divider */}
           <div
@@ -115,7 +126,7 @@ export default function LoginPage() {
 
           {/* Form */}
           <form
-            action={handleSubmit}
+            action={formAction}
             style={{ display: "flex", flexDirection: "column", gap: "14px" }}
           >
             <div>
@@ -125,7 +136,12 @@ export default function LoginPage() {
                 type="email"
                 required
                 placeholder="you@example.com"
-                style={inputStyle}
+                disabled={pending}
+                style={{
+                  ...inputStyle,
+                  opacity: pending ? 0.5 : 1,
+                  cursor: pending ? "not-allowed" : undefined,
+                }}
                 onFocus={(e) =>
                   (e.currentTarget.style.borderColor = "var(--accent)")
                 }
@@ -142,7 +158,12 @@ export default function LoginPage() {
                 type="password"
                 required
                 placeholder="••••••••"
-                style={inputStyle}
+                disabled={pending}
+                style={{
+                  ...inputStyle,
+                  opacity: pending ? 0.5 : 1,
+                  cursor: pending ? "not-allowed" : undefined,
+                }}
                 onFocus={(e) =>
                   (e.currentTarget.style.borderColor = "var(--accent)")
                 }
@@ -169,7 +190,7 @@ export default function LoginPage() {
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={pending}
               style={{
                 width: "100%",
                 background: "#fff",
@@ -179,13 +200,24 @@ export default function LoginPage() {
                 padding: "11px",
                 fontSize: "14px",
                 fontWeight: "500",
-                cursor: loading ? "not-allowed" : "pointer",
-                opacity: loading ? 0.6 : 1,
+                cursor: pending ? "not-allowed" : "pointer",
+                opacity: pending ? 0.6 : 1,
                 transition: "opacity 0.15s",
                 marginTop: "4px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "8px",
               }}
             >
-              {loading ? "Signing in..." : "Sign in"}
+              {pending ? (
+                <>
+                  <Spinner />
+                  Signing in...
+                </>
+              ) : (
+                "Sign in"
+              )}
             </button>
           </form>
         </div>
