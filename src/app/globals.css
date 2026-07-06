@@ -118,3 +118,15 @@ body {
 .remove-btn:hover {
   color: var(--coral-text) !important;
 }
+
+@media (min-width: 768px) {
+  .mobile-only {
+    display: none !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .desktop-only {
+    display: none !important;
+  }
+}
