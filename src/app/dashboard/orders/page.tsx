@@ -106,6 +106,7 @@ export default async function OrdersPage() {
             <Link
               key={order.id}
               href={`/dashboard/orders/${order.id}`}
+              className="card-hover"
               style={{
                 display: "block",
                 background: "var(--surface)",
@@ -113,14 +114,7 @@ export default async function OrdersPage() {
                 borderRadius: "12px",
                 padding: "16px 20px",
                 textDecoration: "none",
-                transition: "border-color 0.15s",
               }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.borderColor = "var(--border-hover)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.borderColor = "var(--border)")
-              }
             >
               <div
                 style={{
