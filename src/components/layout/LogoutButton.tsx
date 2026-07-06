@@ -1,19 +1,18 @@
 "use client";
 
-import { useTransition } from "react";
+import { useState } from "react";
 import { useCartStore } from "@/lib/store/cartStore";
 import { logout } from "@/lib/supabase/actions";
 import { LogOut } from "lucide-react";
 
 export default function LogoutButton() {
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
   const clearCart = useCartStore((state) => state.clearCart);
 
-  function handleLogout() {
+  async function handleLogout() {
+    setPending(true);
     clearCart();
-    startTransition(async () => {
-      await logout();
-    });
+    await logout();
   }
 
   return (

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useTransition } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { ChevronDown, User, ShoppingBag, Heart, LogOut } from "lucide-react";
 import { useCartStore } from "@/lib/store/cartStore";
@@ -18,7 +18,7 @@ const MENU_ITEMS = [
 
 export default function UserMenu({ fullName }: Props) {
   const [isOpen, setIsOpen] = useState(false);
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const clearCart = useCartStore((state) => state.clearCart);
 
@@ -42,12 +42,11 @@ export default function UserMenu({ fullName }: Props) {
     return () => window.removeEventListener("keydown", handleKey);
   }, []);
 
-  function handleLogout() {
+  async function handleLogout() {
     setIsOpen(false);
+    setPending(true);
     clearCart();
-    startTransition(async () => {
-      await logout();
-    });
+    await logout();
   }
 
   return (
