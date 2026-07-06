@@ -84,6 +84,7 @@ export default async function WishlistPage() {
           {items.map((item: any) => (
             <div
               key={item.id}
+              className="card-hover"
               style={{
                 display: "flex",
                 gap: "14px",
@@ -91,14 +92,7 @@ export default async function WishlistPage() {
                 border: "0.5px solid var(--border)",
                 borderRadius: "12px",
                 padding: "14px",
-                transition: "border-color 0.15s",
               }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.borderColor = "var(--border-hover)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.borderColor = "var(--border)")
-              }
             >
               <Link href={`/products/${item.products?.slug}`}>
                 <div
@@ -174,6 +168,7 @@ export default async function WishlistPage() {
                   <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
                     <Link
                       href={`/products/${item.products?.slug}`}
+                      className="btn-ghost"
                       style={{
                         fontSize: "11px",
                         color: "var(--accent-text)",
@@ -181,13 +176,6 @@ export default async function WishlistPage() {
                         padding: "5px 10px",
                         borderRadius: "6px",
                         border: "0.5px solid var(--accent-border)",
-                        transition: "all 0.15s",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = "var(--accent-bg)";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = "transparent";
                       }}
                     >
                       View
@@ -200,6 +188,7 @@ export default async function WishlistPage() {
                     >
                       <button
                         type="submit"
+                        className="btn-ghost-danger"
                         style={{
                           fontSize: "11px",
                           color: "var(--text-muted)",
@@ -208,17 +197,6 @@ export default async function WishlistPage() {
                           borderRadius: "6px",
                           padding: "5px 10px",
                           cursor: "pointer",
-                          transition: "all 0.15s",
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.borderColor = "var(--coral-border)";
-                          e.currentTarget.style.color = "var(--coral-text)";
-                          e.currentTarget.style.background = "var(--coral-bg)";
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.borderColor = "var(--border)";
-                          e.currentTarget.style.color = "var(--text-muted)";
-                          e.currentTarget.style.background = "transparent";
                         }}
                       >
                         Remove
