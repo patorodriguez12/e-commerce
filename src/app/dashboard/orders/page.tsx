@@ -61,12 +61,21 @@ export default async function OrdersPage() {
           style={{
             textAlign: "center",
             padding: "64px 24px",
-            background: "var(--bg-card)",
+            background: "var(--surface)",
             border: "0.5px solid var(--border)",
             borderRadius: "12px",
           }}
         >
-          <p style={{ fontSize: "32px", marginBottom: "12px" }}>📦</p>
+          <p
+            style={{
+              fontSize: "28px",
+              marginBottom: "12px",
+              color: "var(--gold)",
+              opacity: 0.5,
+            }}
+          >
+            ◆
+          </p>
           <p
             style={{
               color: "var(--text-muted)",
@@ -74,7 +83,7 @@ export default async function OrdersPage() {
               fontSize: "14px",
             }}
           >
-            You have no orders yet.
+            No orders yet
           </p>
           <Link
             href="/"
@@ -92,26 +101,33 @@ export default async function OrdersPage() {
           </Link>
         </div>
       ) : (
-        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
           {orders.map((order: Order) => (
             <Link
               key={order.id}
               href={`/dashboard/orders/${order.id}`}
               style={{
                 display: "block",
-                background: "var(--bg-card)",
+                background: "var(--surface)",
                 border: "0.5px solid var(--border)",
                 borderRadius: "12px",
-                padding: "20px",
+                padding: "16px 20px",
                 textDecoration: "none",
                 transition: "border-color 0.15s",
               }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.borderColor = "var(--border-hover)")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.borderColor = "var(--border)")
+              }
             >
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
+                  gap: "12px",
                 }}
               >
                 <div
@@ -119,6 +135,7 @@ export default async function OrdersPage() {
                     display: "flex",
                     flexDirection: "column",
                     gap: "4px",
+                    minWidth: 0,
                   }}
                 >
                   <p
@@ -148,7 +165,8 @@ export default async function OrdersPage() {
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "flex-end",
-                    gap: "8px",
+                    gap: "6px",
+                    flexShrink: 0,
                   }}
                 >
                   <span
@@ -165,7 +183,7 @@ export default async function OrdersPage() {
                   </span>
                   <p
                     style={{
-                      fontSize: "16px",
+                      fontSize: "15px",
                       fontWeight: "500",
                       color: "var(--text-primary)",
                     }}
