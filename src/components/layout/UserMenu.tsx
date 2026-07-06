@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useTransition } from "react";
 import Link from "next/link";
 import { ChevronDown, User, ShoppingBag, Heart, LogOut } from "lucide-react";
 import { useCartStore } from "@/lib/store/cartStore";
@@ -18,6 +18,7 @@ const MENU_ITEMS = [
 
 export default function UserMenu({ fullName }: Props) {
   const [isOpen, setIsOpen] = useState(false);
+  const [pending, startTransition] = useTransition();
   const ref = useRef<HTMLDivElement>(null);
   const clearCart = useCartStore((state) => state.clearCart);
 
@@ -41,10 +42,12 @@ export default function UserMenu({ fullName }: Props) {
     return () => window.removeEventListener("keydown", handleKey);
   }, []);
 
-  async function handleLogout() {
+  function handleLogout() {
     setIsOpen(false);
     clearCart();
-    await logout();
+    startTransition(async () => {
+      await logout();
+    });
   }
 
   return (
@@ -173,6 +176,7 @@ export default function UserMenu({ fullName }: Props) {
         <div style={{ padding: "6px", borderTop: "0.5px solid var(--border)" }}>
           <button
             onClick={handleLogout}
+            disabled={pending}
             style={{
               display: "flex",
               alignItems: "center",
@@ -184,15 +188,18 @@ export default function UserMenu({ fullName }: Props) {
               color: "var(--text-muted)",
               background: "transparent",
               border: "none",
-              cursor: "pointer",
+              cursor: pending ? "not-allowed" : "pointer",
+              opacity: pending ? 0.5 : 1,
               transition: "all 0.1s",
               textAlign: "left",
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.background =
-                "var(--coral-bg)";
-              (e.currentTarget as HTMLButtonElement).style.color =
-                "var(--coral-text)";
+              if (!pending) {
+                (e.currentTarget as HTMLButtonElement).style.background =
+                  "var(--coral-bg)";
+                (e.currentTarget as HTMLButtonElement).style.color =
+                  "var(--coral-text)";
+              }
             }}
             onMouseLeave={(e) => {
               (e.currentTarget as HTMLButtonElement).style.background =
