@@ -1,20 +1,25 @@
 "use client";
 
+import { useTransition } from "react";
 import { useCartStore } from "@/lib/store/cartStore";
 import { logout } from "@/lib/supabase/actions";
 import { LogOut } from "lucide-react";
 
 export default function LogoutButton() {
+  const [pending, startTransition] = useTransition();
   const clearCart = useCartStore((state) => state.clearCart);
 
-  async function handleLogout() {
+  function handleLogout() {
     clearCart();
-    await logout();
+    startTransition(async () => {
+      await logout();
+    });
   }
 
   return (
     <button
       onClick={handleLogout}
+      disabled={pending}
       style={{
         display: "flex",
         alignItems: "center",
@@ -26,15 +31,18 @@ export default function LogoutButton() {
         color: "var(--text-muted)",
         background: "transparent",
         border: "none",
-        cursor: "pointer",
+        cursor: pending ? "not-allowed" : "pointer",
+        opacity: pending ? 0.5 : 1,
         transition: "all 0.15s",
         textAlign: "left",
       }}
       onMouseEnter={(e) => {
-        (e.currentTarget as HTMLButtonElement).style.background =
-          "var(--coral-bg)";
-        (e.currentTarget as HTMLButtonElement).style.color =
-          "var(--coral-text)";
+        if (!pending) {
+          (e.currentTarget as HTMLButtonElement).style.background =
+            "var(--coral-bg)";
+          (e.currentTarget as HTMLButtonElement).style.color =
+            "var(--coral-text)";
+        }
       }}
       onMouseLeave={(e) => {
         (e.currentTarget as HTMLButtonElement).style.background = "transparent";

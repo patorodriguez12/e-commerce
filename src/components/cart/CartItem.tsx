@@ -49,7 +49,8 @@ export default function CartItem({ item }: Props) {
           <span className="text-sm w-4 text-center">{quantity}</span>
           <button
             onClick={() => updateQuantity(product.id, quantity + 1)}
-            className="w-6 h-6 rounded border flex items-center justify-center text-sm hover:bg-gray-100"
+            disabled={quantity >= product.stock}
+            className="w-6 h-6 rounded border flex items-center justify-center text-sm hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed"
           >
             +
           </button>

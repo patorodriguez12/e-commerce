@@ -77,6 +77,12 @@ body {
   }
 }
 
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .remove-btn:hover {
   color: var(--coral-text) !important;
 }

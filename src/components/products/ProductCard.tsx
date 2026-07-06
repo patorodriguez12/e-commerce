@@ -43,10 +43,17 @@ const BADGE_STYLES: Record<string, React.CSSProperties> = {
 
 export default function ProductCard({ product }: Props) {
   const addItem = useCartStore((state) => state.addItem);
+  const cartQuantity = useCartStore(
+    (state) => state.items.find((i) => i.product.id === product.id)?.quantity ?? 0,
+  );
   const badge = getProductBadge(product);
+
+  const isOutOfStock = product.stock === 0;
+  const isMaxReached = !isOutOfStock && cartQuantity >= product.stock;
 
   function handleAdd(e: React.MouseEvent) {
     e.preventDefault();
+    if (isOutOfStock || isMaxReached) return;
     addItem(product);
     toast.success(`${product.name} added to cart`);
   }
@@ -178,22 +185,22 @@ export default function ProductCard({ product }: Props) {
 
             <button
               onClick={handleAdd}
-              disabled={product.stock === 0}
+              disabled={isOutOfStock || isMaxReached}
               style={{
                 fontSize: "11px",
                 color:
-                  product.stock === 0
+                  isOutOfStock || isMaxReached
                     ? "var(--text-muted)"
                     : "var(--text-secondary)",
                 background: "var(--bg-subtle)",
                 border: "0.5px solid var(--border)",
                 borderRadius: "6px",
                 padding: "5px 12px",
-                cursor: product.stock === 0 ? "not-allowed" : "pointer",
+                cursor: isOutOfStock || isMaxReached ? "not-allowed" : "pointer",
                 transition: "all 0.15s",
               }}
               onMouseEnter={(e) => {
-                if (product.stock > 0) {
+                if (!isOutOfStock && !isMaxReached) {
                   (e.currentTarget as HTMLButtonElement).style.background =
                     "#ffffff15";
                   (e.currentTarget as HTMLButtonElement).style.color = "#fff";
@@ -206,7 +213,7 @@ export default function ProductCard({ product }: Props) {
                   "var(--text-secondary)";
               }}
             >
-              {product.stock === 0 ? "Sold out" : "Add to cart"}
+              {isOutOfStock ? "Sold out" : isMaxReached ? "Max reached" : "Add to cart"}
             </button>
           </div>
         </div>

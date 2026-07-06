@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import type { CartItem, CartItemInput, Product } from "@/types";
 
 export async function login(formData: FormData) {
@@ -137,25 +138,55 @@ export async function syncCart(items: CartItemInput[]) {
 
   if (!user) return { error: "Not authenticated" };
 
-  const { error: deleteError } = await supabase
-    .from("cart_items")
-    .delete()
-    .eq("user_id", user.id);
+  if (items.length === 0) {
+    const { error: deleteError } = await supabase
+      .from("cart_items")
+      .delete()
+      .eq("user_id", user.id);
+    if (deleteError) return { error: deleteError.message };
+    return { success: true, items: [] };
+  }
 
-  if (deleteError) return { error: deleteError.message };
+  // Fetch fresh stock from DB
+  const adminSupabase = createAdminClient();
+  const productIds = items.map((i) => i.product_id);
+  const { data: products } = await adminSupabase
+    .from("products")
+    .select("id, stock")
+    .in("id", productIds);
 
-  if (items.length === 0) return { success: true };
+  if (!products) return { error: "Failed to fetch product stock" };
 
-  const { error } = await supabase.from("cart_items").insert(
-    items.map((i) => ({
+  const stockMap = new Map(products.map((p) => [p.id, p.stock]));
+
+  // Cap quantities to available stock, remove items with 0 stock
+  const correctedItems = items
+    .map((i) => {
+      const stock = stockMap.get(i.product_id) ?? 0;
+      return { ...i, quantity: Math.min(i.quantity, stock) };
+    })
+    .filter((i) => i.quantity > 0);
+
+  if (correctedItems.length === 0) {
+    const { error: deleteError } = await supabase
+      .from("cart_items")
+      .delete()
+      .eq("user_id", user.id);
+    if (deleteError) return { error: deleteError.message };
+    return { success: true, items: [] };
+  }
+
+  const { error } = await supabase.from("cart_items").upsert(
+    correctedItems.map((i) => ({
       user_id: user.id,
       product_id: i.product_id,
       quantity: i.quantity,
     })),
+    { onConflict: "user_id,product_id" },
   );
 
   if (error) return { error: error.message };
-  return { success: true };
+  return { success: true, items: correctedItems };
 }
 
 export async function getCart(): Promise<CartItem[]> {
