@@ -43,6 +43,11 @@ export default function CartSync() {
       await syncToServer();
       if (!alive) return;
 
+      // Re-fetch from server to get corrected quantities after stock validation
+      const correctedItems = await getCart();
+      if (!alive) return;
+      replaceItems(correctedItems);
+
       readyForSync.current = true;
       initialSyncing.current = false;
     }
