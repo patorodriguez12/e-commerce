@@ -1,9 +1,9 @@
 import { requireAdmin } from "@/lib/supabase/auth";
 import { createClient } from "@/lib/supabase/server";
 import { formatPrice } from "@/lib/utils/formatPrice";
-import { deleteProduct } from "@/lib/supabase/admin-actions";
 import Link from "next/link";
 import Image from "next/image";
+import DeleteProductButton from "@/components/admin/DeleteProductButton";
 
 export default async function AdminProductsPage() {
   await requireAdmin();
@@ -181,28 +181,7 @@ export default async function AdminProductsPage() {
                     >
                       Edit
                     </Link>
-                    <form
-                      action={async () => {
-                        "use server";
-                        await deleteProduct(product.id);
-                      }}
-                    >
-                      <button
-                        type="submit"
-                        className="remove-btn"
-                        style={{
-                          background: "transparent",
-                          border: "none",
-                          color: "var(--text-muted)",
-                          fontSize: "12px",
-                          cursor: "pointer",
-                          padding: 0,
-                          transition: "color 0.15s",
-                        }}
-                      >
-                        Delete
-                      </button>
-                    </form>
+                    <DeleteProductButton productId={product.id} />
                   </div>
                 </td>
               </tr>
