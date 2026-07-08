@@ -148,7 +148,6 @@ export default async function AdminDashboard() {
           background: "var(--bg-card)",
           border: "0.5px solid var(--border)",
           borderRadius: "12px",
-          overflow: "hidden",
         }}
       >
         <div
@@ -186,6 +185,7 @@ export default async function AdminDashboard() {
             No orders yet
           </p>
         ) : (
+          <div className="overflow-x-auto">
           <table
             style={{
               width: "100%",
@@ -198,6 +198,7 @@ export default async function AdminDashboard() {
                 {["Order", "Date", "Status", "Total"].map((h) => (
                   <th
                     key={h}
+                    className={h === "Date" ? "desktop-only" : ""}
                     style={{
                       padding: "10px 20px",
                       textAlign: h === "Total" ? "right" : "left",
@@ -230,6 +231,7 @@ export default async function AdminDashboard() {
                     #{order.id.slice(0, 8).toUpperCase()}
                   </td>
                   <td
+                    className="desktop-only"
                     style={{
                       padding: "12px 20px",
                       color: "var(--text-muted)",
@@ -268,6 +270,7 @@ export default async function AdminDashboard() {
               ))}
             </tbody>
           </table>
+        </div>
         )}
       </div>
     </div>

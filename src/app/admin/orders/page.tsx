@@ -69,9 +69,9 @@ export default async function AdminOrdersPage() {
           background: "var(--bg-card)",
           border: "0.5px solid var(--border)",
           borderRadius: "12px",
-          overflow: "hidden",
         }}
       >
+        <div className="overflow-x-auto">
         <table
           style={{
             width: "100%",
@@ -85,6 +85,7 @@ export default async function AdminOrdersPage() {
                 (h) => (
                   <th
                     key={h}
+                    className={h === "Customer" || h === "Items" ? "desktop-only" : ""}
                     style={{
                       padding: "12px 20px",
                       textAlign: "left",
@@ -133,6 +134,7 @@ export default async function AdminOrdersPage() {
                   #{order.id.slice(0, 8).toUpperCase()}
                 </td>
                 <td
+                  className="desktop-only"
                   style={{
                     padding: "14px 20px",
                     color: "var(--text-secondary)",
@@ -154,6 +156,7 @@ export default async function AdminOrdersPage() {
                   })}
                 </td>
                 <td
+                  className="desktop-only"
                   style={{ padding: "14px 20px", color: "var(--text-muted)" }}
                 >
                   {order.order_items?.length ?? 0}
@@ -172,6 +175,7 @@ export default async function AdminOrdersPage() {
             ))}
           </tbody>
         </table>
+      </div>
       </div>
     </div>
   );

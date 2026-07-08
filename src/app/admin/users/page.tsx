@@ -49,9 +49,9 @@ export default async function AdminUsersPage() {
           background: "var(--bg-card)",
           border: "0.5px solid var(--border)",
           borderRadius: "12px",
-          overflow: "hidden",
         }}
       >
+        <div className="overflow-x-auto">
         <table
           style={{
             width: "100%",
@@ -64,6 +64,7 @@ export default async function AdminUsersPage() {
               {["Name", "Email", "Role", "Last sign in"].map((h) => (
                 <th
                   key={h}
+                  className={h === "Email" ? "desktop-only" : ""}
                   style={{
                     padding: "12px 20px",
                     textAlign: "left",
@@ -110,6 +111,7 @@ export default async function AdminUsersPage() {
                   {user.full_name ?? "No name"}
                 </td>
                 <td
+                  className="desktop-only"
                   style={{
                     padding: "14px 20px",
                     color: "var(--text-secondary)",
@@ -159,6 +161,7 @@ export default async function AdminUsersPage() {
             ))}
           </tbody>
         </table>
+      </div>
       </div>
     </div>
   );

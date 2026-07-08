@@ -13,7 +13,8 @@ export default async function AdminLayout({
       <AdminSidebar />
       <main style={{ flex: 1, overflowX: "auto" }}>
         <div
-          style={{ maxWidth: "1100px", margin: "0 auto", padding: "40px 32px" }}
+          className="px-4 py-5 md:px-8 md:py-10"
+          style={{ maxWidth: "1100px", margin: "0 auto" }}
         >
           {children}
         </div>
