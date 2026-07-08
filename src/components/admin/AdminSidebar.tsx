@@ -20,7 +20,9 @@ function useMediaQuery(query: string) {
     return window.matchMedia(query).matches;
   }, [query]);
 
-  return useSyncExternalStore(subscribe, getSnapshot);
+  const getServerSnapshot = useCallback(() => false, []);
+
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 }
 
 const NAV_ITEMS = [
