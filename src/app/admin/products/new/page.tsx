@@ -13,7 +13,16 @@ export default async function NewProductPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-8">New product</h1>
+      <h1
+        style={{
+          fontSize: "22px",
+          fontWeight: "500",
+          letterSpacing: "-0.5px",
+          marginBottom: "32px",
+        }}
+      >
+        New product
+      </h1>
       <ProductForm categories={categories ?? []} />
     </div>
   );

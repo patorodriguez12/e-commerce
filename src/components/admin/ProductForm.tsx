@@ -15,13 +15,9 @@ type Props = {
 const inputStyle: React.CSSProperties = {
   width: "100%",
   background: "var(--bg-subtle)",
-  border: "0.5px solid var(--border)",
-  borderRadius: "8px",
   padding: "9px 12px",
   fontSize: "13px",
   color: "var(--text-primary)",
-  outline: "none",
-  transition: "border-color 0.15s",
 };
 
 const labelStyle: React.CSSProperties = {
@@ -187,6 +183,7 @@ export default function ProductForm({ categories, product }: Props) {
         <div>
           <label style={labelStyle}>Name</label>
           <input
+            className="admin-input"
             name="name"
             type="text"
             required
@@ -196,29 +193,18 @@ export default function ProductForm({ categories, product }: Props) {
               if (slugRef.current && !product)
                 slugRef.current.value = generateSlug(e.target.value);
             }}
-            onFocus={(e) =>
-              (e.currentTarget.style.borderColor = "var(--accent)")
-            }
-            onBlur={(e) =>
-              (e.currentTarget.style.borderColor = "var(--border)")
-            }
           />
         </div>
         <div>
           <label style={labelStyle}>Slug</label>
           <input
+            className="admin-input"
             ref={slugRef}
             name="slug"
             type="text"
             required
             defaultValue={product?.slug}
             style={inputStyle}
-            onFocus={(e) =>
-              (e.currentTarget.style.borderColor = "var(--accent)")
-            }
-            onBlur={(e) =>
-              (e.currentTarget.style.borderColor = "var(--border)")
-            }
           />
         </div>
       </div>
@@ -227,12 +213,11 @@ export default function ProductForm({ categories, product }: Props) {
       <div>
         <label style={labelStyle}>Description</label>
         <textarea
+          className="admin-input"
           name="description"
           rows={4}
           defaultValue={product?.description ?? ""}
-          style={{ ...inputStyle, resize: "none", fontFamily: "inherit" }}
-          onFocus={(e) => (e.currentTarget.style.borderColor = "var(--accent)")}
-          onBlur={(e) => (e.currentTarget.style.borderColor = "var(--border)")}
+          style={{ resize: "none", fontFamily: "inherit" }}
         />
       </div>
 
@@ -241,6 +226,7 @@ export default function ProductForm({ categories, product }: Props) {
         <div>
           <label style={labelStyle}>Price (USD)</label>
           <input
+            className="admin-input"
             name="price"
             type="number"
             step="0.01"
@@ -248,43 +234,27 @@ export default function ProductForm({ categories, product }: Props) {
             required
             defaultValue={product ? product.price / 100 : ""}
             style={inputStyle}
-            onFocus={(e) =>
-              (e.currentTarget.style.borderColor = "var(--accent)")
-            }
-            onBlur={(e) =>
-              (e.currentTarget.style.borderColor = "var(--border)")
-            }
           />
         </div>
         <div>
           <label style={labelStyle}>Stock</label>
           <input
+            className="admin-input"
             name="stock"
             type="number"
             min="0"
             required
             defaultValue={product?.stock ?? 0}
             style={inputStyle}
-            onFocus={(e) =>
-              (e.currentTarget.style.borderColor = "var(--accent)")
-            }
-            onBlur={(e) =>
-              (e.currentTarget.style.borderColor = "var(--border)")
-            }
           />
         </div>
         <div>
           <label style={labelStyle}>Category</label>
           <select
+            className="admin-input"
             name="category_id"
             defaultValue={product?.category_id ?? ""}
-            style={{ ...inputStyle, cursor: "pointer" }}
-            onFocus={(e) =>
-              (e.currentTarget.style.borderColor = "var(--accent)")
-            }
-            onBlur={(e) =>
-              (e.currentTarget.style.borderColor = "var(--border)")
-            }
+            style={{ cursor: "pointer" }}
           >
             <option value="">No category</option>
             {categories.map((cat) => (

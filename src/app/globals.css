@@ -144,6 +144,22 @@ body {
   border-color: var(--coral-border);
 }
 
+.admin-input {
+  width: 100%;
+  background: var(--bg-subtle);
+  border: 0.5px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 13px;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.admin-input:focus {
+  border-color: var(--accent);
+}
+
 @media (min-width: 768px) {
   .mobile-only {
     display: none !important;
