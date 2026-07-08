@@ -31,7 +31,6 @@ export default function MobileSidebar({ isOpen, onClose, user, fullName, isAdmin
     onCloseRef.current = onClose;
   }, [onClose]);
 
-  // body scroll lock
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -43,7 +42,6 @@ export default function MobileSidebar({ isOpen, onClose, user, fullName, isAdmin
     };
   }, [isOpen]);
 
-  // Escape to close
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
       if (e.key === "Escape") onCloseRef.current();
@@ -54,7 +52,6 @@ export default function MobileSidebar({ isOpen, onClose, user, fullName, isAdmin
     }
   }, [isOpen]);
 
-  // Close on navigation
   useEffect(() => {
     onCloseRef.current();
   }, [pathname]);
@@ -70,54 +67,20 @@ export default function MobileSidebar({ isOpen, onClose, user, fullName, isAdmin
       {/* Overlay */}
       <div
         onClick={onClose}
-        style={{
-          position: "fixed",
-          inset: 0,
-          zIndex: 40,
-          background: "rgba(0,0,0,0.6)",
-          opacity: isOpen ? 1 : 0,
-          pointerEvents: isOpen ? "auto" : "none",
-          transition: "opacity 0.25s ease",
-          WebkitBackdropFilter: "blur(4px)",
-          backdropFilter: "blur(4px)",
-        }}
+        className={`fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-all duration-200 ${
+          isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
       />
 
       {/* Sidebar */}
       <div
-        style={{
-          position: "fixed",
-          top: 0,
-          right: 0,
-          bottom: 0,
-          width: "300px",
-          maxWidth: "85vw",
-          zIndex: 50,
-          background: "var(--surface)",
-          borderLeft: "0.5px solid var(--border)",
-          display: "flex",
-          flexDirection: "column",
-          transform: isOpen ? "translateX(0)" : "translateX(100%)",
-          opacity: isOpen ? 1 : 0,
-          pointerEvents: isOpen ? "auto" : "none",
-          transition: "transform 0.3s ease, opacity 0.2s ease",
-        }}
+        className={`fixed top-0 right-0 bottom-0 w-[300px] max-w-[85vw] z-50 bg-surface border-l border-border flex flex-col transition-all duration-300 ease-out ${
+          isOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"
+        }`}
       >
         {/* Header */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "16px 20px",
-            borderBottom: "0.5px solid var(--border)",
-          }}
-        >
-          <Link
-            href="/"
-            onClick={onClose}
-            style={{ textDecoration: "none", display: "flex", alignItems: "center" }}
-          >
+        <div className="flex items-center justify-between px-5 py-4 border-b border-border">
+          <Link href="/" onClick={onClose} className="flex items-center no-underline">
             <Image
               src="/navbar-logo.png"
               alt="Smartech"
@@ -130,14 +93,7 @@ export default function MobileSidebar({ isOpen, onClose, user, fullName, isAdmin
           <button
             onClick={onClose}
             aria-label="Close menu"
-            style={{
-              background: "transparent",
-              border: "none",
-              color: "var(--text-secondary)",
-              cursor: "pointer",
-              padding: "4px",
-              display: "flex",
-            }}
+            className="bg-transparent border-none text-text-secondary cursor-pointer p-1 flex"
           >
             <X size={20} />
           </button>
@@ -145,58 +101,29 @@ export default function MobileSidebar({ isOpen, onClose, user, fullName, isAdmin
 
         {/* User info */}
         {user && (
-          <div
-            style={{
-              padding: "16px 20px",
-              borderBottom: "0.5px solid var(--border)",
-            }}
-          >
-            <p style={{ fontSize: "14px", fontWeight: "500", color: "var(--text)", display: "flex", alignItems: "center", gap: "8px" }}>
+          <div className="px-5 py-4 border-b border-border">
+            <p className="text-sm font-medium text-text flex items-center gap-2">
               {fullName ?? "Account"}
               {isAdmin && (
-                <span
-                  style={{
-                    fontSize: "9px",
-                    fontWeight: "600",
-                    letterSpacing: "0.3px",
-                    color: "var(--gold)",
-                    background: "var(--gold-bg)",
-                    border: "0.5px solid var(--gold-border)",
-                    borderRadius: "4px",
-                    padding: "1px 5px",
-                    textTransform: "uppercase",
-                  }}
-                >
+                <span className="text-[9px] font-semibold tracking-[0.3px] text-gold bg-gold-bg border border-gold-border rounded px-1.5 py-px uppercase">
                   Admin
                 </span>
               )}
             </p>
             {user.email && (
-              <p style={{ fontSize: "12px", color: "var(--text-muted)", marginTop: "2px" }}>
-                {user.email}
-              </p>
+              <p className="text-xs text-text-muted mt-0.5">{user.email}</p>
             )}
           </div>
         )}
 
         {/* Nav links */}
-        <div style={{ padding: "8px", flex: 1, overflowY: "auto" }}>
-          {/* Account sub-links (logged in) */}
+        <div className="p-2 flex-1 overflow-y-auto">
           {user && (
             <>
-              <div
-                style={{
-                  margin: "12px 8px 8px",
-                  fontSize: "11px",
-                  fontWeight: "500",
-                  color: "var(--text-muted)",
-                  letterSpacing: "0.5px",
-                  textTransform: "uppercase",
-                }}
-              >
+              <div className="mx-2 mb-2 mt-3 text-xs uppercase tracking-wider font-medium text-text-muted">
                 Account
               </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+              <div className="flex flex-col gap-0.5">
                 {ACCOUNT_LINKS.map((link) => (
                   <SidebarLink
                     key={link.href}
@@ -204,8 +131,8 @@ export default function MobileSidebar({ isOpen, onClose, user, fullName, isAdmin
                     onClick={onClose}
                     isActive={pathname === link.href}
                   >
-                    <span style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                      <link.icon size={14} style={{ flexShrink: 0 }} />
+                    <span className="flex items-center gap-2.5">
+                      <link.icon size={14} className="shrink-0" />
                       {link.label}
                     </span>
                   </SidebarLink>
@@ -216,94 +143,33 @@ export default function MobileSidebar({ isOpen, onClose, user, fullName, isAdmin
         </div>
 
         {/* Bottom: auth buttons / sign out */}
-        <div
-          style={{
-            padding: "12px 16px",
-            borderTop: "0.5px solid var(--border)",
-          }}
-        >
+        <div className="px-4 py-3 border-t border-border">
           {user ? (
             <button
               onClick={handleLogout}
               disabled={pending}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-                width: "100%",
-                padding: "10px 12px",
-                borderRadius: "8px",
-                fontSize: "13px",
-                color: "var(--text-muted)",
-                background: "transparent",
-                border: "none",
-                cursor: pending ? "not-allowed" : "pointer",
-                opacity: pending ? 0.5 : 1,
-                transition: "all 0.15s",
-                textAlign: "left",
-              }}
-              onMouseEnter={(e) => {
-                if (!pending) {
-                  e.currentTarget.style.background = "var(--coral-bg)";
-                  e.currentTarget.style.color = "var(--coral-text)";
-                }
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "transparent";
-                e.currentTarget.style.color = "var(--text-muted)";
-              }}
+              className={`flex items-center gap-2 w-full px-3 py-2.5 rounded-lg text-sm text-text-muted bg-transparent border-none cursor-pointer transition-all duration-150 text-left ${
+                pending
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:bg-coral-bg hover:text-coral-text"
+              }`}
             >
               <LogOut size={14} />
               {pending ? "Signing out..." : "Sign out"}
             </button>
           ) : (
-            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+            <div className="flex flex-col gap-2">
               <Link
                 href="/login"
                 onClick={onClose}
-                style={{
-                  width: "100%",
-                  textAlign: "center",
-                  fontSize: "13px",
-                  color: "var(--text-secondary)",
-                  textDecoration: "none",
-                  padding: "10px",
-                  borderRadius: "8px",
-                  border: "0.5px solid var(--border)",
-                  transition: "all 0.15s",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = "var(--border-hover)";
-                  e.currentTarget.style.color = "var(--text)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = "var(--border)";
-                  e.currentTarget.style.color = "var(--text-secondary)";
-                }}
+                className="w-full text-center text-sm text-text-secondary no-underline px-2.5 py-2.5 rounded-lg border border-border transition-all duration-150 hover:border-border-hover hover:text-text"
               >
                 Sign in
               </Link>
               <Link
                 href="/register"
                 onClick={onClose}
-                style={{
-                  width: "100%",
-                  textAlign: "center",
-                  fontSize: "13px",
-                  color: "#fff",
-                  textDecoration: "none",
-                  padding: "10px",
-                  borderRadius: "8px",
-                  background: "var(--accent)",
-                  fontWeight: "500",
-                  transition: "background 0.15s",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "#db8b66";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "var(--accent)";
-                }}
+                className="w-full text-center text-sm text-white no-underline px-2.5 py-2.5 rounded-lg bg-accent font-medium transition-all duration-150 hover:brightness-110"
               >
                 Sign up
               </Link>
@@ -330,26 +196,11 @@ function SidebarLink({
     <Link
       href={href}
       onClick={onClick}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        padding: "10px 12px",
-        borderRadius: "8px",
-        fontSize: "14px",
-        fontWeight: isActive ? "500" : "400",
-        color: isActive ? "var(--text)" : "var(--text-secondary)",
-        textDecoration: "none",
-        background: isActive ? "var(--bg-subtle)" : "transparent",
-        transition: "all 0.15s",
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.background = "var(--bg-subtle)";
-        e.currentTarget.style.color = "var(--text)";
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.background = isActive ? "var(--bg-subtle)" : "transparent";
-        e.currentTarget.style.color = isActive ? "var(--text)" : "var(--text-secondary)";
-      }}
+      className={`flex items-center px-3 py-2.5 rounded-lg text-sm no-underline transition-all duration-150 ${
+        isActive
+          ? "bg-bg-subtle text-text font-medium"
+          : "text-text-secondary font-normal hover:bg-bg-subtle hover:text-text"
+      }`}
     >
       {children}
     </Link>

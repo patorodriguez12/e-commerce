@@ -19,29 +19,10 @@ export default function NavContent({ user, fullName, isAdmin }: Props) {
 
   return (
     <>
-      <nav
-        style={{
-          borderBottom: "0.5px solid var(--border)",
-          position: "sticky",
-          top: 0,
-          zIndex: 30,
-          backdropFilter: "blur(16px)",
-          WebkitBackdropFilter: "blur(16px)",
-        }}
-      >
-        <div
-          style={{
-            maxWidth: "1200px",
-            margin: "0 auto",
-            padding: "0 24px",
-            height: "56px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
+      <nav className="border-b border-border sticky top-0 z-30 backdrop-blur-2xl">
+        <div className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center" }}>
+          <Link href="/" className="flex items-center no-underline">
             <Image
               src="/navbar-logo.png"
               alt="Smartech"
@@ -53,54 +34,24 @@ export default function NavContent({ user, fullName, isAdmin }: Props) {
           </Link>
 
           {/* Right actions */}
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <div className="flex items-center gap-2">
             <CartButton />
 
             {/* Desktop user menu */}
-            <div className="desktop-only" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <div className="desktop-only flex items-center gap-2">
               {user ? (
                 <UserMenu fullName={fullName ?? "Account"} isAdmin={isAdmin} />
               ) : (
                 <>
                   <Link
                     href="/login"
-                    style={{
-                      fontSize: "13px",
-                      color: "var(--text-secondary)",
-                      textDecoration: "none",
-                      padding: "6px 14px",
-                      borderRadius: "6px",
-                      transition: "all 0.15s",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.color = "var(--accent-text)";
-                      e.currentTarget.style.background = "var(--accent-bg)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.color = "var(--text-secondary)";
-                      e.currentTarget.style.background = "transparent";
-                    }}
+                    className="text-sm text-text-secondary no-underline px-3.5 py-1.5 rounded-md transition-all hover:text-accent-text hover:bg-accent-bg"
                   >
                     Sign in
                   </Link>
                   <Link
                     href="/register"
-                    style={{
-                      fontSize: "13px",
-                      color: "#fff",
-                      background: "var(--accent)",
-                      textDecoration: "none",
-                      padding: "6px 14px",
-                      borderRadius: "6px",
-                      fontWeight: "500",
-                      transition: "all 0.15s",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = "#db8b66";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = "var(--accent)";
-                    }}
+                    className="text-sm text-white bg-accent no-underline px-3.5 py-1.5 rounded-md font-medium transition-all hover:brightness-110"
                   >
                     Sign up
                   </Link>
@@ -110,27 +61,9 @@ export default function NavContent({ user, fullName, isAdmin }: Props) {
 
             {/* Mobile hamburger */}
             <button
-              className="mobile-only"
+              className="mobile-only border border-border rounded-md p-1.5 text-text-secondary cursor-pointer flex items-center justify-center transition-colors hover:border-border-hover"
               onClick={() => setSidebarOpen(true)}
               aria-label="Open menu"
-              style={{
-                background: "transparent",
-                border: "0.5px solid var(--border)",
-                borderRadius: "6px",
-                padding: "6px",
-                color: "var(--text-secondary)",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                transition: "border-color 0.15s",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "var(--border-hover)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "var(--border)";
-              }}
             >
               <Menu size={18} />
             </button>
