@@ -13,7 +13,7 @@ No test, typecheck, or format scripts exist.
 - **Path alias**: `@/*` → `./src/*`
 - **Prices stored in cents** (integers). `formatPrice(n)` divides by 100 and formats as USD.
 - **Remote images** from `images.unsplash.com` and `*.supabase.co` (configured in `next.config.ts`)
-- **Styling**: CSS variables + inline `style` props (dark theme). CSS utility class `.admin-input` for form input styling + focus border. Tailwind utilities used only for responsive layout grids.
+- **Styling**: Tailwind CSS utilities as primary approach. `globals.css` reserved for CSS variables (dark theme colors), `@keyframes` animations, and other truly global CSS. Inline `style` props should be avoided. `.admin-input` class kept for form input styling + focus border.
 
 ## Supabase — three clients
 | File | When to use |
@@ -114,4 +114,4 @@ src/
 | 6 | Delete confirmation — `DeleteProductButton.tsx` with `window.confirm()` |
 | 7 | Empty states — SVG icon + subtitle + CTA link |
 | 8 | Client-side search — `SearchBar`, `ProductTable`, `OrderTable`, `UserTable` |
-| 9 | Final polish — `STATUS_STYLES` shared via `constants.ts`, any type fixed, Tailwind → inline styles in new/edit pages, `.admin-input` CSS class for form focus |
+| 9 | Final polish — `STATUS_STYLES` shared via `constants.ts`, any type fixed, `.admin-input` CSS class for form focus |
