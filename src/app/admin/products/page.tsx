@@ -86,7 +86,64 @@ export default async function AdminProductsPage() {
             </tr>
           </thead>
           <tbody>
-            {products?.map((product: any) => (
+            {!products?.length ? (
+              <tr>
+                <td
+                  colSpan={5}
+                  style={{
+                    padding: "48px 24px",
+                    textAlign: "center",
+                  }}
+                >
+                  <svg
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    style={{
+                      margin: "0 auto 12px",
+                      color: "var(--text-muted)",
+                      opacity: 0.4,
+                    }}
+                  >
+                    <path d="M3 7L12 3L21 7V17L12 21L3 17V7Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+                    <path d="M12 14L21 10" stroke="currentColor" strokeWidth="1.5" />
+                    <path d="M12 14L3 10" stroke="currentColor" strokeWidth="1.5" />
+                    <path d="M12 14V21" stroke="currentColor" strokeWidth="1.5" />
+                  </svg>
+                  <p style={{ color: "var(--text-muted)", fontSize: "13px" }}>
+                    No products yet
+                  </p>
+                  <p
+                    style={{
+                      color: "var(--text-muted)",
+                      fontSize: "12px",
+                      marginTop: "4px",
+                      opacity: 0.6,
+                    }}
+                  >
+                    Create your first product to start selling.
+                  </p>
+                  <Link
+                    href="/admin/products/new"
+                    style={{
+                      display: "inline-block",
+                      marginTop: "16px",
+                      background: "var(--accent)",
+                      color: "#fff",
+                      padding: "8px 16px",
+                      borderRadius: "8px",
+                      textDecoration: "none",
+                      fontSize: "13px",
+                      fontWeight: "500",
+                    }}
+                  >
+                    Create product
+                  </Link>
+                </td>
+              </tr>
+            ) : (
+              products?.map((product: any) => (
               <tr
                 key={product.id}
                 style={{ borderBottom: "0.5px solid var(--border)" }}
@@ -185,7 +242,7 @@ export default async function AdminProductsPage() {
                   </div>
                 </td>
               </tr>
-            ))}
+            )))}
           </tbody>
         </table>
       </div>

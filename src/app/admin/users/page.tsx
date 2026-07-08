@@ -86,13 +86,38 @@ export default async function AdminUsersPage() {
                 <td
                   colSpan={4}
                   style={{
-                    padding: "40px",
+                    padding: "48px 24px",
                     textAlign: "center",
-                    color: "var(--text-muted)",
-                    fontSize: "13px",
                   }}
                 >
-                  No users yet
+                  <svg
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    style={{
+                      margin: "0 auto 12px",
+                      color: "var(--text-muted)",
+                      opacity: 0.4,
+                    }}
+                  >
+                    <circle cx="9" cy="8" r="3.5" stroke="currentColor" strokeWidth="1.5" />
+                    <path d="M2 20C2 16.5 4.5 14 9 14C13.5 14 16 16.5 16 20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                    <path d="M16 8.5C18 8.5 19.5 10 19.5 12C19.5 14 18 15.5 16 15.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                  </svg>
+                  <p style={{ color: "var(--text-muted)", fontSize: "13px" }}>
+                    No registered users yet
+                  </p>
+                  <p
+                    style={{
+                      color: "var(--text-muted)",
+                      fontSize: "12px",
+                      marginTop: "4px",
+                      opacity: 0.6,
+                    }}
+                  >
+                    Users will appear here once they create an account.
+                  </p>
                 </td>
               </tr>
             )}

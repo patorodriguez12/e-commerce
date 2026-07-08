@@ -220,16 +220,47 @@ export default async function AdminDashboard() {
         </div>
 
         {recentOrders.length === 0 ? (
-          <p
+          <div
             style={{
               textAlign: "center",
-              color: "var(--text-muted)",
-              padding: "40px",
-              fontSize: "13px",
+              padding: "48px 24px",
             }}
           >
-            No orders yet
-          </p>
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              style={{
+                margin: "0 auto 12px",
+                color: "var(--text-muted)",
+                opacity: 0.4,
+              }}
+            >
+              <path d="M3 6H21L19 18H5L3 6Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+              <circle cx="8" cy="20" r="1.5" fill="currentColor" />
+              <circle cx="16" cy="20" r="1.5" fill="currentColor" />
+              <path d="M6 6V4C6 2.5 7.5 2 12 2C16.5 2 18 2.5 18 4V6" stroke="currentColor" strokeWidth="1.5" />
+            </svg>
+            <p
+              style={{
+                color: "var(--text-muted)",
+                fontSize: "13px",
+              }}
+            >
+              No orders yet
+            </p>
+            <p
+              style={{
+                color: "var(--text-muted)",
+                fontSize: "12px",
+                marginTop: "4px",
+                opacity: 0.6,
+              }}
+            >
+              Orders will appear here once customers start purchasing.
+            </p>
+          </div>
         ) : (
           <div className="overflow-x-auto">
           <table
