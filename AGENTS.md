@@ -13,7 +13,7 @@ No test, typecheck, or format scripts exist.
 - **Path alias**: `@/*` → `./src/*`
 - **Prices stored in cents** (integers). `formatPrice(n)` divides by 100 and formats as USD.
 - **Remote images** from `images.unsplash.com` and `*.supabase.co` (configured in `next.config.ts`)
-- **Styling**: CSS variables + inline `style` props (dark theme). No Tailwind utility classes in actual components.
+- **Styling**: CSS variables + inline `style` props (dark theme). CSS utility class `.admin-input` for form input styling + focus border. Tailwind utilities used only for responsive layout grids.
 
 ## Supabase — three clients
 | File | When to use |
@@ -72,6 +72,9 @@ Checks session **only** (redirects unauthenticated users from `/dashboard`, `/ch
 - Roles (`customer`/`admin`) in `profiles` table, enforced via SQL RLS policies
 - `requireAdmin()` in `src/lib/supabase/auth.ts` checks profile role and redirects if not admin
 
+## Shared constants
+- `src/lib/constants.ts` — `STATUS_STYLES` (order status badge styles), shared across admin pages and components
+
 ## Project structure
 
 ```
@@ -84,7 +87,7 @@ src/
     auth/callback                     — OAuth code exchange
     checkout/, dashboard/             — protected pages
   components/
-    admin/         — ProductForm, OrderStatusSelect
+    admin/         — AdminSidebar, ProductForm, OrderStatusSelect, SearchBar, DeleteProductButton, ProductTable, OrderTable, UserTable
     auth/          — OAuthButtons
     cart/          — CartDrawer, CartItem, CartButton
     dashboard/     — ProfileForm
@@ -99,3 +102,16 @@ src/
     utils/         — formatPrice
   types/           — Product, Order, CartItem, Review, etc.
 ```
+
+## Admin dashboard — responsive/UX polish (completed)
+| Step | Change |
+|------|--------|
+| 1 | `AdminSidebar.tsx` — Client Component with mobile hamburger toggle, SVG icons, active indicator |
+| 2 | `layout.tsx` — responsive padding `px-4 py-5 md:px-8 md:py-10` |
+| 3 | Tables — `overflow-x-auto` wrapper + `desktop-only` column class |
+| 4 | ProductForm — responsive `grid-cols-1 md:grid-cols-2/3` |
+| 5 | Dashboard metrics — SVG icons per card |
+| 6 | Delete confirmation — `DeleteProductButton.tsx` with `window.confirm()` |
+| 7 | Empty states — SVG icon + subtitle + CTA link |
+| 8 | Client-side search — `SearchBar`, `ProductTable`, `OrderTable`, `UserTable` |
+| 9 | Final polish — `STATUS_STYLES` shared via `constants.ts`, any type fixed, Tailwind → inline styles in new/edit pages, `.admin-input` CSS class for form focus |
