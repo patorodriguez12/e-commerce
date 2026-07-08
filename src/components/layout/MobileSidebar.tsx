@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { X, LogOut, User, ShoppingBag, Heart } from "lucide-react";
 import { useCartStore } from "@/lib/store/cartStore";
@@ -115,20 +116,16 @@ export default function MobileSidebar({ isOpen, onClose, user, fullName, isAdmin
           <Link
             href="/"
             onClick={onClose}
-            style={{
-              fontSize: "15px",
-              fontWeight: "600",
-              letterSpacing: "-0.5px",
-              color: "var(--text)",
-              textDecoration: "none",
-              fontFamily: "var(--font-sora)",
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-            }}
+            style={{ textDecoration: "none", display: "flex", alignItems: "center" }}
           >
-            <span style={{ color: "var(--gold)", opacity: 0.7 }}>◆</span>
-            Smartech
+            <Image
+              src="/navbar-logo.png"
+              alt="Smartech"
+              width={500}
+              height={500}
+              priority
+              className="h-24 w-auto"
+            />
           </Link>
           <button
             onClick={onClose}

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu } from "lucide-react";
 import CartButton from "@/components/cart/CartButton";
 import UserMenu from "@/components/layout/UserMenu";
@@ -40,22 +41,15 @@ export default function NavContent({ user, fullName, isAdmin }: Props) {
           }}
         >
           {/* Logo */}
-          <Link
-            href="/"
-            style={{
-              fontSize: "16px",
-              fontWeight: "600",
-              letterSpacing: "-0.5px",
-              color: "var(--text)",
-              textDecoration: "none",
-              fontFamily: "var(--font-sora)",
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-            }}
-          >
-            <span style={{ color: "var(--gold)", opacity: 0.7 }}>◆</span>
-            Smartech
+          <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center" }}>
+            <Image
+              src="/navbar-logo.png"
+              alt="Smartech"
+              width={500}
+              height={500}
+              priority
+              className="h-24 w-auto"
+            />
           </Link>
 
           {/* Right actions */}
