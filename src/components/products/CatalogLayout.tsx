@@ -70,37 +70,17 @@ export default function CatalogLayout({ categories, products, total }: Props) {
   if (isMobile) {
     return (
       <div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginBottom: "20px",
-            gap: "12px",
-          }}
-        >
-          <p style={{ fontSize: "13px", color: "var(--text-muted)" }}>
+        <div className="flex items-center justify-between mb-5 gap-3">
+          <p className="text-sm text-text-muted">
             {total} {total === 1 ? "product" : "products"}
           </p>
           <button
             onClick={() => setDrawerOpen(true)}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              background: hasActiveFilters
-                ? "var(--accent-bg)"
-                : "var(--bg-card)",
-              border: `0.5px solid ${hasActiveFilters ? "var(--accent-border)" : "var(--border)"}`,
-              borderRadius: "8px",
-              padding: "8px 16px",
-              color: hasActiveFilters
-                ? "var(--accent-text)"
-                : "var(--text-secondary)",
-              cursor: "pointer",
-              fontSize: "13px",
-              fontWeight: "500",
-            }}
+            className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium cursor-pointer ${
+              hasActiveFilters
+                ? "bg-accent-bg border border-accent-border text-accent-text"
+                : "bg-surface border border-border text-text-secondary"
+            }`}
           >
             <svg
               width="14"
@@ -116,16 +96,7 @@ export default function CatalogLayout({ categories, products, total }: Props) {
             </svg>
             Filters
             {activeCount > 0 && (
-              <span
-                style={{
-                  background: "var(--accent)",
-                  color: "#fff",
-                  fontSize: "10px",
-                  borderRadius: "10px",
-                  padding: "1px 6px",
-                  fontWeight: "500",
-                }}
-              >
+              <span className="bg-accent text-white text-[10px] rounded-[10px] px-[6px] py-[1px] font-medium">
                 {activeCount}
               </span>
             )}
@@ -153,7 +124,7 @@ export default function CatalogLayout({ categories, products, total }: Props) {
   }
 
   return (
-    <div style={{ display: "flex", gap: "32px", alignItems: "flex-start" }}>
+    <div className="flex gap-8 items-start">
       <FilterSidebar
         categories={categories}
         filters={filters}

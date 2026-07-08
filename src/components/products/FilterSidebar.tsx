@@ -21,42 +21,13 @@ const SORT_OPTIONS: { value: SortOption; label: string }[] = [
   { value: "name_asc", label: "Name: A to Z" },
 ];
 
-const sectionLabel: React.CSSProperties = {
-  fontSize: "10px",
-  color: "var(--text-muted)",
-  textTransform: "uppercase",
-  letterSpacing: "1px",
-  marginBottom: "10px",
-  display: "block",
-};
-
-const filterBtn = (active: boolean): React.CSSProperties => ({
-  width: "100%",
-  textAlign: "left",
-  padding: "7px 10px",
-  borderRadius: "6px",
-  fontSize: "13px",
-  background: active ? "var(--accent-bg)" : "transparent",
-  color: active ? "var(--accent-text)" : "var(--text-secondary)",
-  border: active
-    ? "0.5px solid var(--accent-border)"
-    : "0.5px solid transparent",
-  cursor: "pointer",
-  transition: "all 0.15s",
-  fontWeight: active ? "500" : "400",
-});
-
-const inputStyle: React.CSSProperties = {
-  width: "100%",
-  background: "var(--bg-subtle)",
-  border: "0.5px solid var(--border)",
-  borderRadius: "6px",
-  padding: "8px 10px",
-  fontSize: "13px",
-  color: "var(--text-primary)",
-  outline: "none",
-  transition: "border-color 0.15s",
-};
+function filterBtnClasses(active: boolean): string {
+  return `w-full text-left px-[10px] py-[7px] rounded-md text-sm cursor-pointer transition-all duration-150 ${
+    active
+      ? "bg-accent-bg text-accent-text border border-accent-border font-medium"
+      : "bg-transparent text-text-secondary border border-transparent font-normal"
+  }`;
+}
 
 export default function FilterSidebar({
   categories,
@@ -100,49 +71,33 @@ export default function FilterSidebar({
   }
 
   return (
-    <aside
-      style={{
-        width: "200px",
-        flexShrink: 0,
-        display: "flex",
-        flexDirection: "column",
-        gap: "28px",
-      }}
-    >
+    <aside className="w-[200px] shrink-0 flex flex-col gap-7">
       {hasActiveFilters && (
         <button
           onClick={handleClearAll}
-          style={{
-            background: "transparent",
-            border: "0.5px solid var(--coral-border)",
-            color: "var(--coral-text)",
-            borderRadius: "6px",
-            padding: "6px 12px",
-            fontSize: "12px",
-            cursor: "pointer",
-          }}
+          className="bg-transparent border border-coral-border text-coral-text rounded-md px-3 py-1.5 text-xs cursor-pointer"
         >
           ✕ Clear filters
         </button>
       )}
 
       <div>
-        <span style={sectionLabel}>Search</span>
+        <span className="text-[10px] text-text-muted uppercase tracking-[1px] mb-[10px] block">Search</span>
         <input
           type="text"
           placeholder="Search products..."
           value={searchInput}
           onChange={handleSearchChange}
-          style={inputStyle}
+          className="w-full bg-bg-subtle border border-border rounded-md px-[10px] py-2 text-sm text-text outline-none transition-colors duration-150"
         />
       </div>
 
       <div>
-        <span style={sectionLabel}>Category</span>
-        <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+        <span className="text-[10px] text-text-muted uppercase tracking-[1px] mb-[10px] block">Category</span>
+        <div className="flex flex-col gap-0.5">
           <button
             onClick={() => setFilter("category", null)}
-            style={filterBtn(!filters.category)}
+            className={filterBtnClasses(!filters.category)}
           >
             All categories
           </button>
@@ -150,7 +105,7 @@ export default function FilterSidebar({
             <button
               key={cat.id}
               onClick={() => setFilter("category", cat.slug)}
-              style={filterBtn(filters.category === cat.slug)}
+              className={filterBtnClasses(filters.category === cat.slug)}
             >
               {cat.name}
             </button>
@@ -159,13 +114,13 @@ export default function FilterSidebar({
       </div>
 
       <div>
-        <span style={sectionLabel}>Sort by</span>
-        <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+        <span className="text-[10px] text-text-muted uppercase tracking-[1px] mb-[10px] block">Sort by</span>
+        <div className="flex flex-col gap-0.5">
           {SORT_OPTIONS.map((option) => (
             <button
               key={option.value}
               onClick={() => setFilter("sort", option.value)}
-              style={filterBtn(filters.sort === option.value)}
+              className={filterBtnClasses(filters.sort === option.value)}
             >
               {option.label}
             </button>
@@ -174,52 +129,34 @@ export default function FilterSidebar({
       </div>
 
       <div>
-        <span style={sectionLabel}>Price range (USD)</span>
-        <div style={{ display: "flex", gap: "8px", marginBottom: "8px" }}>
+        <span className="text-[10px] text-text-muted uppercase tracking-[1px] mb-[10px] block">Price range (USD)</span>
+        <div className="flex gap-2 mb-2">
           <input
             type="number"
             placeholder="Min"
             value={minInput}
             onChange={(e) => setMinInput(e.target.value)}
-            style={{ ...inputStyle, width: "50%" }}
+            className="w-1/2 bg-bg-subtle border border-border rounded-md px-[10px] py-2 text-sm text-text outline-none transition-colors duration-150"
           />
           <input
             type="number"
             placeholder="Max"
             value={maxInput}
             onChange={(e) => setMaxInput(e.target.value)}
-            style={{ ...inputStyle, width: "50%" }}
+            className="w-1/2 bg-bg-subtle border border-border rounded-md px-[10px] py-2 text-sm text-text outline-none transition-colors duration-150"
           />
         </div>
-        <div style={{ display: "flex", gap: "8px" }}>
+        <div className="flex gap-2">
           <button
             onClick={handlePriceApply}
-            style={{
-              flex: 1,
-              background: "var(--accent)",
-              color: "#fff",
-              border: "none",
-              borderRadius: "6px",
-              padding: "7px",
-              fontSize: "12px",
-              fontWeight: "500",
-              cursor: "pointer",
-            }}
+            className="flex-1 bg-accent text-white border-none rounded-md p-[7px] text-xs font-medium cursor-pointer"
           >
             Apply
           </button>
           {(filters.min || filters.max) && (
             <button
               onClick={handlePriceClear}
-              style={{
-                background: "transparent",
-                border: "0.5px solid var(--border)",
-                borderRadius: "6px",
-                color: "var(--text-muted)",
-                padding: "7px 10px",
-                fontSize: "12px",
-                cursor: "pointer",
-              }}
+              className="bg-transparent border border-border rounded-md text-text-muted px-[10px] py-[7px] text-xs cursor-pointer"
             >
               ✕
             </button>

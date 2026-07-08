@@ -34,26 +34,11 @@ export default function AddToCartButton({ product }: Props) {
     <button
       onClick={handleAdd}
       disabled={isOutOfStock || isMaxReached}
-      style={{
-        width: "100%",
-        padding: "13px 24px",
-        borderRadius: "8px",
-        fontSize: "14px",
-        fontWeight: "500",
-        cursor: isOutOfStock || isMaxReached ? "not-allowed" : "pointer",
-        transition: "all 0.2s ease",
-        background: added
-          ? "var(--accent)"
-          : isOutOfStock || isMaxReached
-            ? "var(--elevated)"
-            : "var(--accent)",
-        color: added
-          ? "#fff"
-          : isOutOfStock || isMaxReached
-            ? "var(--text-muted)"
-            : "#fff",
-        border: "none",
-      }}
+      className={`w-full px-6 py-[13px] rounded-lg text-sm font-medium transition-all duration-200 border-none ${
+        isOutOfStock || isMaxReached
+          ? "bg-elevated text-text-muted cursor-not-allowed"
+          : "bg-accent text-white cursor-pointer"
+      }`}
     >
       {isOutOfStock ? "Out of stock" : isMaxReached ? "Max reached" : added ? "✓ Added" : "Add to cart"}
     </button>

@@ -1,35 +1,6 @@
 import { requireAdmin } from "@/lib/supabase/auth";
 import { createClient } from "@/lib/supabase/server";
-import { formatPrice } from "@/lib/utils/formatPrice";
-import OrderStatusSelect from "@/components/admin/OrderStatusSelect";
-
-const STATUS_STYLES: Record<string, React.CSSProperties> = {
-  paid: {
-    background: "var(--green-bg)",
-    color: "var(--green-text)",
-    border: "0.5px solid var(--green-border)",
-  },
-  pending: {
-    background: "#BA751718",
-    color: "#EF9F27",
-    border: "0.5px solid #BA751740",
-  },
-  shipped: {
-    background: "#185FA518",
-    color: "#378ADD",
-    border: "0.5px solid #185FA540",
-  },
-  delivered: {
-    background: "var(--accent-bg)",
-    color: "var(--accent-text)",
-    border: "0.5px solid var(--accent-border)",
-  },
-  cancelled: {
-    background: "var(--coral-bg)",
-    color: "var(--coral-text)",
-    border: "0.5px solid var(--coral-border)",
-  },
-};
+import OrderTable from "@/components/admin/OrderTable";
 
 export default async function AdminOrdersPage() {
   await requireAdmin();
@@ -42,137 +13,16 @@ export default async function AdminOrdersPage() {
 
   return (
     <div>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginBottom: "32px",
-        }}
-      >
-        <h1
-          style={{
-            fontSize: "22px",
-            fontWeight: "500",
-            letterSpacing: "-0.5px",
-          }}
-        >
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="text-[22px] font-medium tracking-[-0.5px]">
           Orders
         </h1>
-        <p style={{ fontSize: "12px", color: "var(--text-muted)" }}>
+        <p className="text-xs text-text-muted">
           {orders?.length ?? 0} total
         </p>
       </div>
 
-      <div
-        style={{
-          background: "var(--bg-card)",
-          border: "0.5px solid var(--border)",
-          borderRadius: "12px",
-          overflow: "hidden",
-        }}
-      >
-        <table
-          style={{
-            width: "100%",
-            borderCollapse: "collapse",
-            fontSize: "13px",
-          }}
-        >
-          <thead>
-            <tr style={{ borderBottom: "0.5px solid var(--border)" }}>
-              {["Order", "Customer", "Date", "Items", "Total", "Status"].map(
-                (h) => (
-                  <th
-                    key={h}
-                    style={{
-                      padding: "12px 20px",
-                      textAlign: "left",
-                      fontSize: "11px",
-                      color: "var(--text-muted)",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.5px",
-                      fontWeight: "500",
-                    }}
-                  >
-                    {h}
-                  </th>
-                ),
-              )}
-            </tr>
-          </thead>
-          <tbody>
-            {!orders?.length && (
-              <tr>
-                <td
-                  colSpan={6}
-                  style={{
-                    padding: "40px",
-                    textAlign: "center",
-                    color: "var(--text-muted)",
-                    fontSize: "13px",
-                  }}
-                >
-                  No orders yet
-                </td>
-              </tr>
-            )}
-            {orders?.map((order: any) => (
-              <tr
-                key={order.id}
-                style={{ borderBottom: "0.5px solid var(--border)" }}
-              >
-                <td
-                  style={{
-                    padding: "14px 20px",
-                    fontFamily: "monospace",
-                    fontSize: "12px",
-                    color: "var(--text-secondary)",
-                  }}
-                >
-                  #{order.id.slice(0, 8).toUpperCase()}
-                </td>
-                <td
-                  style={{
-                    padding: "14px 20px",
-                    color: "var(--text-secondary)",
-                  }}
-                >
-                  {order.profiles?.full_name ?? "Unknown"}
-                </td>
-                <td
-                  style={{
-                    padding: "14px 20px",
-                    color: "var(--text-muted)",
-                    fontSize: "12px",
-                  }}
-                >
-                  {new Date(order.created_at).toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "numeric",
-                    year: "numeric",
-                  })}
-                </td>
-                <td
-                  style={{ padding: "14px 20px", color: "var(--text-muted)" }}
-                >
-                  {order.order_items?.length ?? 0}
-                </td>
-                <td style={{ padding: "14px 20px", fontWeight: "500" }}>
-                  {formatPrice(order.total)}
-                </td>
-                <td style={{ padding: "14px 20px" }}>
-                  <OrderStatusSelect
-                    orderId={order.id}
-                    currentStatus={order.status}
-                    styles={STATUS_STYLES}
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <OrderTable orders={orders ?? []} />
     </div>
   );
 }

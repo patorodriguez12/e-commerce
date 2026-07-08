@@ -21,26 +21,7 @@ export default function CartButton() {
   return (
     <button
       onClick={openDrawer}
-      style={{
-        position: "relative",
-        background: "transparent",
-        border: "0.5px solid var(--border)",
-        borderRadius: "6px",
-        padding: "6px 12px",
-        color: "var(--text-secondary)",
-        cursor: "pointer",
-        fontSize: "14px",
-        transition: "border-color 0.15s",
-        display: "flex",
-        alignItems: "center",
-        gap: "6px",
-      }}
-      onMouseEnter={(e) =>
-        (e.currentTarget.style.borderColor = "var(--border-hover)")
-      }
-      onMouseLeave={(e) =>
-        (e.currentTarget.style.borderColor = "var(--border)")
-      }
+      className="relative bg-transparent border border-border rounded-md px-3 py-1.5 text-text-secondary cursor-pointer text-sm transition-colors duration-150 flex items-center gap-1.5 hover:border-border-hover"
     >
       <svg
         width="15"
@@ -55,16 +36,7 @@ export default function CartButton() {
         <path d="M16 10a4 4 0 01-8 0" />
       </svg>
       {isClient && totalItems > 0 && (
-        <span
-          style={{
-            background: "var(--accent)",
-            color: "#fff",
-            fontSize: "10px",
-            borderRadius: "10px",
-            padding: "1px 6px",
-            fontWeight: "500",
-          }}
-        >
+        <span className="bg-accent text-white text-[10px] rounded-[10px] px-1.5 py-0.5 font-medium">
           {totalItems}
         </span>
       )}

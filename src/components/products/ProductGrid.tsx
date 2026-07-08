@@ -25,25 +25,13 @@ export default function ProductGrid({
   }
 
   return (
-    <div style={{ flex: 1, minWidth: 0 }}>
+    <div className="flex-1 min-w-0">
       {!hideTotalLabel && (
-        <p
-          style={{
-            fontSize: "13px",
-            color: "var(--text-muted)",
-            marginBottom: "16px",
-          }}
-        >
+        <p className="text-sm text-text-muted mb-4">
           {total} {total === 1 ? "product" : "products"} found
         </p>
       )}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))",
-          gap: "16px",
-        }}
-      >
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-4">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

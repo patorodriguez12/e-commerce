@@ -11,25 +11,6 @@ type Props = {
   email?: string;
 };
 
-const inputStyle: React.CSSProperties = {
-  width: "100%",
-  background: "var(--elevated)",
-  border: "0.5px solid var(--border)",
-  borderRadius: "8px",
-  padding: "10px 14px",
-  fontSize: "14px",
-  color: "var(--text-primary)",
-  outline: "none",
-  transition: "border-color 0.15s",
-};
-
-const labelStyle: React.CSSProperties = {
-  display: "block",
-  fontSize: "12px",
-  color: "var(--text-secondary)",
-  marginBottom: "6px",
-};
-
 export default function ProfileForm({ profile, userId, email }: Props) {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -64,62 +45,18 @@ export default function ProfileForm({ profile, userId, email }: Props) {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{ display: "flex", flexDirection: "column", gap: "20px" }}
-    >
+    <form onSubmit={handleSubmit} className="flex flex-col gap-5">
       {/* Avatar + email */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "16px",
-          paddingBottom: "20px",
-          borderBottom: "0.5px solid var(--border)",
-        }}
-      >
-        <div
-          style={{
-            width: "48px",
-            height: "48px",
-            borderRadius: "50%",
-            background: "var(--accent-bg)",
-            border: "0.5px solid var(--accent-border)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: "18px",
-            fontWeight: "600",
-            color: "var(--accent-text)",
-            flexShrink: 0,
-          }}
-        >
+      <div className="flex items-center gap-4 pb-5 border-b border-border">
+        <div className="w-12 h-12 rounded-full bg-accent-bg border border-accent-border flex items-center justify-center text-lg font-semibold text-accent-text shrink-0">
           {firstInitial}
         </div>
-        <div style={{ minWidth: 0 }}>
-          <p
-            style={{
-              fontSize: "14px",
-              fontWeight: "500",
-              color: "var(--text)",
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-            }}
-          >
+        <div className="min-w-0">
+          <p className="text-sm font-medium text-text truncate">
             {fullName}
           </p>
           {email && (
-            <p
-              style={{
-                fontSize: "12px",
-                color: "var(--text-muted)",
-                marginTop: "2px",
-                display: "flex",
-                alignItems: "center",
-                gap: "4px",
-              }}
-            >
+            <p className="text-xs text-text-muted mt-0.5 flex items-center gap-1">
               <Mail size={11} />
               {email}
             </p>
@@ -128,87 +65,45 @@ export default function ProfileForm({ profile, userId, email }: Props) {
       </div>
 
       {/* Fields */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-          gap: "16px",
-        }}
-      >
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4">
         <div>
-          <label style={labelStyle}>Full name</label>
+          <label className="block text-xs text-text-secondary mb-1.5">Full name</label>
           <input
             name="full_name"
             type="text"
             defaultValue={profile?.full_name ?? ""}
-            style={inputStyle}
-            onFocus={(e) =>
-              (e.currentTarget.style.borderColor = "var(--accent)")
-            }
-            onBlur={(e) =>
-              (e.currentTarget.style.borderColor = "var(--border)")
-            }
+            className="admin-input"
           />
         </div>
         <div>
-          <label style={labelStyle}>Phone</label>
+          <label className="block text-xs text-text-secondary mb-1.5">Phone</label>
           <input
             name="phone"
             type="text"
             defaultValue={profile?.phone ?? ""}
-            style={inputStyle}
-            onFocus={(e) =>
-              (e.currentTarget.style.borderColor = "var(--accent)")
-            }
-            onBlur={(e) =>
-              (e.currentTarget.style.borderColor = "var(--border)")
-            }
+            className="admin-input"
           />
         </div>
       </div>
 
       <div>
-        <label style={labelStyle}>Address</label>
+        <label className="block text-xs text-text-secondary mb-1.5">Address</label>
         <textarea
           name="address"
           rows={3}
           defaultValue={profile?.address ?? ""}
-          style={{
-            ...inputStyle,
-            resize: "none",
-            fontFamily: "inherit",
-          }}
-          onFocus={(e) => (e.currentTarget.style.borderColor = "var(--accent)")}
-          onBlur={(e) => (e.currentTarget.style.borderColor = "var(--border)")}
+          className="admin-input resize-none"
         />
       </div>
 
       {error && (
-        <div
-          style={{
-            background: "var(--coral-bg)",
-            border: "0.5px solid var(--coral-border)",
-            borderRadius: "8px",
-            padding: "10px 14px",
-            fontSize: "13px",
-            color: "var(--coral-text)",
-          }}
-        >
+        <div className="bg-coral-bg border border-coral-border rounded-lg px-3.5 py-2.5 text-sm text-coral-text">
           {error}
         </div>
       )}
 
       {success && (
-        <div
-          style={{
-            background: "var(--green-bg)",
-            border: "0.5px solid var(--green-border)",
-            borderRadius: "8px",
-            padding: "10px 14px",
-            fontSize: "13px",
-            color: "var(--green-text)",
-          }}
-        >
+        <div className="bg-green-bg border border-green-border rounded-lg px-3.5 py-2.5 text-sm text-green-text">
           Changes saved successfully
         </div>
       )}
@@ -217,18 +112,7 @@ export default function ProfileForm({ profile, userId, email }: Props) {
         <button
           type="submit"
           disabled={loading}
-          style={{
-            background: "var(--accent)",
-            color: "#fff",
-            border: "none",
-            borderRadius: "8px",
-            padding: "10px 24px",
-            fontSize: "13px",
-            fontWeight: "500",
-            cursor: loading ? "not-allowed" : "pointer",
-            opacity: loading ? 0.6 : 1,
-            transition: "opacity 0.15s",
-          }}
+          className="bg-accent text-white border-0 rounded-lg px-6 py-2.5 text-sm font-medium cursor-pointer disabled:cursor-not-allowed disabled:opacity-60 transition-opacity duration-150"
         >
           {loading ? "Saving..." : "Save changes"}
         </button>

@@ -3,36 +3,9 @@
 import { useFormStatus } from "react-dom";
 import { signInWithGoogle, signInWithGitHub } from "@/lib/supabase/actions";
 
-const btnStyle: React.CSSProperties = {
-  width: "100%",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  gap: "10px",
-  background: "var(--bg-subtle)",
-  border: "0.5px solid var(--border)",
-  borderRadius: "8px",
-  padding: "10px 16px",
-  fontSize: "13px",
-  fontWeight: "500",
-  color: "var(--text-secondary)",
-  cursor: "pointer",
-  transition: "all 0.15s",
-};
-
 function Spinner() {
   return (
-    <span
-      style={{
-        width: 14,
-        height: 14,
-        border: "2px solid #ffffff30",
-        borderTopColor: "#fff",
-        borderRadius: "50%",
-        display: "inline-block",
-        animation: "spin 0.6s linear infinite",
-      }}
-    />
+    <span className="inline-block w-3.5 h-3.5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
   );
 }
 
@@ -50,27 +23,7 @@ function SubmitButton({
     <button
       type="submit"
       disabled={isDisabled}
-      style={{
-        ...btnStyle,
-        opacity: isDisabled ? 0.5 : 1,
-        cursor: isDisabled ? "not-allowed" : "pointer",
-      }}
-      onMouseEnter={(e) => {
-        if (!isDisabled) {
-          (e.currentTarget as HTMLButtonElement).style.borderColor =
-            "var(--border-hover)";
-          (e.currentTarget as HTMLButtonElement).style.color =
-            "var(--text-primary)";
-        }
-      }}
-      onMouseLeave={(e) => {
-        if (!isDisabled) {
-          (e.currentTarget as HTMLButtonElement).style.borderColor =
-            "var(--border)";
-          (e.currentTarget as HTMLButtonElement).style.color =
-            "var(--text-secondary)";
-        }
-      }}
+      className="w-full flex items-center justify-center gap-2.5 bg-bg-subtle border border-border rounded-lg px-4 py-2.5 text-sm font-medium text-text-secondary cursor-pointer transition-all duration-150 hover:border-border-hover hover:text-text disabled:opacity-50 disabled:cursor-not-allowed"
     >
       {pending ? <Spinner /> : children}
     </button>
@@ -95,7 +48,7 @@ function OAuthForm({
 
 export default function OAuthButtons({ disabled }: { disabled?: boolean }) {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+    <div className="flex flex-col gap-2.5">
       <OAuthForm action={signInWithGoogle} disabled={disabled}>
         <svg width="16" height="16" viewBox="0 0 24 24">
           <path

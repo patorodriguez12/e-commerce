@@ -1,9 +1,7 @@
 import { requireAdmin } from "@/lib/supabase/auth";
 import { createClient } from "@/lib/supabase/server";
-import { formatPrice } from "@/lib/utils/formatPrice";
-import { deleteProduct } from "@/lib/supabase/admin-actions";
 import Link from "next/link";
-import Image from "next/image";
+import ProductTable from "@/components/admin/ProductTable";
 
 export default async function AdminProductsPage() {
   await requireAdmin();
@@ -16,198 +14,19 @@ export default async function AdminProductsPage() {
 
   return (
     <div>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginBottom: "32px",
-        }}
-      >
-        <h1
-          style={{
-            fontSize: "22px",
-            fontWeight: "500",
-            letterSpacing: "-0.5px",
-          }}
-        >
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="text-[22px] font-medium tracking-[-0.5px]">
           Products
         </h1>
         <Link
           href="/admin/products/new"
-          style={{
-            background: "var(--accent)",
-            color: "#fff",
-            padding: "8px 16px",
-            borderRadius: "8px",
-            textDecoration: "none",
-            fontSize: "13px",
-            fontWeight: "500",
-          }}
+          className="bg-accent text-white px-4 py-2 rounded-lg no-underline text-sm font-medium"
         >
           + New product
         </Link>
       </div>
 
-      <div
-        style={{
-          background: "var(--bg-card)",
-          border: "0.5px solid var(--border)",
-          borderRadius: "12px",
-          overflow: "hidden",
-        }}
-      >
-        <table
-          style={{
-            width: "100%",
-            borderCollapse: "collapse",
-            fontSize: "13px",
-          }}
-        >
-          <thead>
-            <tr style={{ borderBottom: "0.5px solid var(--border)" }}>
-              {["Product", "Category", "Price", "Stock", "Actions"].map((h) => (
-                <th
-                  key={h}
-                  style={{
-                    padding: "12px 20px",
-                    textAlign: "left",
-                    fontSize: "11px",
-                    color: "var(--text-muted)",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.5px",
-                    fontWeight: "500",
-                  }}
-                >
-                  {h}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {products?.map((product: any) => (
-              <tr
-                key={product.id}
-                style={{ borderBottom: "0.5px solid var(--border)" }}
-              >
-                <td style={{ padding: "14px 20px" }}>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "12px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        position: "relative",
-                        width: "36px",
-                        height: "36px",
-                        flexShrink: 0,
-                        borderRadius: "6px",
-                        overflow: "hidden",
-                        background: "var(--bg-subtle)",
-                      }}
-                    >
-                      {product.image_url && (
-                        <Image
-                          src={product.image_url}
-                          alt={product.name}
-                          fill
-                          style={{ objectFit: "cover" }}
-                        />
-                      )}
-                    </div>
-                    <span
-                      style={{
-                        fontWeight: "500",
-                        color: "var(--text-primary)",
-                      }}
-                    >
-                      {product.name}
-                    </span>
-                  </div>
-                </td>
-                <td
-                  style={{ padding: "14px 20px", color: "var(--text-muted)" }}
-                >
-                  {product.categories?.name ?? "—"}
-                </td>
-                <td style={{ padding: "14px 20px", fontWeight: "500" }}>
-                  {formatPrice(product.price)}
-                </td>
-                <td style={{ padding: "14px 20px" }}>
-                  <span
-                    style={{
-                      fontSize: "11px",
-                      fontWeight: "500",
-                      padding: "3px 10px",
-                      borderRadius: "20px",
-                      ...(product.stock > 0
-                        ? {
-                            background: "var(--green-bg)",
-                            color: "var(--green-text)",
-                            border: "0.5px solid var(--green-border)",
-                          }
-                        : {
-                            background: "var(--coral-bg)",
-                            color: "var(--coral-text)",
-                            border: "0.5px solid var(--coral-border)",
-                          }),
-                    }}
-                  >
-                    {product.stock > 0
-                      ? `${product.stock} units`
-                      : "Out of stock"}
-                  </span>
-                </td>
-                <td style={{ padding: "14px 20px" }}>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "16px",
-                    }}
-                  >
-                    <Link
-                      href={`/admin/products/${product.id}/edit`}
-                      style={{
-                        fontSize: "12px",
-                        color: "var(--accent-text)",
-                        textDecoration: "none",
-                      }}
-                    >
-                      Edit
-                    </Link>
-                    <form
-                      action={async () => {
-                        "use server";
-                        await deleteProduct(product.id);
-                      }}
-                    >
-                      <button
-                        type="submit"
-                        className="remove-btn"
-                        style={{
-                          background: "transparent",
-                          border: "none",
-                          color: "var(--text-muted)",
-                          fontSize: "12px",
-                          cursor: "pointer",
-                          padding: 0,
-                          transition: "color 0.15s",
-                        }}
-                      >
-                        Delete
-                      </button>
-                    </form>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <ProductTable products={products ?? []} />
     </div>
   );
 }

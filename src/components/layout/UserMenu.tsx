@@ -2,11 +2,9 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { ChevronDown, User, ShoppingBag, Heart, LogOut } from "lucide-react";
+import { ChevronDown, User, ShoppingBag, Heart, LogOut, Shield } from "lucide-react";
 import { useCartStore } from "@/lib/store/cartStore";
 import { logout } from "@/lib/supabase/actions";
-
-import { Shield } from "lucide-react";
 
 type Props = {
   fullName: string;
@@ -19,13 +17,14 @@ const MENU_ITEMS = [
   { href: "/dashboard/wishlist", label: "My Wishlist", icon: Heart },
 ];
 
+const linkClass = "flex items-center gap-2.5 px-2.5 py-2 rounded-md text-sm text-text-secondary no-underline transition-all duration-100 hover:bg-bg-subtle hover:text-text";
+
 export default function UserMenu({ fullName, isAdmin }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [pending, setPending] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const clearCart = useCartStore((state) => state.clearCart);
 
-  // Cerrar al hacer click fuera
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) {
@@ -36,7 +35,6 @@ export default function UserMenu({ fullName, isAdmin }: Props) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Cerrar con Escape
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
       if (e.key === "Escape") setIsOpen(false);
@@ -53,105 +51,40 @@ export default function UserMenu({ fullName, isAdmin }: Props) {
   }
 
   return (
-    <div ref={ref} style={{ position: "relative" }}>
+    <div ref={ref} className="relative">
       {/* Trigger */}
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "6px",
-          background: isOpen ? "var(--bg-subtle)" : "transparent",
-          border: "0.5px solid",
-          borderColor: isOpen ? "var(--border-hover)" : "var(--border)",
-          borderRadius: "8px",
-          padding: "6px 12px",
-          color: "var(--text-secondary)",
-          cursor: "pointer",
-          fontSize: "13px",
-          fontWeight: "500",
-          transition: "all 0.15s",
-        }}
-        onMouseEnter={(e) => {
-          if (!isOpen) {
-            (e.currentTarget as HTMLButtonElement).style.borderColor =
-              "var(--border-hover)";
-            (e.currentTarget as HTMLButtonElement).style.background =
-              "var(--bg-subtle)";
-          }
-        }}
-        onMouseLeave={(e) => {
-          if (!isOpen) {
-            (e.currentTarget as HTMLButtonElement).style.borderColor =
-              "var(--border)";
-            (e.currentTarget as HTMLButtonElement).style.background =
-              "transparent";
-          }
-        }}
+        className={`flex items-center gap-1.5 border rounded-lg px-3 py-1.5 text-sm font-medium cursor-pointer transition-all duration-150 ${
+          isOpen
+            ? "bg-bg-subtle border-border-hover text-text-secondary"
+            : "bg-transparent border-border text-text-secondary hover:bg-bg-subtle hover:border-border-hover"
+        }`}
       >
         {fullName}
         <ChevronDown
           size={14}
-          style={{
-            transition: "transform 0.2s",
-            transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-          }}
+          className={`transition-transform duration-200 ${
+            isOpen ? "rotate-180" : ""
+          }`}
         />
       </button>
 
       {/* Dropdown */}
       <div
-        style={{
-          position: "absolute",
-          top: "calc(100% + 8px)",
-          right: 0,
-          width: "200px",
-          background: "#111111",
-          border: "0.5px solid var(--border)",
-          borderRadius: "10px",
-          overflow: "hidden",
-          zIndex: 50,
-          opacity: isOpen ? 1 : 0,
-          transform: isOpen
-            ? "translateY(0) scale(1)"
-            : "translateY(-8px) scale(0.97)",
-          pointerEvents: isOpen ? "auto" : "none",
-          transition: "opacity 0.15s ease, transform 0.15s ease",
-        }}
+        className={`absolute top-[calc(100%+8px)] right-0 w-[200px] bg-[#111111] border border-border rounded-xl overflow-hidden z-50 transition-all duration-150 ${
+          isOpen
+            ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
+            : "opacity-0 -translate-y-2 scale-[0.97] pointer-events-none"
+        }`}
       >
         {/* Header */}
-        <div
-          style={{
-            padding: "12px 16px",
-            borderBottom: "0.5px solid var(--border)",
-          }}
-        >
-          <p
-            style={{
-              fontSize: "13px",
-              fontWeight: "500",
-              color: "var(--text-primary)",
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-            }}
-          >
+        <div className="px-4 py-3 border-b border-border">
+          <p className="text-sm font-medium text-text flex items-center gap-2">
             {fullName}
             {isAdmin && (
-              <span
-                style={{
-                  fontSize: "10px",
-                  fontWeight: "600",
-                  letterSpacing: "0.3px",
-                  color: "var(--gold)",
-                  background: "var(--gold-bg)",
-                  border: "0.5px solid var(--gold-border)",
-                  borderRadius: "4px",
-                  padding: "1px 6px",
-                  textTransform: "uppercase",
-                }}
-              >
-                <Shield size={10} style={{ display: "inline", marginRight: 3, verticalAlign: "middle" }} />
+              <span className="text-[10px] font-semibold tracking-[0.3px] text-gold bg-gold-bg border border-gold-border rounded px-1.5 py-px uppercase flex items-center gap-1">
+                <Shield size={10} />
                 Admin
               </span>
             )}
@@ -159,108 +92,45 @@ export default function UserMenu({ fullName, isAdmin }: Props) {
         </div>
 
         {/* Links */}
-        <div style={{ padding: "6px" }}>
+        <div className="p-1.5">
           {MENU_ITEMS.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               onClick={() => setIsOpen(false)}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-                padding: "9px 10px",
-                borderRadius: "6px",
-                fontSize: "13px",
-                color: "var(--text-secondary)",
-                textDecoration: "none",
-                transition: "all 0.1s",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.background =
-                  "var(--bg-subtle)";
-                (e.currentTarget as HTMLAnchorElement).style.color =
-                  "var(--text-primary)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.background =
-                  "transparent";
-                (e.currentTarget as HTMLAnchorElement).style.color =
-                  "var(--text-secondary)";
-              }}
+              className={linkClass}
             >
-              <item.icon size={14} style={{ flexShrink: 0 }} />
+              <item.icon size={14} className="shrink-0" />
               {item.label}
             </Link>
           ))}
         </div>
 
         {isAdmin && (
-          <div style={{ padding: "6px 6px 0", borderTop: "0.5px solid var(--border)" }}>
+          <div className="p-1.5 pb-0 border-t border-border">
             <Link
               href="/admin"
               onClick={() => setIsOpen(false)}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-                padding: "9px 10px",
-                borderRadius: "6px",
-                fontSize: "13px",
-                color: "var(--gold)",
-                textDecoration: "none",
-                transition: "all 0.1s",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.background = "var(--gold-bg)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
-              }}
+              className="flex items-center gap-2.5 px-2.5 py-2 rounded-md text-sm text-gold no-underline transition-all duration-100 hover:bg-gold-bg"
             >
-              <Shield size={14} style={{ flexShrink: 0 }} />
+              <Shield size={14} className="shrink-0" />
               Admin panel
             </Link>
           </div>
         )}
 
         {/* Sign out */}
-        <div style={{ padding: "6px", borderTop: isAdmin ? "0" : "0.5px solid var(--border)" }}>
+        <div className={`p-1.5 ${isAdmin ? "border-t-0" : "border-t border-border"}`}>
           <button
             onClick={handleLogout}
             disabled={pending}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-              width: "100%",
-              padding: "9px 10px",
-              borderRadius: "6px",
-              fontSize: "13px",
-              color: "var(--text-muted)",
-              background: "transparent",
-              border: "none",
-              cursor: pending ? "not-allowed" : "pointer",
-              opacity: pending ? 0.5 : 1,
-              transition: "all 0.1s",
-              textAlign: "left",
-            }}
-            onMouseEnter={(e) => {
-              if (!pending) {
-                (e.currentTarget as HTMLButtonElement).style.background =
-                  "var(--coral-bg)";
-                (e.currentTarget as HTMLButtonElement).style.color =
-                  "var(--coral-text)";
-              }
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.background =
-                "transparent";
-              (e.currentTarget as HTMLButtonElement).style.color =
-                "var(--text-muted)";
-            }}
+            className={`flex items-center gap-2.5 w-full px-2.5 py-2 rounded-md text-sm text-text-muted bg-transparent border-none cursor-pointer transition-all duration-100 text-left ${
+              pending
+                ? "opacity-50 cursor-not-allowed"
+                : "hover:bg-coral-bg hover:text-coral-text"
+            }`}
           >
-            <LogOut size={14} style={{ flexShrink: 0 }} />
+            <LogOut size={14} className="shrink-0" />
             Sign out
           </button>
         </div>

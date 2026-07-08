@@ -31,130 +31,56 @@ export default function CartDrawer() {
       {/* Overlay */}
       <div
         onClick={close}
-        style={{
-          position: "fixed",
-          inset: 0,
-          background: "rgba(0,0,0,0.75)",
-          zIndex: 998,
-          opacity: isOpen ? 1 : 0,
-          pointerEvents: isOpen ? "auto" : "none",
-          transition: "opacity 0.25s ease",
-        }}
+        className={`fixed inset-0 bg-black/75 z-[998] transition-opacity duration-200 ${
+          isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
       />
 
       {/* Drawer */}
       <div
-        style={{
-          position: "fixed",
-          top: 0,
-          right: 0,
-          height: "100dvh",
-          width: "min(420px, 100vw)",
-          background: "var(--surface)",
-          borderLeft: "0.5px solid var(--border)",
-          zIndex: 999,
-          display: "flex",
-          flexDirection: "column",
-          transform: isOpen ? "translateX(0)" : "translateX(100%)",
-          transition: "transform 0.3s cubic-bezier(0.32, 0.72, 0, 1)",
-          overscrollBehavior: "contain",
-        }}
+        className={`fixed top-0 right-0 h-dvh w-[420px] max-w-full bg-surface border-l border-border z-[999] flex flex-col transition-transform duration-[0.3s] ease-[cubic-bezier(0.32,0.72,0,1)] overscroll-contain ${
+          isOpen ? "translate-x-0" : "translate-x-full"
+        }`}
       >
         {/* Header */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "20px 24px",
-            borderBottom: "0.5px solid var(--border)",
-            flexShrink: 0,
-          }}
-        >
+        <div className="flex items-center justify-between px-6 py-5 border-b border-border shrink-0">
           <div>
-            <h2
-              style={{
-                fontSize: "16px",
-                fontWeight: "500",
-                color: "var(--text-primary)",
-              }}
-            >
-              Your cart
-            </h2>
+            <h2 className="text-base font-medium text-text">Your cart</h2>
             {items.length > 0 && (
-              <p
-                style={{
-                  fontSize: "12px",
-                  color: "var(--text-muted)",
-                  marginTop: "2px",
-                }}
-              >
+              <p className="text-xs text-text-muted mt-0.5">
                 {items.reduce((acc, i) => acc + i.quantity, 0)} items
               </p>
             )}
           </div>
           <button
             onClick={close}
-            style={{
-              background: "var(--bg-subtle)",
-              border: "0.5px solid var(--border)",
-              borderRadius: "6px",
-              color: "var(--text-secondary)",
-              cursor: "pointer",
-              width: "32px",
-              height: "32px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "20px",
-              lineHeight: 1,
-            }}
+            className="bg-bg-subtle border border-border rounded-md text-text-secondary cursor-pointer w-8 h-8 flex items-center justify-center text-xl leading-none"
           >
             ×
           </button>
         </div>
 
         {/* Items */}
-        <div
-          style={{
-            flex: 1,
-            overflowY: "auto",
-            padding: "20px 24px",
-            overscrollBehavior: "contain",
-          }}
-        >
+        <div className="flex-1 overflow-y-auto px-6 py-5 overscroll-contain">
           {items.length === 0 ? (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                height: "100%",
-                gap: "12px",
-                minHeight: "200px",
-              }}
-            >
+            <div className="flex flex-col items-center justify-center h-full gap-3 min-h-[200px]">
               <svg
                 width="40"
                 height="40"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="var(--text-muted)"
+                stroke="currentColor"
                 strokeWidth="1"
+                className="text-text-muted"
               >
                 <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
                 <line x1="3" y1="6" x2="21" y2="6" />
                 <path d="M16 10a4 4 0 01-8 0" />
               </svg>
-              <p style={{ color: "var(--text-muted)", fontSize: "14px" }}>
-                Your cart is empty
-              </p>
+              <p className="text-sm text-text-muted">Your cart is empty</p>
             </div>
           ) : (
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "16px" }}
-            >
+            <div className="flex flex-col gap-4">
               {items.map((item) => (
                 <CartItem key={item.product.id} item={item} />
               ))}
@@ -164,64 +90,23 @@ export default function CartDrawer() {
 
         {/* Footer */}
         {items.length > 0 && (
-          <div
-            style={{
-              borderTop: "0.5px solid var(--border)",
-              padding: "20px 24px",
-              display: "flex",
-              flexDirection: "column",
-              gap: "12px",
-              flexShrink: 0,
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <span
-                style={{ fontSize: "14px", color: "var(--text-secondary)" }}
-              >
-                Total
-              </span>
-              <span style={{ fontSize: "18px", fontWeight: "500" }}>
+          <div className="border-t border-border px-6 py-5 flex flex-col gap-3 shrink-0">
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-text-secondary">Total</span>
+              <span className="text-lg font-medium">
                 {formatPrice(getTotalPrice())}
               </span>
             </div>
             <Link
               href="/checkout"
               onClick={close}
-              style={{
-                display: "block",
-                background: "var(--accent)",
-                color: "#fff",
-                textAlign: "center",
-                padding: "12px",
-                borderRadius: "8px",
-                textDecoration: "none",
-                fontSize: "14px",
-                fontWeight: "500",
-              }}
+              className="block bg-accent text-white text-center py-3 rounded-lg no-underline text-sm font-medium"
             >
               Checkout
             </Link>
             <button
               onClick={clearCart}
-              style={{
-                background: "transparent",
-                border: "none",
-                color: "var(--text-muted)",
-                fontSize: "12px",
-                cursor: "pointer",
-                padding: "4px",
-                transition: "color 0.15s",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "#E24B4A")}
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.color = "var(--text-muted)")
-              }
+              className="bg-transparent border-none text-text-muted text-xs cursor-pointer p-1 transition-colors duration-150 hover:text-[#E24B4A]"
             >
               Clear cart
             </button>

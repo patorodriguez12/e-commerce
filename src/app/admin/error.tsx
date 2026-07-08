@@ -14,65 +14,23 @@ export default function AdminError({
   }, [error]);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: "40dvh",
-        gap: "16px",
-        textAlign: "center",
-      }}
-    >
-      <div
-        style={{
-          width: "48px",
-          height: "48px",
-          borderRadius: "50%",
-          background: "var(--coral-bg)",
-          border: "0.5px solid var(--coral-border)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: "22px",
-        }}
-      >
+    <div className="flex flex-col items-center justify-center min-h-[40dvh] gap-4 text-center">
+      <div className="w-12 h-12 rounded-full bg-coral-bg border border-coral-border flex items-center justify-center text-[22px]">
         !
       </div>
 
       <div>
-        <h2
-          style={{
-            fontSize: "18px",
-            fontWeight: "500",
-            marginBottom: "4px",
-          }}
-        >
+        <h2 className="text-lg font-medium mb-1">
           Error loading admin panel
         </h2>
-        <p
-          style={{
-            fontSize: "13px",
-            color: "var(--text-secondary)",
-          }}
-        >
+        <p className="text-sm text-text-secondary">
           {error.message || "An unexpected error occurred."}
         </p>
       </div>
 
       <button
         onClick={reset}
-        style={{
-          background: "var(--accent)",
-          color: "#fff",
-          border: "none",
-          padding: "8px 20px",
-          borderRadius: "6px",
-          fontSize: "13px",
-          fontWeight: "500",
-          cursor: "pointer",
-        }}
+        className="bg-accent text-white border-none px-5 py-2 rounded-md text-sm font-medium cursor-pointer transition-all duration-150 hover:opacity-90"
       >
         Try again
       </button>

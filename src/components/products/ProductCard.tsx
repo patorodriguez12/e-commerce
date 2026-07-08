@@ -23,22 +23,10 @@ function getProductBadge(product: Product) {
   return null;
 }
 
-const BADGE_STYLES: Record<string, React.CSSProperties> = {
-  new: {
-    background: "var(--gold-bg)",
-    color: "var(--gold)",
-    border: "0.5px solid var(--gold-border)",
-  },
-  low: {
-    background: "var(--coral-bg)",
-    color: "var(--coral-text)",
-    border: "0.5px solid var(--coral-border)",
-  },
-  sold: {
-    background: "#ffffff10",
-    color: "#ffffff40",
-    border: "0.5px solid #ffffff15",
-  },
+const BADGE_CLASSES: Record<string, string> = {
+  new: "bg-gold-bg text-gold border border-gold-border",
+  low: "bg-coral-bg text-coral-text border border-coral-border",
+  sold: "bg-[#ffffff10] text-[#ffffff40] border border-[#ffffff15]",
 };
 
 export default function ProductCard({ product }: Props) {
@@ -59,165 +47,56 @@ export default function ProductCard({ product }: Props) {
   }
 
   return (
-    <Link href={`/products/${product.slug}`} style={{ textDecoration: "none" }}>
-      <div
-        style={{
-          background: "var(--bg-card)",
-          border: "0.5px solid var(--border)",
-          borderRadius: "10px",
-          overflow: "hidden",
-          transition: "border-color 0.2s ease, transform 0.2s ease",
-          cursor: "pointer",
-        }}
-        onMouseEnter={(e) => {
-          (e.currentTarget as HTMLDivElement).style.borderColor =
-            "var(--accent-border)";
-          (e.currentTarget as HTMLDivElement).style.transform =
-            "translateY(-2px)";
-        }}
-        onMouseLeave={(e) => {
-          (e.currentTarget as HTMLDivElement).style.borderColor =
-            "var(--border)";
-          (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
-        }}
-      >
-        {/* Imagen */}
-        <div
-          style={{
-            aspectRatio: "1",
-            background: "var(--bg-subtle)",
-            position: "relative",
-            overflow: "hidden",
-          }}
-        >
+    <Link href={`/products/${product.slug}`} className="no-underline">
+      <div className="bg-surface border border-border rounded-xl overflow-hidden transition-all duration-200 cursor-pointer hover:border-accent-border hover:-translate-y-0.5">
+        {/* Image */}
+        <div className="aspect-square bg-bg-subtle relative overflow-hidden">
           {product.image_url ? (
             <Image
               src={product.image_url}
               alt={product.name}
               fill
-              style={{ objectFit: "cover", transition: "transform 0.3s" }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.transform = "scale(1.04)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.transform = "scale(1)")
-              }
+              className="object-cover transition-transform duration-300 hover:scale-[1.04]"
             />
           ) : (
-            <div
-              style={{
-                width: "100%",
-                height: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "var(--text-muted)",
-                fontSize: "13px",
-              }}
-            >
+            <div className="w-full h-full flex items-center justify-center text-sm text-text-muted">
               No image
             </div>
           )}
 
           {badge && (
             <div
-              style={{
-                position: "absolute",
-                top: "10px",
-                left: "10px",
-                fontSize: "10px",
-                fontWeight: "500",
-                padding: "3px 9px",
-                borderRadius: "4px",
-                ...BADGE_STYLES[badge.type],
-              }}
+              className={`absolute top-2.5 left-2.5 text-[10px] font-medium px-2 py-0.5 rounded ${BADGE_CLASSES[badge.type]}`}
             >
               {badge.label}
             </div>
           )}
         </div>
 
-          {/* Info */}
-        <div style={{ padding: "14px" }}>
+        {/* Info */}
+        <div className="p-3.5">
           {product.categories && (
-            <p
-              style={{
-                fontSize: "10px",
-                color: "var(--text-muted)",
-                textTransform: "uppercase",
-                letterSpacing: "0.5px",
-                marginBottom: "4px",
-              }}
-            >
+            <p className="text-[10px] text-text-muted uppercase tracking-[0.5px] mb-1">
               {(product.categories as any).name}
             </p>
           )}
-          <p
-            style={{
-              fontSize: "14px",
-              fontWeight: "500",
-              fontFamily: "var(--font-sora)",
-              color: "var(--text-primary)",
-              marginBottom: "12px",
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-            }}
-          >
+          <p className="text-sm font-medium font-sora text-text mb-3 truncate">
             {product.name}
           </p>
 
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <span
-              style={{
-                fontSize: "15px",
-                fontWeight: "500",
-                color: "var(--text-primary)",
-              }}
-            >
+          <div className="flex items-center justify-between">
+            <span className="text-[15px] font-medium text-text">
               {formatPrice(product.price)}
             </span>
 
             <button
               onClick={handleAdd}
               disabled={isOutOfStock || isMaxReached}
-              style={{
-                fontSize: "11px",
-                color:
-                  isOutOfStock || isMaxReached
-                    ? "var(--text-muted)"
-                    : "var(--text-secondary)",
-                background: "var(--bg-subtle)",
-                border: "0.5px solid var(--border)",
-                borderRadius: "6px",
-                padding: "5px 12px",
-                cursor: isOutOfStock || isMaxReached ? "not-allowed" : "pointer",
-                transition: "all 0.2s ease",
-              }}
-              onMouseEnter={(e) => {
-                if (!isOutOfStock && !isMaxReached) {
-                  (e.currentTarget as HTMLButtonElement).style.background =
-                    "var(--accent-bg)";
-                  (e.currentTarget as HTMLButtonElement).style.borderColor =
-                    "var(--accent-border)";
-                  (e.currentTarget as HTMLButtonElement).style.color =
-                    "var(--accent-text)";
-                }
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.background =
-                  "var(--bg-subtle)";
-                (e.currentTarget as HTMLButtonElement).style.borderColor =
-                  "var(--border)";
-                (e.currentTarget as HTMLButtonElement).style.color =
-                  "var(--text-secondary)";
-              }}
+              className={`text-[11px] bg-bg-subtle border border-border rounded-md px-3 py-1 transition-all duration-200 ${
+                isOutOfStock || isMaxReached
+                  ? "text-text-muted cursor-not-allowed"
+                  : "text-text-secondary cursor-pointer hover:bg-accent-bg hover:border-accent-border hover:text-accent-text"
+              }`}
             >
               {isOutOfStock ? "Sold out" : isMaxReached ? "Max reached" : "Add to cart"}
             </button>

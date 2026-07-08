@@ -13,7 +13,7 @@ No test, typecheck, or format scripts exist.
 - **Path alias**: `@/*` → `./src/*`
 - **Prices stored in cents** (integers). `formatPrice(n)` divides by 100 and formats as USD.
 - **Remote images** from `images.unsplash.com` and `*.supabase.co` (configured in `next.config.ts`)
-- **Styling**: CSS variables + inline `style` props (dark theme). No Tailwind utility classes in actual components.
+- **Styling**: Tailwind CSS utilities as primary approach. `globals.css` reserved for CSS variables (dark theme colors), `@keyframes` animations, and other truly global CSS. Inline `style` props should be avoided. `.admin-input` class kept for form input styling + focus border.
 
 ## Supabase — three clients
 | File | When to use |
@@ -29,7 +29,7 @@ Checks session **only** (redirects unauthenticated users from `/dashboard`, `/ch
 
 ## Auth
 - Server Actions live in `src/lib/supabase/actions.ts` (login, register, logout, wishlist, review, OAuth)
-- OAuth callback at `src/app/auth/callback/route.ts` exchanges code for session
+- OAuth callback at `src/app/(main)/auth/callback/route.ts` exchanges code for session
 - Admin-only Server Actions in `src/lib/supabase/admin-actions.ts` (gated by `requireAdmin()`)
 
 ## Cart
@@ -61,7 +61,8 @@ Checks session **only** (redirects unauthenticated users from `/dashboard`, `/ch
 - Webhook uses `nodejs` runtime (`export const runtime = "nodejs"`)
 
 ## Products & catalog
-- Home page (`src/app/(store)/page.tsx`) is a Server Component that reads `searchParams` for filtering/sorting
+- Home page (`src/app/(main)/(store)/page.tsx`) is a Server Component that reads `searchParams` for filtering/sorting
+- Navbar/Footer rendered via `(main)/layout.tsx` — NOT applied to `/admin` routes (admin has its own sidebar layout)
 - Client-side filter state via `useFilters()` hook (URL search params)
 - Prices stored as cents in DB, passed as integers to Stripe `unit_amount`
 
@@ -72,19 +73,24 @@ Checks session **only** (redirects unauthenticated users from `/dashboard`, `/ch
 - Roles (`customer`/`admin`) in `profiles` table, enforced via SQL RLS policies
 - `requireAdmin()` in `src/lib/supabase/auth.ts` checks profile role and redirects if not admin
 
+## Shared constants
+- `src/lib/constants.ts` — `STATUS_STYLES` (order status badge styles), shared across admin pages and components
+
 ## Project structure
 
 ```
 src/
   app/
-    (auth)/login, (auth)/register     — public auth pages
-    (store)/                          — catalog + home
-    admin/                            — admin panel (role-gated layout)
+    (main)/
+      (auth)/login, (main)/(auth)/register     — public auth pages (with Navbar/Footer)
+      (store)/                                  — catalog + home (with Navbar/Footer)
+      auth/callback                             — OAuth code exchange
+      checkout/, dashboard/                     — protected pages (with Navbar/Footer)
+      layout.tsx                                — wraps children with Navbar + Footer
+    admin/                            — admin panel (role-gated layout, NO Navbar/Footer)
     api/checkout/session, api/stripe/webhook  — route handlers
-    auth/callback                     — OAuth code exchange
-    checkout/, dashboard/             — protected pages
   components/
-    admin/         — ProductForm, OrderStatusSelect
+    admin/         — AdminSidebar, ProductForm, OrderStatusSelect, SearchBar, DeleteProductButton, ProductTable, OrderTable, UserTable
     auth/          — OAuthButtons
     cart/          — CartDrawer, CartItem, CartButton
     dashboard/     — ProfileForm
@@ -99,3 +105,16 @@ src/
     utils/         — formatPrice
   types/           — Product, Order, CartItem, Review, etc.
 ```
+
+## Admin dashboard — responsive/UX polish (completed)
+| Step | Change |
+|------|--------|
+| 1 | `AdminSidebar.tsx` — Client Component with mobile hamburger toggle, SVG icons, active indicator |
+| 2 | `layout.tsx` — responsive padding `px-4 py-5 md:px-8 md:py-10` |
+| 3 | Tables — `overflow-x-auto` wrapper + `desktop-only` column class |
+| 4 | ProductForm — responsive `grid-cols-1 md:grid-cols-2/3` |
+| 5 | Dashboard metrics — SVG icons per card |
+| 6 | Delete confirmation — `DeleteProductButton.tsx` with `window.confirm()` |
+| 7 | Empty states — SVG icon + subtitle + CTA link |
+| 8 | Client-side search — `SearchBar`, `ProductTable`, `OrderTable`, `UserTable` |
+| 9 | Final polish — `STATUS_STYLES` shared via `constants.ts`, any type fixed, `.admin-input` CSS class for form focus |

@@ -19,35 +19,7 @@ export default function LogoutButton() {
     <button
       onClick={handleLogout}
       disabled={pending}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "8px",
-        width: "100%",
-        padding: "8px 12px",
-        borderRadius: "6px",
-        fontSize: "13px",
-        color: "var(--text-muted)",
-        background: "transparent",
-        border: "none",
-        cursor: pending ? "not-allowed" : "pointer",
-        opacity: pending ? 0.5 : 1,
-        transition: "all 0.15s",
-        textAlign: "left",
-      }}
-      onMouseEnter={(e) => {
-        if (!pending) {
-          (e.currentTarget as HTMLButtonElement).style.background =
-            "var(--coral-bg)";
-          (e.currentTarget as HTMLButtonElement).style.color =
-            "var(--coral-text)";
-        }
-      }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLButtonElement).style.background = "transparent";
-        (e.currentTarget as HTMLButtonElement).style.color =
-          "var(--text-muted)";
-      }}
+      className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm text-text-muted bg-transparent border-none cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-150 text-left hover:bg-coral-bg hover:text-coral-text"
     >
       <LogOut size={14} />
       Sign out
