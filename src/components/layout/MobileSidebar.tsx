@@ -87,7 +87,7 @@ export default function MobileSidebar({ isOpen, onClose, user, fullName, isAdmin
               width={500}
               height={500}
               priority
-              className="h-24 w-auto"
+              className="h-9 w-auto"
             />
           </Link>
           <button

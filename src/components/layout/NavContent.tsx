@@ -29,7 +29,7 @@ export default function NavContent({ user, fullName, isAdmin }: Props) {
               width={500}
               height={500}
               priority
-              className="h-24 w-auto"
+              className="h-10 w-auto"
             />
           </Link>
 
