@@ -1,5 +1,31 @@
 @import "tailwindcss";
 
+@theme {
+  --color-accent: var(--accent);
+  --color-accent-bg: var(--accent-bg);
+  --color-accent-border: var(--accent-border);
+  --color-accent-text: var(--accent-text);
+  --color-gold: var(--gold);
+  --color-gold-bg: var(--gold-bg);
+  --color-gold-border: var(--gold-border);
+  --color-border: var(--border);
+  --color-border-hover: var(--border-hover);
+  --color-text-muted: var(--text-muted);
+  --color-text-secondary: var(--text-secondary);
+  --color-bg-subtle: var(--bg-subtle);
+  --color-surface: var(--surface);
+  --color-elevated: var(--elevated);
+  --color-coral: var(--coral);
+  --color-coral-bg: var(--coral-bg);
+  --color-coral-border: var(--coral-border);
+  --color-coral-text: var(--coral-text);
+  --color-green: var(--green);
+  --color-green-bg: var(--green-bg);
+  --color-green-border: var(--green-border);
+  --color-green-text: var(--green-text);
+  --font-sora: var(--font-sora), sans-serif;
+}
+
 :root {
   --bg: #0c0b09;
   --surface: #151412;
@@ -30,12 +56,6 @@
   --bg-subtle: var(--elevated);
   --bg-card-hover: var(--elevated);
   --text-primary: var(--text);
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
 html {
