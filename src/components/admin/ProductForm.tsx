@@ -80,8 +80,8 @@ export default function ProductForm({ categories, product }: Props) {
   return (
     <form
       onSubmit={handleSubmit}
+      className="w-full max-w-xl"
       style={{
-        maxWidth: "640px",
         display: "flex",
         flexDirection: "column",
         gap: "24px",
@@ -183,9 +183,7 @@ export default function ProductForm({ categories, product }: Props) {
       </div>
 
       {/* Name & Slug */}
-      <div
-        style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}
-      >
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label style={labelStyle}>Name</label>
           <input
@@ -239,13 +237,7 @@ export default function ProductForm({ categories, product }: Props) {
       </div>
 
       {/* Price, Stock, Category */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr",
-          gap: "16px",
-        }}
-      >
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
           <label style={labelStyle}>Price (USD)</label>
           <input
