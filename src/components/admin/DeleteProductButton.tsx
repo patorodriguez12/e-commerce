@@ -24,15 +24,7 @@ export default function DeleteProductButton({ productId }: Props) {
     >
       <button
         type="submit"
-        style={{
-          background: "transparent",
-          border: "none",
-          color: "var(--text-muted)",
-          fontSize: "12px",
-          cursor: "pointer",
-          padding: 0,
-          transition: "color 0.15s",
-        }}
+        className="bg-transparent border-none text-text-muted text-xs cursor-pointer p-0 transition-colors duration-150 hover:text-coral-text"
       >
         Delete
       </button>

@@ -40,41 +40,20 @@ export default function OrderTable({ orders }: Props) {
         onChange={setSearch}
         placeholder="Search orders by ID or customer..."
       />
-      <div
-        style={{
-          background: "var(--bg-card)",
-          border: "0.5px solid var(--border)",
-          borderRadius: "12px",
-        }}
-      >
+      <div className="bg-surface border border-border rounded-xl">
         <div className="overflow-x-auto">
-          <table
-            style={{
-              width: "100%",
-              borderCollapse: "collapse",
-              fontSize: "13px",
-            }}
-          >
+          <table className="w-full border-collapse text-sm">
             <thead>
-              <tr style={{ borderBottom: "0.5px solid var(--border)" }}>
+              <tr className="border-b border-border">
                 {["Order", "Customer", "Date", "Items", "Total", "Status"].map(
                   (h) => (
                     <th
                       key={h}
-                      className={
+                      className={`${
                         h === "Customer" || h === "Items"
                           ? "desktop-only"
                           : ""
-                      }
-                      style={{
-                        padding: "12px 20px",
-                        textAlign: "left",
-                        fontSize: "11px",
-                        color: "var(--text-muted)",
-                        textTransform: "uppercase",
-                        letterSpacing: "0.5px",
-                        fontWeight: "500",
-                      }}
+                      } px-5 py-3 text-left text-xs text-text-muted uppercase tracking-[0.5px] font-medium`}
                     >
                       {h}
                     </th>
@@ -85,23 +64,13 @@ export default function OrderTable({ orders }: Props) {
             <tbody>
               {!filtered.length ? (
                 <tr>
-                  <td
-                    colSpan={6}
-                    style={{
-                      padding: "48px 24px",
-                      textAlign: "center",
-                    }}
-                  >
+                  <td colSpan={6} className="px-6 py-12 text-center">
                     <svg
                       width="32"
                       height="32"
                       viewBox="0 0 24 24"
                       fill="none"
-                      style={{
-                        margin: "0 auto 12px",
-                        color: "var(--text-muted)",
-                        opacity: 0.4,
-                      }}
+                      className="mx-auto mb-3 text-text-muted opacity-40"
                     >
                       <path
                         d="M3 6H21L19 18H5L3 6Z"
@@ -117,19 +86,12 @@ export default function OrderTable({ orders }: Props) {
                         strokeWidth="1.5"
                       />
                     </svg>
-                    <p style={{ color: "var(--text-muted)", fontSize: "13px" }}>
+                    <p className="text-text-muted text-sm">
                       {orders.length === 0
                         ? "No orders yet"
                         : "No orders match your search"}
                     </p>
-                    <p
-                      style={{
-                        color: "var(--text-muted)",
-                        fontSize: "12px",
-                        marginTop: "4px",
-                        opacity: 0.6,
-                      }}
-                    >
+                    <p className="text-text-muted text-xs mt-1 opacity-60">
                       {orders.length === 0
                         ? "Orders will appear here once customers start purchasing."
                         : "Try a different search term."}
@@ -138,55 +100,27 @@ export default function OrderTable({ orders }: Props) {
                 </tr>
               ) : (
                 filtered.map((order: OrderRow) => (
-                  <tr
-                    key={order.id}
-                    style={{ borderBottom: "0.5px solid var(--border)" }}
-                  >
-                    <td
-                      style={{
-                        padding: "14px 20px",
-                        fontFamily: "monospace",
-                        fontSize: "12px",
-                        color: "var(--text-secondary)",
-                      }}
-                    >
+                  <tr key={order.id} className="border-b border-border">
+                    <td className="px-5 py-3.5 font-mono text-xs text-text-secondary">
                       #{order.id.slice(0, 8).toUpperCase()}
                     </td>
-                    <td
-                      className="desktop-only"
-                      style={{
-                        padding: "14px 20px",
-                        color: "var(--text-secondary)",
-                      }}
-                    >
+                    <td className="desktop-only px-5 py-3.5 text-text-secondary">
                       {order.profiles?.full_name ?? "Unknown"}
                     </td>
-                    <td
-                      style={{
-                        padding: "14px 20px",
-                        color: "var(--text-muted)",
-                        fontSize: "12px",
-                      }}
-                    >
+                    <td className="px-5 py-3.5 text-text-muted text-xs">
                       {new Date(order.created_at).toLocaleDateString("en-US", {
                         month: "short",
                         day: "numeric",
                         year: "numeric",
                       })}
                     </td>
-                    <td
-                      className="desktop-only"
-                      style={{
-                        padding: "14px 20px",
-                        color: "var(--text-muted)",
-                      }}
-                    >
+                    <td className="desktop-only px-5 py-3.5 text-text-muted">
                       {order.order_items?.length ?? 0}
                     </td>
-                    <td style={{ padding: "14px 20px", fontWeight: "500" }}>
+                    <td className="px-5 py-3.5 font-medium">
                       {formatPrice(order.total)}
                     </td>
-                    <td style={{ padding: "14px 20px" }}>
+                    <td className="px-5 py-3.5">
                       <OrderStatusSelect
                         orderId={order.id}
                         currentStatus={order.status}

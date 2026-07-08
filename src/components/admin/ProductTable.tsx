@@ -40,41 +40,20 @@ export default function ProductTable({ products }: Props) {
         onChange={setSearch}
         placeholder="Search products..."
       />
-      <div
-        style={{
-          background: "var(--bg-card)",
-          border: "0.5px solid var(--border)",
-          borderRadius: "12px",
-        }}
-      >
+      <div className="bg-surface border border-border rounded-xl">
         <div className="overflow-x-auto">
-          <table
-            style={{
-              width: "100%",
-              borderCollapse: "collapse",
-              fontSize: "13px",
-            }}
-          >
+          <table className="w-full border-collapse text-sm">
             <thead>
-              <tr style={{ borderBottom: "0.5px solid var(--border)" }}>
+              <tr className="border-b border-border">
                 {["Product", "Category", "Price", "Stock", "Actions"].map(
                   (h) => (
                     <th
                       key={h}
-                      className={
+                      className={`${
                         h === "Category" || h === "Actions"
                           ? "desktop-only"
                           : ""
-                      }
-                      style={{
-                        padding: "12px 20px",
-                        textAlign: "left",
-                        fontSize: "11px",
-                        color: "var(--text-muted)",
-                        textTransform: "uppercase",
-                        letterSpacing: "0.5px",
-                        fontWeight: "500",
-                      }}
+                      } px-5 py-3 text-left text-xs text-text-muted uppercase tracking-[0.5px] font-medium`}
                     >
                       {h}
                     </th>
@@ -85,23 +64,13 @@ export default function ProductTable({ products }: Props) {
             <tbody>
               {!filtered.length ? (
                 <tr>
-                  <td
-                    colSpan={5}
-                    style={{
-                      padding: "48px 24px",
-                      textAlign: "center",
-                    }}
-                  >
+                  <td colSpan={5} className="px-6 py-12 text-center">
                     <svg
                       width="32"
                       height="32"
                       viewBox="0 0 24 24"
                       fill="none"
-                      style={{
-                        margin: "0 auto 12px",
-                        color: "var(--text-muted)",
-                        opacity: 0.4,
-                      }}
+                      className="mx-auto mb-3 text-text-muted opacity-40"
                     >
                       <path
                         d="M3 7L12 3L21 7V17L12 21L3 17V7Z"
@@ -125,19 +94,12 @@ export default function ProductTable({ products }: Props) {
                         strokeWidth="1.5"
                       />
                     </svg>
-                    <p style={{ color: "var(--text-muted)", fontSize: "13px" }}>
+                    <p className="text-text-muted text-sm">
                       {products.length === 0
                         ? "No products yet"
                         : "No products match your search"}
                     </p>
-                    <p
-                      style={{
-                        color: "var(--text-muted)",
-                        fontSize: "12px",
-                        marginTop: "4px",
-                        opacity: 0.6,
-                      }}
-                    >
+                    <p className="text-text-muted text-xs mt-1 opacity-60">
                       {products.length === 0
                         ? "Create your first product to start selling."
                         : "Try a different search term."}
@@ -145,17 +107,7 @@ export default function ProductTable({ products }: Props) {
                     {products.length === 0 && (
                       <Link
                         href="/admin/products/new"
-                        style={{
-                          display: "inline-block",
-                          marginTop: "16px",
-                          background: "var(--accent)",
-                          color: "#fff",
-                          padding: "8px 16px",
-                          borderRadius: "8px",
-                          textDecoration: "none",
-                          fontSize: "13px",
-                          fontWeight: "500",
-                        }}
+                        className="inline-block mt-4 bg-accent text-white px-4 py-2 rounded-lg no-underline text-sm font-medium"
                       >
                         Create product
                       </Link>
@@ -164,103 +116,48 @@ export default function ProductTable({ products }: Props) {
                 </tr>
               ) : (
                 filtered.map((product: ProductRow) => (
-                  <tr
-                    key={product.id}
-                    style={{ borderBottom: "0.5px solid var(--border)" }}
-                  >
-                    <td style={{ padding: "14px 20px" }}>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "12px",
-                        }}
-                      >
-                        <div
-                          style={{
-                            position: "relative",
-                            width: "36px",
-                            height: "36px",
-                            flexShrink: 0,
-                            borderRadius: "6px",
-                            overflow: "hidden",
-                            background: "var(--bg-subtle)",
-                          }}
-                        >
+                  <tr key={product.id} className="border-b border-border">
+                    <td className="px-5 py-3.5">
+                      <div className="flex items-center gap-3">
+                        <div className="relative w-9 h-9 shrink-0 rounded-md overflow-hidden bg-bg-subtle">
                           {product.image_url && (
                             <Image
                               src={product.image_url}
                               alt={product.name}
                               fill
-                              style={{ objectFit: "cover" }}
+                              className="object-cover"
                             />
                           )}
                         </div>
-                        <span
-                          style={{
-                            fontWeight: "500",
-                            color: "var(--text-primary)",
-                          }}
-                        >
+                        <span className="font-medium text-text">
                           {product.name}
                         </span>
                       </div>
                     </td>
-                    <td
-                      className="desktop-only"
-                      style={{
-                        padding: "14px 20px",
-                        color: "var(--text-muted)",
-                      }}
-                    >
+                    <td className="desktop-only px-5 py-3.5 text-text-muted">
                       {product.categories?.name ?? "—"}
                     </td>
-                    <td style={{ padding: "14px 20px", fontWeight: "500" }}>
+                    <td className="px-5 py-3.5 font-medium">
                       {formatPrice(product.price)}
                     </td>
-                    <td style={{ padding: "14px 20px" }}>
+                    <td className="px-5 py-3.5">
                       <span
-                        style={{
-                          fontSize: "11px",
-                          fontWeight: "500",
-                          padding: "3px 10px",
-                          borderRadius: "20px",
-                          ...(product.stock > 0
-                            ? {
-                                background: "var(--green-bg)",
-                                color: "var(--green-text)",
-                                border: "0.5px solid var(--green-border)",
-                              }
-                            : {
-                                background: "var(--coral-bg)",
-                                color: "var(--coral-text)",
-                                border: "0.5px solid var(--coral-border)",
-                              }),
-                        }}
+                        className={`text-xs font-medium px-2.5 py-[3px] rounded-full ${
+                          product.stock > 0
+                            ? "bg-green-bg text-green-text border border-green-border"
+                            : "bg-coral-bg text-coral-text border border-coral-border"
+                        }`}
                       >
                         {product.stock > 0
                           ? `${product.stock} units`
                           : "Out of stock"}
                       </span>
                     </td>
-                    <td
-                      className="desktop-only"
-                      style={{ padding: "14px 20px" }}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "16px",
-                        }}
-                      >
+                    <td className="desktop-only px-5 py-3.5">
+                      <div className="flex items-center gap-4">
                         <Link
                           href={`/admin/products/${product.id}/edit`}
-                          style={{
-                            fontSize: "12px",
-                            color: "var(--accent-text)",
-                            textDecoration: "none",
-                          }}
+                          className="text-xs text-accent-text no-underline"
                         >
                           Edit
                         </Link>

@@ -62,139 +62,56 @@ export default async function ProductPage({
 
   return (
     <>
-      <main
-        style={{ maxWidth: "1200px", margin: "0 auto", padding: "48px 24px" }}
-      >
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "64px",
-            alignItems: "start",
-          }}
-        >
-          {/* Imagen */}
-          <div
-            style={{
-              position: "relative",
-              aspectRatio: "1",
-              borderRadius: "16px",
-              overflow: "hidden",
-              background: "var(--bg-subtle)",
-              border: "0.5px solid var(--border)",
-            }}
-          >
+      <main className="max-w-[1200px] mx-auto px-6 py-12">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-16 items-start">
+          <div className="relative aspect-square rounded-2xl overflow-hidden bg-bg-subtle border border-border">
             {product.image_url ? (
               <Image
                 src={product.image_url}
                 alt={product.name}
                 fill
-                style={{ objectFit: "cover" }}
+                className="object-cover"
                 priority
               />
             ) : (
-              <div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "var(--text-muted)",
-                  fontSize: "13px",
-                }}
-              >
+              <div className="size-full flex items-center justify-center text-text-muted text-sm">
                 No image
               </div>
             )}
           </div>
 
-          {/* Info */}
-          <div
-            style={{ display: "flex", flexDirection: "column", gap: "24px" }}
-          >
-            {/* Categoría y nombre */}
+          <div className="flex flex-col gap-6">
             <div>
               {(product.categories as any) && (
-                <p
-                  style={{
-                    fontSize: "11px",
-                    color: "var(--accent-text)",
-                    textTransform: "uppercase",
-                    letterSpacing: "1px",
-                    marginBottom: "10px",
-                    background: "var(--accent-bg)",
-                    border: "0.5px solid var(--accent-border)",
-                    borderRadius: "20px",
-                    padding: "3px 12px",
-                    display: "inline-block",
-                  }}
-                >
+                <p className="text-[11px] text-accent-text uppercase tracking-[1px] mb-2.5 bg-accent-bg border border-accent-border rounded-full px-3 py-[3px] inline-block">
                   {(product.categories as any).name}
                 </p>
               )}
-              <h1
-                style={{
-                  fontSize: "clamp(24px, 4vw, 36px)",
-                  fontWeight: "500",
-                  letterSpacing: "-0.5px",
-                  lineHeight: "1.1",
-                  color: "var(--text-primary)",
-                }}
-              >
+              <h1 className="text-[clamp(24px,4vw,36px)] font-medium tracking-tight leading-[1.1] text-text">
                 {product.name}
               </h1>
             </div>
 
-            {/* Precio y stock */}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "16px",
-                paddingBottom: "24px",
-                borderBottom: "0.5px solid var(--border)",
-              }}
-            >
-              <span
-                style={{
-                  fontSize: "32px",
-                  fontWeight: "500",
-                  letterSpacing: "-1px",
-                }}
-              >
+            <div className="flex items-center gap-4 pb-6 border-b border-border">
+              <span className="text-3xl font-medium tracking-tighter">
                 {formatPrice(product.price)}
               </span>
               <span
-                style={{
-                  fontSize: "12px",
-                  color: stockStatus.color,
-                  background: "#ffffff08",
-                  border: "0.5px solid #ffffff12",
-                  borderRadius: "20px",
-                  padding: "4px 12px",
-                }}
+                className="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1"
+                style={{ color: stockStatus.color }}
               >
                 {stockStatus.label}
               </span>
             </div>
 
-            {/* Descripción */}
             {product.description && (
-              <p
-                style={{
-                  fontSize: "14px",
-                  color: "var(--text-secondary)",
-                  lineHeight: "1.8",
-                }}
-              >
+              <p className="text-sm text-text-secondary leading-[1.8]">
                 {product.description}
               </p>
             )}
 
-            {/* Acciones */}
-            <div style={{ display: "flex", gap: "12px" }}>
-              <div style={{ flex: 1 }}>
+            <div className="flex gap-3">
+              <div className="flex-1">
                 <AddToCartButton product={product} />
               </div>
               <WishlistButton
@@ -204,18 +121,7 @@ export default async function ProductPage({
               />
             </div>
 
-            {/* Info extra */}
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "10px",
-                padding: "16px",
-                background: "var(--bg-card)",
-                border: "0.5px solid var(--border)",
-                borderRadius: "10px",
-              }}
-            >
+            <div className="flex flex-col gap-2.5 p-4 bg-surface border border-border rounded-xl">
               {[
                 { icon: "🚚", text: "Free shipping on orders over $99" },
                 { icon: "↩️", text: "30-day return policy" },
@@ -223,16 +129,10 @@ export default async function ProductPage({
               ].map((item) => (
                 <div
                   key={item.text}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                  }}
+                  className="flex items-center gap-2.5"
                 >
-                  <span style={{ fontSize: "14px" }}>{item.icon}</span>
-                  <span
-                    style={{ fontSize: "12px", color: "var(--text-secondary)" }}
-                  >
+                  <span className="text-sm">{item.icon}</span>
+                  <span className="text-xs text-text-secondary">
                     {item.text}
                   </span>
                 </div>

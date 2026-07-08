@@ -12,100 +12,33 @@ export default function SuccessPage() {
   }, [clearCart]);
 
   return (
-    <div
-      style={{
-        minHeight: "80dvh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "24px",
-      }}
-    >
-      <div
-        style={{
-          textAlign: "center",
-          maxWidth: "420px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "16px",
-        }}
-      >
+    <div className="min-h-[80dvh] flex items-center justify-center p-6">
+      <div className="w-[420px] max-w-full flex flex-col items-center gap-4 text-center">
         {/* Checkmark */}
-        <div
-          style={{
-            width: "64px",
-            height: "64px",
-            borderRadius: "50%",
-            background: "var(--green-bg)",
-            border: "0.5px solid var(--green-border)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: "28px",
-            marginBottom: "8px",
-          }}
-        >
+        <div className="w-16 h-16 rounded-full bg-green-bg border border-green-border flex items-center justify-center text-[28px] mb-2 shrink-0">
           ✓
         </div>
 
         <div>
-          <h1
-            style={{
-              fontSize: "24px",
-              fontWeight: "500",
-              letterSpacing: "-0.5px",
-              marginBottom: "8px",
-            }}
-          >
+          <h1 className="text-2xl font-medium tracking-[-0.5px] mb-2">
             Payment successful
           </h1>
-          <p
-            style={{
-              fontSize: "14px",
-              color: "var(--text-secondary)",
-              lineHeight: "1.7",
-            }}
-          >
+          <p className="text-sm text-text-secondary leading-relaxed">
             Your order has been placed successfully. You can track it from your
             dashboard.
           </p>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            gap: "10px",
-            marginTop: "8px",
-            flexWrap: "wrap",
-            justifyContent: "center",
-          }}
-        >
+        <div className="flex gap-2.5 mt-2 flex-wrap justify-center">
           <Link
             href="/dashboard/orders"
-            style={{
-              background: "var(--accent)",
-              color: "#fff",
-              padding: "10px 24px",
-              borderRadius: "8px",
-              textDecoration: "none",
-              fontSize: "13px",
-              fontWeight: "500",
-            }}
+            className="bg-accent text-white px-6 py-[10px] rounded-lg no-underline text-sm font-medium transition-colors duration-150"
           >
             View my orders
           </Link>
           <Link
             href="/"
-            style={{
-              background: "transparent",
-              color: "var(--text-secondary)",
-              padding: "10px 24px",
-              borderRadius: "8px",
-              textDecoration: "none",
-              fontSize: "13px",
-              border: "0.5px solid var(--border)",
-            }}
+            className="bg-transparent text-text-secondary px-6 py-[10px] rounded-lg no-underline text-sm border border-border transition-colors duration-150"
           >
             Continue shopping
           </Link>

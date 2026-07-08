@@ -22,23 +22,11 @@ export default async function DashboardLayout({
   const fullName = profile?.full_name ?? user.email?.split("@")[0] ?? "Account";
 
   return (
-    <div
-      style={{
-        maxWidth: "1000px",
-        margin: "0 auto",
-        padding: "48px 24px",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          gap: "48px",
-          alignItems: "flex-start",
-        }}
-      >
+    <div className="mx-auto max-w-250 px-6 py-12">
+      <div className="flex gap-12 items-start">
         <DashboardNav fullName={fullName} />
 
-        <main style={{ flex: 1, minWidth: 0 }}>{children}</main>
+        <main className="flex-1 min-w-0">{children}</main>
       </div>
     </div>
   );

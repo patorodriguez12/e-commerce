@@ -14,34 +14,13 @@ export default async function AdminProductsPage() {
 
   return (
     <div>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginBottom: "32px",
-        }}
-      >
-        <h1
-          style={{
-            fontSize: "22px",
-            fontWeight: "500",
-            letterSpacing: "-0.5px",
-          }}
-        >
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="text-[22px] font-medium tracking-[-0.5px]">
           Products
         </h1>
         <Link
           href="/admin/products/new"
-          style={{
-            background: "var(--accent)",
-            color: "#fff",
-            padding: "8px 16px",
-            borderRadius: "8px",
-            textDecoration: "none",
-            fontSize: "13px",
-            fontWeight: "500",
-          }}
+          className="bg-accent text-white px-4 py-2 rounded-lg no-underline text-sm font-medium"
         >
           + New product
         </Link>

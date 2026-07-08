@@ -38,15 +38,10 @@ export default function OrderStatusSelect({
       value={status}
       onChange={(e) => handleChange(e.target.value)}
       disabled={loading}
+      className={`text-xs font-medium px-2.5 py-[3px] rounded-full cursor-pointer outline-none transition-opacity duration-150 ${
+        loading ? "opacity-50" : ""
+      }`}
       style={{
-        fontSize: "11px",
-        padding: "3px 10px",
-        borderRadius: "20px",
-        fontWeight: "500",
-        border: "none",
-        cursor: "pointer",
-        outline: "none",
-        opacity: loading ? 0.5 : 1,
         ...(styles[status] ?? {
           background: "var(--bg-subtle)",
           color: "var(--text-muted)",
@@ -54,11 +49,7 @@ export default function OrderStatusSelect({
       }}
     >
       {STATUS_OPTIONS.map((option) => (
-        <option
-          key={option}
-          value={option}
-          style={{ background: "#111", color: "#fff" }}
-        >
+        <option key={option} value={option} className="bg-[#111] text-white">
           {option.charAt(0).toUpperCase() + option.slice(1)}
         </option>
       ))}

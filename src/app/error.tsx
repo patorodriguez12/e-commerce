@@ -14,76 +14,24 @@ export default function Error({
   }, [error]);
 
   return (
-    <div
-      style={{
-        minHeight: "100dvh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "24px",
-      }}
-    >
-      <div
-        style={{
-          textAlign: "center",
-          maxWidth: "420px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "16px",
-        }}
-      >
-        <div
-          style={{
-            width: "64px",
-            height: "64px",
-            borderRadius: "50%",
-            background: "var(--coral-bg)",
-            border: "0.5px solid var(--coral-border)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: "28px",
-            marginBottom: "8px",
-          }}
-        >
+    <div className="min-h-dvh flex items-center justify-center p-6">
+      <div className="w-[420px] max-w-full flex flex-col items-center gap-4 text-center">
+        <div className="w-16 h-16 rounded-full bg-coral-bg border border-coral-border flex items-center justify-center text-[28px] mb-2 shrink-0">
           !
         </div>
 
         <div>
-          <h1
-            style={{
-              fontSize: "24px",
-              fontWeight: "500",
-              letterSpacing: "-0.5px",
-              marginBottom: "8px",
-            }}
-          >
+          <h1 className="text-2xl font-medium tracking-[-0.5px] mb-2">
             Something went wrong
           </h1>
-          <p
-            style={{
-              fontSize: "14px",
-              color: "var(--text-secondary)",
-              lineHeight: "1.7",
-            }}
-          >
+          <p className="text-sm text-text-secondary leading-relaxed">
             An unexpected error occurred. Please try again.
           </p>
         </div>
 
         <button
           onClick={reset}
-          style={{
-            background: "var(--accent)",
-            color: "#fff",
-            border: "none",
-            padding: "10px 24px",
-            borderRadius: "8px",
-            fontSize: "13px",
-            fontWeight: "500",
-            cursor: "pointer",
-          }}
+          className="bg-accent text-white border-none px-6 py-[10px] rounded-lg text-sm font-medium cursor-pointer transition-colors duration-150"
         >
           Try again
         </button>

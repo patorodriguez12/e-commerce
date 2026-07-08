@@ -4,33 +4,16 @@ import { formatPrice } from "@/lib/utils/formatPrice";
 import Image from "next/image";
 import Link from "next/link";
 
-const STATUS_STYLES: Record<string, React.CSSProperties> = {
-  paid: {
-    background: "var(--green-bg)",
-    color: "var(--green-text)",
-    border: "0.5px solid var(--green-border)",
-  },
-  pending: {
-    background: "#BA751718",
-    color: "#EF9F27",
-    border: "0.5px solid #BA751740",
-  },
-  shipped: {
-    background: "#185FA518",
-    color: "#378ADD",
-    border: "0.5px solid #185FA540",
-  },
-  delivered: {
-    background: "var(--accent-bg)",
-    color: "var(--accent-text)",
-    border: "0.5px solid var(--accent-border)",
-  },
-  cancelled: {
-    background: "var(--coral-bg)",
-    color: "var(--coral-text)",
-    border: "0.5px solid var(--coral-border)",
-  },
-};
+function statusClasses(status: string) {
+  const map: Record<string, string> = {
+    paid: "bg-green-bg text-green-text border-green-border",
+    pending: "bg-[#BA751718] text-[#EF9F27] border-[#BA751740]",
+    shipped: "bg-[#185FA518] text-[#378ADD] border-[#185FA540]",
+    delivered: "bg-accent-bg text-accent-text border-accent-border",
+    cancelled: "bg-coral-bg text-coral-text border-coral-border",
+  };
+  return map[status] ?? "";
+}
 
 export default async function OrderDetailPage({
   params,
@@ -53,64 +36,28 @@ export default async function OrderDetailPage({
   if (!order) notFound();
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+    <div className="flex flex-col gap-4">
       {/* Header */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "12px",
-          marginBottom: "8px",
-        }}
-      >
+      <div className="flex items-center gap-3 mb-2">
         <Link
           href="/dashboard/orders"
-          style={{
-            fontSize: "13px",
-            color: "var(--text-muted)",
-            textDecoration: "none",
-            transition: "color 0.15s",
-          }}
+          className="text-sm text-text-muted no-underline transition-colors duration-150"
         >
           ← Orders
         </Link>
-        <span style={{ color: "var(--border)" }}>/</span>
-        <h1
-          style={{
-            fontSize: "16px",
-            fontWeight: "500",
-            fontFamily: "monospace",
-            color: "var(--text-primary)",
-          }}
-        >
+        <span className="text-border">/</span>
+        <h1 className="text-base font-medium font-mono text-text">
           #{order.id.slice(0, 8).toUpperCase()}
         </h1>
       </div>
 
       {/* Info card */}
-      <div
-        style={{
-          background: "var(--bg-card)",
-          border: "0.5px solid var(--border)",
-          borderRadius: "12px",
-          padding: "20px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-          <p
-            style={{
-              fontSize: "11px",
-              color: "var(--text-muted)",
-              textTransform: "uppercase",
-              letterSpacing: "0.5px",
-            }}
-          >
+      <div className="bg-surface border border-border rounded-xl p-5 flex justify-between items-center">
+        <div className="flex flex-col gap-1">
+          <p className="text-[11px] text-text-muted uppercase tracking-[0.5px]">
             Date
           </p>
-          <p style={{ fontSize: "14px", color: "var(--text-primary)" }}>
+          <p className="text-sm text-text">
             {new Date(order.created_at).toLocaleDateString("en-US", {
               year: "numeric",
               month: "long",
@@ -118,32 +65,12 @@ export default async function OrderDetailPage({
             })}
           </p>
         </div>
-        <div
-          style={{
-            textAlign: "right",
-            display: "flex",
-            flexDirection: "column",
-            gap: "4px",
-          }}
-        >
-          <p
-            style={{
-              fontSize: "11px",
-              color: "var(--text-muted)",
-              textTransform: "uppercase",
-              letterSpacing: "0.5px",
-            }}
-          >
+        <div className="text-right flex flex-col gap-1">
+          <p className="text-[11px] text-text-muted uppercase tracking-[0.5px]">
             Status
           </p>
           <span
-            style={{
-              fontSize: "11px",
-              fontWeight: "500",
-              padding: "3px 10px",
-              borderRadius: "20px",
-              ...(STATUS_STYLES[order.status] ?? {}),
-            }}
+            className={`text-[11px] font-medium px-[10px] py-[3px] rounded-full border ${statusClasses(order.status)}`}
           >
             {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
           </span>
@@ -151,28 +78,9 @@ export default async function OrderDetailPage({
       </div>
 
       {/* Items */}
-      <div
-        style={{
-          background: "var(--bg-card)",
-          border: "0.5px solid var(--border)",
-          borderRadius: "12px",
-          overflow: "hidden",
-        }}
-      >
-        <div
-          style={{
-            padding: "14px 20px",
-            borderBottom: "0.5px solid var(--border)",
-          }}
-        >
-          <p
-            style={{
-              fontSize: "11px",
-              color: "var(--text-muted)",
-              textTransform: "uppercase",
-              letterSpacing: "0.5px",
-            }}
-          >
+      <div className="bg-surface border border-border rounded-xl overflow-hidden">
+        <div className="px-5 py-[14px] border-b border-border">
+          <p className="text-[11px] text-text-muted uppercase tracking-[0.5px]">
             Products
           </p>
         </div>
@@ -180,64 +88,27 @@ export default async function OrderDetailPage({
           {order.order_items?.map((item: any, i: number) => (
             <div
               key={item.id}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "16px",
-                padding: "16px 20px",
-                borderBottom:
-                  i < order.order_items.length - 1
-                    ? "0.5px solid var(--border)"
-                    : "none",
-              }}
+              className={`flex items-center gap-4 px-5 py-4 ${i < order.order_items.length - 1 ? "border-b border-border" : ""}`}
             >
-              <div
-                style={{
-                  position: "relative",
-                  width: "52px",
-                  height: "52px",
-                  flexShrink: 0,
-                  borderRadius: "8px",
-                  overflow: "hidden",
-                  background: "var(--bg-subtle)",
-                }}
-              >
+              <div className="relative w-[52px] h-[52px] shrink-0 rounded-lg overflow-hidden bg-bg-subtle">
                 {item.products?.image_url && (
                   <Image
                     src={item.products.image_url}
                     alt={item.products.name}
                     fill
-                    style={{ objectFit: "cover" }}
+                    className="object-cover"
                   />
                 )}
               </div>
-              <div style={{ flex: 1 }}>
-                <p
-                  style={{
-                    fontSize: "14px",
-                    fontWeight: "500",
-                    color: "var(--text-primary)",
-                  }}
-                >
+              <div className="flex-1">
+                <p className="text-sm font-medium text-text">
                   {item.products?.name}
                 </p>
-                <p
-                  style={{
-                    fontSize: "12px",
-                    color: "var(--text-muted)",
-                    marginTop: "2px",
-                  }}
-                >
+                <p className="text-xs text-text-muted mt-0.5">
                   Qty: {item.quantity}
                 </p>
               </div>
-              <p
-                style={{
-                  fontSize: "14px",
-                  fontWeight: "500",
-                  color: "var(--text-primary)",
-                }}
-              >
+              <p className="text-sm font-medium text-text">
                 {formatPrice(item.unit_price * item.quantity)}
               </p>
             </div>
@@ -246,21 +117,9 @@ export default async function OrderDetailPage({
       </div>
 
       {/* Total */}
-      <div
-        style={{
-          background: "var(--bg-card)",
-          border: "0.5px solid var(--border)",
-          borderRadius: "12px",
-          padding: "20px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <span style={{ fontSize: "14px", color: "var(--text-secondary)" }}>
-          Total
-        </span>
-        <span style={{ fontSize: "20px", fontWeight: "500" }}>
+      <div className="bg-surface border border-border rounded-xl p-5 flex justify-between items-center">
+        <span className="text-sm text-text-secondary">Total</span>
+        <span className="text-xl font-medium">
           {formatPrice(order.total)}
         </span>
       </div>

@@ -21,94 +21,34 @@ export default function DashboardNav({ fullName }: { fullName: string }) {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="desktop-only" style={{ width: "200px", flexShrink: 0 }}>
-        <div
-          style={{
-            background: "var(--surface)",
-            border: "0.5px solid var(--border)",
-            borderRadius: "12px",
-            overflow: "hidden",
-          }}
-        >
+      <aside className="desktop-only w-[200px] shrink-0">
+        <div className="bg-surface border border-border rounded-xl overflow-hidden">
           {/* Header */}
-          <div
-            style={{
-              padding: "20px 20px 16px",
-              borderBottom: "0.5px solid var(--border)",
-            }}
-          >
-            <p
-              style={{
-                fontSize: "14px",
-                fontWeight: "500",
-                color: "var(--text)",
-                marginBottom: "4px",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
-            >
+          <div className="px-5 pt-5 pb-4 border-b border-border">
+            <p className="text-sm font-medium text-text mb-1 truncate">
               {fullName}
             </p>
-            <p
-              style={{
-                fontSize: "11px",
-                color: "var(--text-muted)",
-                textTransform: "uppercase",
-                letterSpacing: "1px",
-              }}
-            >
+            <p className="text-[11px] text-text-muted uppercase tracking-[1px]">
               Account
             </p>
           </div>
 
           {/* Nav */}
-          <nav style={{ padding: "8px" }}>
+          <nav className="p-2">
             {NAV_ITEMS.map((item) => {
               const active = isActive(item.href);
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    padding: "9px 12px",
-                    borderRadius: "6px",
-                    fontSize: "13px",
-                    color: active ? "var(--accent-text)" : "var(--text-secondary)",
-                    textDecoration: "none",
-                    background: active ? "var(--accent-bg)" : "transparent",
-                    transition: "all 0.15s",
-                    position: "relative",
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!active) {
-                      e.currentTarget.style.background = "var(--elevated)";
-                      e.currentTarget.style.color = "var(--text)";
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!active) {
-                      e.currentTarget.style.background = "transparent";
-                      e.currentTarget.style.color = "var(--text-secondary)";
-                    }
-                  }}
+                  className={`flex items-center gap-2.5 px-3 py-2 rounded-md text-sm no-underline transition-all duration-150 relative ${
+                    active
+                      ? "text-accent-text bg-accent-bg"
+                      : "text-text-secondary bg-transparent hover:bg-elevated hover:text-text"
+                  }`}
                 >
                   {active && (
-                    <span
-                      style={{
-                        position: "absolute",
-                        left: "-8px",
-                        top: "50%",
-                        transform: "translateY(-50%)",
-                        width: "3px",
-                        height: "18px",
-                        background: "var(--accent)",
-                        borderRadius: "0 2px 2px 0",
-                      }}
-                    />
+                    <span className="absolute -left-2 top-1/2 -translate-y-1/2 w-[3px] h-[18px] bg-accent rounded-r-sm" />
                   )}
                   {item.label}
                 </Link>
@@ -117,32 +57,10 @@ export default function DashboardNav({ fullName }: { fullName: string }) {
           </nav>
 
           {/* Links + logout */}
-          <div
-            style={{
-              padding: "8px",
-              borderTop: "0.5px solid var(--border)",
-            }}
-          >
+          <div className="p-2 border-t border-border">
             <Link
               href="/"
-              style={{
-                display: "block",
-                padding: "8px 12px",
-                borderRadius: "6px",
-                fontSize: "13px",
-                color: "var(--text-muted)",
-                textDecoration: "none",
-                marginBottom: "2px",
-                transition: "all 0.15s",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = "var(--text)";
-                e.currentTarget.style.background = "var(--elevated)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = "var(--text-muted)";
-                e.currentTarget.style.background = "transparent";
-              }}
+              className="block px-3 py-2 rounded-md text-sm text-text-muted no-underline mb-0.5 transition-all duration-150 hover:text-text hover:bg-elevated"
             >
               ← Store
             </Link>
@@ -152,36 +70,19 @@ export default function DashboardNav({ fullName }: { fullName: string }) {
       </aside>
 
       {/* Mobile tabs */}
-      <div className="mobile-only" style={{ marginBottom: "24px" }}>
-        <div
-          style={{
-            display: "flex",
-            gap: "4px",
-            overflowX: "auto",
-            scrollbarWidth: "none",
-            WebkitOverflowScrolling: "touch",
-            paddingBottom: "4px",
-          }}
-        >
+      <div className="mobile-only mb-6">
+        <div className="flex gap-1 overflow-x-auto pb-1">
           {NAV_ITEMS.map((item) => {
             const active = isActive(item.href);
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                style={{
-                  flexShrink: 0,
-                  padding: "8px 16px",
-                  borderRadius: "8px",
-                  fontSize: "13px",
-                  fontWeight: active ? "500" : "400",
-                  color: active ? "#fff" : "var(--text-secondary)",
-                  background: active ? "var(--accent)" : "var(--surface)",
-                  border: active ? "none" : "0.5px solid var(--border)",
-                  textDecoration: "none",
-                  transition: "all 0.15s",
-                  whiteSpace: "nowrap",
-                }}
+                className={`shrink-0 px-4 py-2 rounded-lg text-sm no-underline transition-all duration-150 whitespace-nowrap ${
+                  active
+                    ? "text-white bg-accent font-medium border-0"
+                    : "text-text-secondary bg-surface font-normal border border-border"
+                }`}
               >
                 {item.label}
               </Link>

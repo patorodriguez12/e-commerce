@@ -24,31 +24,11 @@ export default async function RelatedProducts({
   if (!products || products.length === 0) return null;
 
   return (
-    <section
-      style={{
-        maxWidth: "1200px",
-        margin: "0 auto",
-        padding: "48px 24px",
-        borderTop: "0.5px solid var(--border)",
-      }}
-    >
-      <h2
-        style={{
-          fontSize: "18px",
-          fontWeight: "500",
-          marginBottom: "24px",
-          letterSpacing: "-0.3px",
-        }}
-      >
+    <section className="max-w-[1200px] mx-auto px-6 py-12 border-t border-border">
+      <h2 className="text-lg font-medium mb-6 tracking-[-0.3px]">
         Related products
       </h2>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-          gap: "16px",
-        }}
-      >
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
         {products.map((product: Product) => (
           <ProductCard key={product.id} product={product} />
         ))}

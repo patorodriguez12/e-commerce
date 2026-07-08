@@ -38,35 +38,11 @@ export default function WishlistButton({
       onClick={handleToggle}
       disabled={loading}
       title={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
-      style={{
-        padding: "13px 16px",
-        borderRadius: "8px",
-        border: "0.5px solid",
-        borderColor: isWishlisted ? "var(--coral-border)" : "var(--border)",
-        background: isWishlisted ? "var(--coral-bg)" : "transparent",
-        cursor: "pointer",
-        transition: "all 0.15s",
-        fontSize: "18px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-      onMouseEnter={(e) => {
-        if (!isWishlisted) {
-          (e.currentTarget as HTMLButtonElement).style.borderColor =
-            "var(--coral-border)";
-          (e.currentTarget as HTMLButtonElement).style.background =
-            "var(--coral-bg)";
-        }
-      }}
-      onMouseLeave={(e) => {
-        if (!isWishlisted) {
-          (e.currentTarget as HTMLButtonElement).style.borderColor =
-            "var(--border)";
-          (e.currentTarget as HTMLButtonElement).style.background =
-            "transparent";
-        }
-      }}
+      className={`px-4 py-[13px] rounded-lg cursor-pointer transition-all duration-150 text-lg flex items-center justify-center ${
+        isWishlisted
+          ? "bg-coral-bg border border-coral-border"
+          : "bg-transparent border border-border hover:bg-coral-bg hover:border-coral-border"
+      }`}
     >
       {isWishlisted ? "❤️" : "🤍"}
     </button>

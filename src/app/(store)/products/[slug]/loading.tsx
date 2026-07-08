@@ -2,98 +2,25 @@ import { ProductDetailSkeleton } from "@/components/ui/Skeleton";
 
 export default function Loading() {
   return (
-    <main
-      style={{ maxWidth: "1200px", margin: "0 auto", padding: "48px 24px" }}
-    >
+    <main className="max-w-[1200px] mx-auto px-6 py-12">
       <ProductDetailSkeleton />
 
       {/* Reviews skeleton */}
-      <div
-        style={{
-          marginTop: "48px",
-          paddingTop: "48px",
-          borderTop: "0.5px solid var(--border)",
-          display: "flex",
-          flexDirection: "column",
-          gap: "20px",
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-          <div
-            style={{
-              height: "20px",
-              width: "80px",
-              background: "#1a1a1a",
-              borderRadius: "6px",
-              backgroundImage:
-                "linear-gradient(90deg, #1a1a1a 25%, #222 50%, #1a1a1a 75%)",
-              backgroundSize: "200% 100%",
-              animation: "shimmer 1.5s infinite",
-            }}
-          />
-          <div
-            style={{
-              height: "16px",
-              width: "120px",
-              background: "#1a1a1a",
-              borderRadius: "6px",
-              backgroundImage:
-                "linear-gradient(90deg, #1a1a1a 25%, #222 50%, #1a1a1a 75%)",
-              backgroundSize: "200% 100%",
-              animation: "shimmer 1.5s infinite",
-            }}
-          />
+      <div className="mt-12 pt-12 border-t border-border flex flex-col gap-5">
+        <div className="flex items-center gap-4">
+          <div className="h-5 w-[80px] rounded-md bg-[linear-gradient(90deg,#1a1a1a_25%,#222_50%,#1a1a1a_75%)] bg-[length:200%_100%] animate-[shimmer_1.5s_infinite]" />
+          <div className="h-4 w-[120px] rounded-md bg-[linear-gradient(90deg,#1a1a1a_25%,#222_50%,#1a1a1a_75%)] bg-[length:200%_100%] animate-[shimmer_1.5s_infinite]" />
         </div>
         {Array.from({ length: 2 }).map((_, i) => (
           <div
             key={i}
-            style={{
-              padding: "20px 0",
-              borderBottom: "0.5px solid var(--border)",
-              display: "flex",
-              flexDirection: "column",
-              gap: "8px",
-            }}
+            className="py-5 border-b border-border flex flex-col gap-2"
           >
-            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-              <div
-                style={{
-                  width: "28px",
-                  height: "28px",
-                  borderRadius: "50%",
-                  background: "#1a1a1a",
-                  backgroundImage:
-                    "linear-gradient(90deg, #1a1a1a 25%, #222 50%, #1a1a1a 75%)",
-                  backgroundSize: "200% 100%",
-                  animation: "shimmer 1.5s infinite",
-                }}
-              />
-              <div
-                style={{
-                  height: "13px",
-                  width: "100px",
-                  background: "#1a1a1a",
-                  borderRadius: "6px",
-                  backgroundImage:
-                    "linear-gradient(90deg, #1a1a1a 25%, #222 50%, #1a1a1a 75%)",
-                  backgroundSize: "200% 100%",
-                  animation: "shimmer 1.5s infinite",
-                }}
-              />
+            <div className="flex gap-2.5 items-center">
+              <div className="size-7 rounded-full bg-[linear-gradient(90deg,#1a1a1a_25%,#222_50%,#1a1a1a_75%)] bg-[length:200%_100%] animate-[shimmer_1.5s_infinite]" />
+              <div className="h-[13px] w-[100px] rounded-md bg-[linear-gradient(90deg,#1a1a1a_25%,#222_50%,#1a1a1a_75%)] bg-[length:200%_100%] animate-[shimmer_1.5s_infinite]" />
             </div>
-            <div
-              style={{
-                height: "14px",
-                width: "80%",
-                background: "#1a1a1a",
-                borderRadius: "6px",
-                marginLeft: "38px",
-                backgroundImage:
-                  "linear-gradient(90deg, #1a1a1a 25%, #222 50%, #1a1a1a 75%)",
-                backgroundSize: "200% 100%",
-                animation: "shimmer 1.5s infinite",
-              }}
-            />
+            <div className="h-[14px] w-[80%] rounded-md ml-[38px] bg-[linear-gradient(90deg,#1a1a1a_25%,#222_50%,#1a1a1a_75%)] bg-[length:200%_100%] animate-[shimmer_1.5s_infinite]" />
           </div>
         ))}
       </div>

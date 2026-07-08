@@ -12,20 +12,13 @@ export default function SearchBar({
   placeholder = "Search...",
 }: Props) {
   return (
-    <div style={{ position: "relative", marginBottom: "16px" }}>
+    <div className="relative mb-4">
       <svg
         width="14"
         height="14"
         viewBox="0 0 14 14"
         fill="none"
-        style={{
-          position: "absolute",
-          left: "12px",
-          top: "50%",
-          transform: "translateY(-50%)",
-          color: "var(--text-muted)",
-          pointerEvents: "none",
-        }}
+        className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none"
       >
         <circle
           cx="6"
@@ -46,19 +39,7 @@ export default function SearchBar({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        style={{
-          width: "100%",
-          background: "var(--bg-card)",
-          border: "0.5px solid var(--border)",
-          borderRadius: "8px",
-          padding: "9px 12px 9px 34px",
-          fontSize: "13px",
-          color: "var(--text-primary)",
-          outline: "none",
-          transition: "border-color 0.15s",
-        }}
-        onFocus={(e) => (e.currentTarget.style.borderColor = "var(--accent)")}
-        onBlur={(e) => (e.currentTarget.style.borderColor = "var(--border)")}
+        className="w-full bg-surface border border-border rounded-lg px-3 py-[9px] pl-[34px] text-sm text-text outline-none transition-colors duration-150 focus:border-accent"
       />
     </div>
   );

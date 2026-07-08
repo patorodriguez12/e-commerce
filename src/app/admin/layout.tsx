@@ -9,13 +9,10 @@ export default async function AdminLayout({
   await requireAdmin();
 
   return (
-    <div style={{ minHeight: "100dvh", display: "flex" }}>
+    <div className="min-h-dvh flex">
       <AdminSidebar />
-      <main style={{ flex: 1, overflowX: "auto" }}>
-        <div
-          className="px-4 py-5 md:px-8 md:py-10"
-          style={{ maxWidth: "1100px", margin: "0 auto" }}
-        >
+      <main className="flex-1 overflow-x-auto">
+        <div className="px-4 py-5 md:px-8 md:py-10 max-w-[1100px] mx-auto">
           {children}
         </div>
       </main>

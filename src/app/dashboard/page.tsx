@@ -27,15 +27,15 @@ export default async function DashboardPage() {
       label: "Orders",
       value: orderCount.count ?? 0,
       icon: ShoppingBag,
-      color: "var(--accent-text)",
-      bg: "var(--accent-bg)",
+      color: "text-accent-text",
+      bg: "bg-accent-bg",
     },
     {
       label: "Wishlist",
       value: wishlistCount.count ?? 0,
       icon: Heart,
-      color: "var(--coral-text)",
-      bg: "var(--coral-bg)",
+      color: "text-coral-text",
+      bg: "bg-coral-bg",
     },
     {
       label: "Member since",
@@ -46,97 +46,39 @@ export default async function DashboardPage() {
           })
         : "—",
       icon: null,
-      color: "var(--green-text)",
-      bg: "var(--green-bg)",
+      color: "text-green-text",
+      bg: "bg-green-bg",
     },
   ];
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
+    <div className="flex flex-col gap-7">
       {/* Welcome */}
       <div>
-        <h1
-          style={{
-            fontSize: "24px",
-            fontWeight: "500",
-            letterSpacing: "-0.5px",
-            display: "flex",
-            alignItems: "center",
-            gap: "10px",
-          }}
-        >
-          <span style={{ color: "var(--gold)", opacity: 0.7 }}>◆</span>
+        <h1 className="text-2xl font-medium tracking-[-0.5px] flex items-center gap-2.5">
+          <span className="text-gold opacity-70">◆</span>
           Hey, {fullName.split(" ")[0]}
         </h1>
-        <p
-          style={{
-            fontSize: "13px",
-            color: "var(--text-muted)",
-            marginTop: "4px",
-            marginLeft: "24px",
-          }}
-        >
+        <p className="text-xs text-text-muted mt-1 ml-6">
           {user?.email}
         </p>
       </div>
 
       {/* Stats */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))",
-          gap: "12px",
-        }}
-      >
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-3">
         {stats.map((stat) => {
           const Icon = stat.icon;
           return (
-            <div
-              key={stat.label}
-              style={{
-                background: "var(--surface)",
-                border: "0.5px solid var(--border)",
-                borderRadius: "12px",
-                padding: "16px",
-                display: "flex",
-                flexDirection: "column",
-                gap: "8px",
-              }}
-            >
+            <div key={stat.label} className="bg-surface border border-border rounded-xl p-4 flex flex-col gap-2">
               {Icon && (
-                <div
-                  style={{
-                    width: "32px",
-                    height: "32px",
-                    borderRadius: "8px",
-                    background: stat.bg,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: stat.color,
-                  }}
-                >
+                <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${stat.bg} ${stat.color}`}>
                   <Icon size={16} />
                 </div>
               )}
-              <p
-                style={{
-                  fontSize: "20px",
-                  fontWeight: "600",
-                  letterSpacing: "-0.5px",
-                  color: "var(--text)",
-                }}
-              >
+              <p className="text-xl font-semibold tracking-[-0.5px] text-text">
                 {stat.value}
               </p>
-              <p
-                style={{
-                  fontSize: "11px",
-                  color: "var(--text-muted)",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.5px",
-                }}
-              >
+              <p className="text-[11px] text-text-muted uppercase tracking-[0.5px]">
                 {stat.label}
               </p>
             </div>
@@ -145,22 +87,8 @@ export default async function DashboardPage() {
       </div>
 
       {/* Profile form */}
-      <div
-        style={{
-          background: "var(--surface)",
-          border: "0.5px solid var(--border)",
-          borderRadius: "12px",
-          padding: "28px",
-        }}
-      >
-        <h2
-          style={{
-            fontSize: "15px",
-            fontWeight: "500",
-            marginBottom: "20px",
-            color: "var(--text)",
-          }}
-        >
+      <div className="bg-surface border border-border rounded-xl p-7">
+        <h2 className="text-base font-medium mb-5 text-text">
           Profile details
         </h2>
         <ProfileForm profile={profile.data} userId={user!.id} email={user?.email} />

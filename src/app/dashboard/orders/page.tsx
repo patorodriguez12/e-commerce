@@ -3,33 +3,16 @@ import { Order } from "@/types";
 import { formatPrice } from "@/lib/utils/formatPrice";
 import Link from "next/link";
 
-const STATUS_STYLES: Record<string, React.CSSProperties> = {
-  paid: {
-    background: "var(--green-bg)",
-    color: "var(--green-text)",
-    border: "0.5px solid var(--green-border)",
-  },
-  pending: {
-    background: "#BA751718",
-    color: "#EF9F27",
-    border: "0.5px solid #BA751740",
-  },
-  shipped: {
-    background: "#185FA518",
-    color: "#378ADD",
-    border: "0.5px solid #185FA540",
-  },
-  delivered: {
-    background: "var(--accent-bg)",
-    color: "var(--accent-text)",
-    border: "0.5px solid var(--accent-border)",
-  },
-  cancelled: {
-    background: "var(--coral-bg)",
-    color: "var(--coral-text)",
-    border: "0.5px solid var(--coral-border)",
-  },
-};
+function statusClasses(status: string) {
+  const map: Record<string, string> = {
+    paid: "bg-green-bg text-green-text border-green-border",
+    pending: "bg-[#BA751718] text-[#EF9F27] border-[#BA751740]",
+    shipped: "bg-[#185FA518] text-[#378ADD] border-[#185FA540]",
+    delivered: "bg-accent-bg text-accent-text border-accent-border",
+    cancelled: "bg-coral-bg text-coral-text border-coral-border",
+  };
+  return map[status] ?? "";
+}
 
 export default async function OrdersPage() {
   const supabase = await createClient();
@@ -45,143 +28,54 @@ export default async function OrdersPage() {
 
   return (
     <div>
-      <h1
-        style={{
-          fontSize: "22px",
-          fontWeight: "500",
-          letterSpacing: "-0.5px",
-          marginBottom: "24px",
-        }}
-      >
+      <h1 className="text-[22px] font-medium tracking-[-0.5px] mb-6">
         My Orders
       </h1>
 
       {!orders || orders.length === 0 ? (
-        <div
-          style={{
-            textAlign: "center",
-            padding: "64px 24px",
-            background: "var(--surface)",
-            border: "0.5px solid var(--border)",
-            borderRadius: "12px",
-          }}
-        >
-          <p
-            style={{
-              fontSize: "28px",
-              marginBottom: "12px",
-              color: "var(--gold)",
-              opacity: 0.5,
-            }}
-          >
-            ◆
-          </p>
-          <p
-            style={{
-              color: "var(--text-muted)",
-              marginBottom: "20px",
-              fontSize: "14px",
-            }}
-          >
-            No orders yet
-          </p>
+        <div className="text-center py-16 px-6 bg-surface border border-border rounded-xl">
+          <p className="text-[28px] mb-3 text-gold opacity-50">◆</p>
+          <p className="text-text-muted mb-5 text-sm">No orders yet</p>
           <Link
             href="/"
-            style={{
-              background: "var(--accent)",
-              color: "#fff",
-              padding: "10px 24px",
-              borderRadius: "8px",
-              textDecoration: "none",
-              fontSize: "13px",
-              fontWeight: "500",
-            }}
+            className="bg-accent text-white px-6 py-[10px] rounded-lg no-underline text-sm font-medium transition-colors duration-150"
           >
             Start shopping
           </Link>
         </div>
       ) : (
-        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+        <div className="flex flex-col gap-2.5">
           {orders.map((order: Order) => (
             <Link
               key={order.id}
               href={`/dashboard/orders/${order.id}`}
-              className="card-hover"
-              style={{
-                display: "block",
-                background: "var(--surface)",
-                border: "0.5px solid var(--border)",
-                borderRadius: "12px",
-                padding: "16px 20px",
-                textDecoration: "none",
-              }}
+              className="card-hover block bg-surface border border-border rounded-xl px-5 py-4 no-underline"
             >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  gap: "12px",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "4px",
-                    minWidth: 0,
-                  }}
-                >
-                  <p
-                    style={{
-                      fontSize: "13px",
-                      fontWeight: "500",
-                      color: "var(--text-primary)",
-                      fontFamily: "monospace",
-                    }}
-                  >
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex flex-col gap-1 min-w-0">
+                  <p className="text-sm font-medium text-text font-mono">
                     #{order.id.slice(0, 8).toUpperCase()}
                   </p>
-                  <p style={{ fontSize: "12px", color: "var(--text-muted)" }}>
+                  <p className="text-xs text-text-muted">
                     {new Date(order.created_at).toLocaleDateString("en-US", {
                       year: "numeric",
                       month: "long",
                       day: "numeric",
                     })}
                   </p>
-                  <p style={{ fontSize: "12px", color: "var(--text-muted)" }}>
+                  <p className="text-xs text-text-muted">
                     {order.order_items?.length ?? 0} item
                     {(order.order_items?.length ?? 0) !== 1 ? "s" : ""}
                   </p>
                 </div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "flex-end",
-                    gap: "6px",
-                    flexShrink: 0,
-                  }}
-                >
+                <div className="flex flex-col items-end gap-[6px] shrink-0">
                   <span
-                    style={{
-                      fontSize: "11px",
-                      fontWeight: "500",
-                      padding: "3px 10px",
-                      borderRadius: "20px",
-                      ...(STATUS_STYLES[order.status] ?? {}),
-                    }}
+                    className={`text-[11px] font-medium px-[10px] py-[3px] rounded-full border ${statusClasses(order.status)}`}
                   >
                     {order.status.charAt(0).toUpperCase() +
                       order.status.slice(1)}
                   </span>
-                  <p
-                    style={{
-                      fontSize: "15px",
-                      fontWeight: "500",
-                      color: "var(--text-primary)",
-                    }}
-                  >
+                  <p className="text-base font-medium text-text">
                     {formatPrice(order.total)}
                   </p>
                 </div>

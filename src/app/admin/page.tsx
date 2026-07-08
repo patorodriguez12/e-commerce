@@ -102,59 +102,30 @@ export default async function AdminDashboard() {
 
   return (
     <div>
-      <h1
-        style={{
-          fontSize: "22px",
-          fontWeight: "500",
-          letterSpacing: "-0.5px",
-          marginBottom: "32px",
-        }}
-      >
+      <h1 className="text-[22px] font-medium tracking-[-0.5px] mb-8">
         Dashboard
       </h1>
 
       {/* Metrics */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
-          gap: "12px",
-          marginBottom: "32px",
-        }}
-      >
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-3 mb-8">
         {METRICS.map((m) => (
           <div
             key={m.label}
+            className="rounded-xl p-4"
             style={{
               background: m.bg,
               border: `0.5px solid ${m.border}`,
-              borderRadius: "10px",
-              padding: "16px",
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "6px",
-                marginBottom: "8px",
-              }}
-            >
-              <span style={{ color: m.accent, display: "flex" }}>
+            <div className="flex items-center gap-1.5 mb-2">
+              <span style={{ color: m.accent }} className="flex">
                 {m.icon}
               </span>
-              <p
-                style={{
-                  fontSize: "11px",
-                  color: "var(--text-muted)",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.5px",
-                }}
-              >
+              <p className="text-[11px] uppercase tracking-[0.5px] text-text-muted">
                 {m.label}
               </p>
             </div>
-            <p style={{ fontSize: "24px", fontWeight: "500", color: m.accent }}>
+            <p className="text-2xl font-medium" style={{ color: m.accent }}>
               {m.value}
             </p>
           </div>
@@ -162,102 +133,47 @@ export default async function AdminDashboard() {
       </div>
 
       {/* Recent Orders */}
-      <div
-        style={{
-          background: "var(--bg-card)",
-          border: "0.5px solid var(--border)",
-          borderRadius: "12px",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "16px 20px",
-            borderBottom: "0.5px solid var(--border)",
-          }}
-        >
-          <h2 style={{ fontSize: "14px", fontWeight: "500" }}>Recent orders</h2>
+      <div className="bg-surface border border-border rounded-xl">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-border">
+          <h2 className="text-sm font-medium">Recent orders</h2>
           <Link
             href="/admin/orders"
-            style={{
-              fontSize: "12px",
-              color: "var(--text-muted)",
-              textDecoration: "none",
-              transition: "color 0.15s",
-            }}
+            className="text-xs text-text-muted no-underline transition-colors duration-150 hover:text-text-secondary"
           >
             View all →
           </Link>
         </div>
 
         {recentOrders.length === 0 ? (
-          <div
-            style={{
-              textAlign: "center",
-              padding: "48px 24px",
-            }}
-          >
+          <div className="text-center py-12 px-6">
             <svg
               width="32"
               height="32"
               viewBox="0 0 24 24"
               fill="none"
-              style={{
-                margin: "0 auto 12px",
-                color: "var(--text-muted)",
-                opacity: 0.4,
-              }}
+              className="mx-auto mb-3 text-text-muted opacity-40"
             >
               <path d="M3 6H21L19 18H5L3 6Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
               <circle cx="8" cy="20" r="1.5" fill="currentColor" />
               <circle cx="16" cy="20" r="1.5" fill="currentColor" />
               <path d="M6 6V4C6 2.5 7.5 2 12 2C16.5 2 18 2.5 18 4V6" stroke="currentColor" strokeWidth="1.5" />
             </svg>
-            <p
-              style={{
-                color: "var(--text-muted)",
-                fontSize: "13px",
-              }}
-            >
+            <p className="text-sm text-text-muted">
               No orders yet
             </p>
-            <p
-              style={{
-                color: "var(--text-muted)",
-                fontSize: "12px",
-                marginTop: "4px",
-                opacity: 0.6,
-              }}
-            >
+            <p className="text-xs text-text-muted mt-1 opacity-60">
               Orders will appear here once customers start purchasing.
             </p>
           </div>
         ) : (
           <div className="overflow-x-auto">
-          <table
-            style={{
-              width: "100%",
-              borderCollapse: "collapse",
-              fontSize: "13px",
-            }}
-          >
+          <table className="w-full border-collapse text-sm">
             <thead>
-              <tr style={{ borderBottom: "0.5px solid var(--border)" }}>
+              <tr className="border-b border-border">
                 {["Order", "Date", "Status", "Total"].map((h) => (
                   <th
                     key={h}
-                    className={h === "Date" ? "desktop-only" : ""}
-                    style={{
-                      padding: "10px 20px",
-                      textAlign: h === "Total" ? "right" : "left",
-                      fontSize: "11px",
-                      color: "var(--text-muted)",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.5px",
-                      fontWeight: "500",
-                    }}
+                    className={`${h === "Date" ? "desktop-only" : ""} px-5 py-2.5 text-[11px] text-text-muted uppercase tracking-[0.5px] font-medium ${h === "Total" ? "text-right" : "text-left"}`}
                   >
                     {h}
                   </th>
@@ -268,52 +184,27 @@ export default async function AdminDashboard() {
               {recentOrders.map((order: { id: string; total: number; status: string; created_at: string }) => (
                 <tr
                   key={order.id}
-                  style={{ borderBottom: "0.5px solid var(--border)" }}
+                  className="border-b border-border"
                 >
-                  <td
-                    style={{
-                      padding: "12px 20px",
-                      fontFamily: "monospace",
-                      fontSize: "12px",
-                      color: "var(--text-secondary)",
-                    }}
-                  >
+                  <td className="px-5 py-3 font-mono text-xs text-text-secondary">
                     #{order.id.slice(0, 8).toUpperCase()}
                   </td>
-                  <td
-                    className="desktop-only"
-                    style={{
-                      padding: "12px 20px",
-                      color: "var(--text-muted)",
-                      fontSize: "12px",
-                    }}
-                  >
+                  <td className="desktop-only px-5 py-3 text-xs text-text-muted">
                     {new Date(order.created_at).toLocaleDateString("en-US", {
                       month: "short",
                       day: "numeric",
                       year: "numeric",
                     })}
                   </td>
-                  <td style={{ padding: "12px 20px" }}>
+                  <td className="px-5 py-3">
                     <span
-                      style={{
-                        fontSize: "11px",
-                        fontWeight: "500",
-                        padding: "3px 10px",
-                        borderRadius: "20px",
-                        ...(STATUS_STYLES[order.status] ?? {}),
-                      }}
+                      className="text-[11px] font-medium px-[10px] py-[3px] rounded-full"
+                      style={STATUS_STYLES[order.status] ?? {}}
                     >
                       {order.status}
                     </span>
                   </td>
-                  <td
-                    style={{
-                      padding: "12px 20px",
-                      textAlign: "right",
-                      fontWeight: "500",
-                    }}
-                  >
+                  <td className="px-5 py-3 text-right font-medium">
                     {formatPrice(order.total)}
                   </td>
                 </tr>

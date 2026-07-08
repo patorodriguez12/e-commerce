@@ -56,7 +56,7 @@ export default async function HomePage({ searchParams }: Props) {
       <Hero />
       <div
         id="catalog"
-        style={{ maxWidth: "1200px", margin: "0 auto", padding: "48px 24px" }}
+        className="max-w-[1200px] mx-auto px-6 py-12"
       >
         <CatalogLayout
           categories={categories ?? []}

@@ -5,38 +5,9 @@ import Link from "next/link";
 import { login } from "@/lib/supabase/actions";
 import OAuthButtons from "@/components/auth/OAuthButtons";
 
-const inputStyle: React.CSSProperties = {
-  width: "100%",
-  background: "var(--bg-subtle)",
-  border: "0.5px solid var(--border)",
-  borderRadius: "8px",
-  padding: "10px 14px",
-  fontSize: "14px",
-  color: "var(--text-primary)",
-  outline: "none",
-  transition: "border-color 0.15s",
-};
-
-const labelStyle: React.CSSProperties = {
-  display: "block",
-  fontSize: "12px",
-  color: "var(--text-secondary)",
-  marginBottom: "6px",
-};
-
 function Spinner() {
   return (
-    <span
-      style={{
-        width: 14,
-        height: 14,
-        border: "2px solid #ffffff40",
-        borderTopColor: "#fff",
-        borderRadius: "50%",
-        display: "inline-block",
-        animation: "spin 0.6s linear infinite",
-      }}
-    />
+    <span className="size-[14px] border-2 border-white/25 border-t-white rounded-full inline-block animate-spin" />
   );
 }
 
@@ -50,140 +21,59 @@ export default function LoginPage() {
   );
 
   return (
-    <div
-      style={{
-        minHeight: "100dvh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "24px",
-      }}
-    >
-      <div style={{ width: "100%", maxWidth: "400px" }}>
-        {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "32px" }}>
+    <div className="min-h-dvh flex items-center justify-center p-6">
+      <div className="w-full max-w-[400px]">
+        <div className="text-center mb-8">
           <Link
             href="/"
-            style={{
-              fontSize: "18px",
-              fontWeight: "500",
-              letterSpacing: "-0.5px",
-              color: "var(--text-primary)",
-              textDecoration: "none",
-              display: "block",
-              marginBottom: "24px",
-            }}
+            className="text-lg font-medium tracking-tight text-text no-underline block mb-6"
           >
             Smartech
           </Link>
-          <h1
-            style={{
-              fontSize: "22px",
-              fontWeight: "500",
-              letterSpacing: "-0.5px",
-              marginBottom: "6px",
-            }}
-          >
+          <h1 className="text-2xl font-medium tracking-tight mb-1.5">
             Welcome back
           </h1>
-          <p style={{ fontSize: "13px", color: "var(--text-muted)" }}>
+          <p className="text-sm text-text-muted">
             Sign in to your account
           </p>
         </div>
 
-        {/* Card */}
-        <div
-          style={{
-            background: "var(--bg-card)",
-            border: "0.5px solid var(--border)",
-            borderRadius: "16px",
-            padding: "28px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "16px",
-          }}
-        >
+        <div className="bg-surface border border-border rounded-xl p-7 flex flex-col gap-4">
           <OAuthButtons disabled={pending} />
 
-          {/* Divider */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "12px",
-            }}
-          >
-            <div
-              style={{ flex: 1, height: "0.5px", background: "var(--border)" }}
-            />
-            <span style={{ fontSize: "11px", color: "var(--text-muted)" }}>
-              or
-            </span>
-            <div
-              style={{ flex: 1, height: "0.5px", background: "var(--border)" }}
-            />
+          <div className="flex items-center gap-3">
+            <div className="flex-1 h-[0.5px] bg-border" />
+            <span className="text-[11px] text-text-muted">or</span>
+            <div className="flex-1 h-[0.5px] bg-border" />
           </div>
 
-          {/* Form */}
-          <form
-            action={formAction}
-            style={{ display: "flex", flexDirection: "column", gap: "14px" }}
-          >
+          <form action={formAction} className="flex flex-col gap-3.5">
             <div>
-              <label style={labelStyle}>Email</label>
+              <label className="block text-xs text-text-secondary mb-1.5">Email</label>
               <input
                 name="email"
                 type="email"
                 required
                 placeholder="you@example.com"
                 disabled={pending}
-                style={{
-                  ...inputStyle,
-                  opacity: pending ? 0.5 : 1,
-                  cursor: pending ? "not-allowed" : undefined,
-                }}
-                onFocus={(e) =>
-                  (e.currentTarget.style.borderColor = "var(--accent)")
-                }
-                onBlur={(e) =>
-                  (e.currentTarget.style.borderColor = "var(--border)")
-                }
+                className="admin-input disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
 
             <div>
-              <label style={labelStyle}>Password</label>
+              <label className="block text-xs text-text-secondary mb-1.5">Password</label>
               <input
                 name="password"
                 type="password"
                 required
                 placeholder="••••••••"
                 disabled={pending}
-                style={{
-                  ...inputStyle,
-                  opacity: pending ? 0.5 : 1,
-                  cursor: pending ? "not-allowed" : undefined,
-                }}
-                onFocus={(e) =>
-                  (e.currentTarget.style.borderColor = "var(--accent)")
-                }
-                onBlur={(e) =>
-                  (e.currentTarget.style.borderColor = "var(--border)")
-                }
+                className="admin-input disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
 
             {error && (
-              <div
-                style={{
-                  background: "var(--coral-bg)",
-                  border: "0.5px solid var(--coral-border)",
-                  borderRadius: "8px",
-                  padding: "10px 14px",
-                  fontSize: "13px",
-                  color: "var(--coral-text)",
-                }}
-              >
+              <div className="bg-coral-bg border border-coral-border rounded-lg px-3.5 py-2.5 text-sm text-coral-text">
                 {error}
               </div>
             )}
@@ -191,24 +81,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={pending}
-              style={{
-                width: "100%",
-                background: pending ? "var(--accent)" : "var(--accent)",
-                color: "#fff",
-                border: "none",
-                borderRadius: "8px",
-                padding: "11px",
-                fontSize: "14px",
-                fontWeight: "500",
-                cursor: pending ? "not-allowed" : "pointer",
-                opacity: pending ? 0.6 : 1,
-                transition: "opacity 0.15s",
-                marginTop: "4px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "8px",
-              }}
+              className={`w-full bg-accent text-white border-0 rounded-lg p-[11px] text-sm font-medium mt-1 flex items-center justify-center gap-2 transition-opacity duration-150 ${pending ? "opacity-60 cursor-not-allowed" : "opacity-100 cursor-pointer"}`}
             >
               {pending ? (
                 <>
@@ -222,22 +95,11 @@ export default function LoginPage() {
           </form>
         </div>
 
-        <p
-          style={{
-            textAlign: "center",
-            fontSize: "13px",
-            color: "var(--text-muted)",
-            marginTop: "20px",
-          }}
-        >
+        <p className="text-center text-sm text-text-muted mt-5">
           Don&apos;t have an account?{" "}
           <Link
             href="/register"
-            style={{
-              color: "var(--text-primary)",
-              textDecoration: "none",
-              fontWeight: "500",
-            }}
+            className="text-text no-underline font-medium"
           >
             Sign up
           </Link>

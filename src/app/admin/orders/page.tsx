@@ -13,24 +13,11 @@ export default async function AdminOrdersPage() {
 
   return (
     <div>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginBottom: "32px",
-        }}
-      >
-        <h1
-          style={{
-            fontSize: "22px",
-            fontWeight: "500",
-            letterSpacing: "-0.5px",
-          }}
-        >
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="text-[22px] font-medium tracking-[-0.5px]">
           Orders
         </h1>
-        <p style={{ fontSize: "12px", color: "var(--text-muted)" }}>
+        <p className="text-xs text-text-muted">
           {orders?.length ?? 0} total
         </p>
       </div>

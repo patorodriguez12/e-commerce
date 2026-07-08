@@ -30,24 +30,9 @@ export default function UserTable({ users }: Props) {
 
   return (
     <div>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginBottom: "32px",
-        }}
-      >
-        <h1
-          style={{
-            fontSize: "22px",
-            fontWeight: "500",
-            letterSpacing: "-0.5px",
-          }}
-        >
-          Users
-        </h1>
-        <p style={{ fontSize: "12px", color: "var(--text-muted)" }}>
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="text-2xl font-medium tracking-[-0.5px]">Users</h1>
+        <p className="text-xs text-text-muted">
           {users?.length ?? 0} registered
         </p>
       </div>
@@ -58,36 +43,17 @@ export default function UserTable({ users }: Props) {
         placeholder="Search users by name or email..."
       />
 
-      <div
-        style={{
-          background: "var(--bg-card)",
-          border: "0.5px solid var(--border)",
-          borderRadius: "12px",
-        }}
-      >
+      <div className="bg-surface border border-border rounded-xl">
         <div className="overflow-x-auto">
-          <table
-            style={{
-              width: "100%",
-              borderCollapse: "collapse",
-              fontSize: "13px",
-            }}
-          >
+          <table className="w-full border-collapse text-sm">
             <thead>
-              <tr style={{ borderBottom: "0.5px solid var(--border)" }}>
+              <tr className="border-b border-border">
                 {["Name", "Email", "Role", "Last sign in"].map((h) => (
                   <th
                     key={h}
-                    className={h === "Email" ? "desktop-only" : ""}
-                    style={{
-                      padding: "12px 20px",
-                      textAlign: "left",
-                      fontSize: "11px",
-                      color: "var(--text-muted)",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.5px",
-                      fontWeight: "500",
-                    }}
+                    className={`${
+                      h === "Email" ? "desktop-only" : ""
+                    } px-5 py-3 text-left text-xs text-text-muted uppercase tracking-[0.5px] font-medium`}
                   >
                     {h}
                   </th>
@@ -97,23 +63,13 @@ export default function UserTable({ users }: Props) {
             <tbody>
               {!filtered.length ? (
                 <tr>
-                  <td
-                    colSpan={4}
-                    style={{
-                      padding: "48px 24px",
-                      textAlign: "center",
-                    }}
-                  >
+                  <td colSpan={4} className="px-6 py-12 text-center">
                     <svg
                       width="32"
                       height="32"
                       viewBox="0 0 24 24"
                       fill="none"
-                      style={{
-                        margin: "0 auto 12px",
-                        color: "var(--text-muted)",
-                        opacity: 0.4,
-                      }}
+                      className="mx-auto mb-3 text-text-muted opacity-40"
                     >
                       <circle
                         cx="9"
@@ -135,19 +91,12 @@ export default function UserTable({ users }: Props) {
                         strokeLinecap="round"
                       />
                     </svg>
-                    <p style={{ color: "var(--text-muted)", fontSize: "13px" }}>
+                    <p className="text-text-muted text-sm">
                       {users.length === 0
                         ? "No registered users yet"
                         : "No users match your search"}
                     </p>
-                    <p
-                      style={{
-                        color: "var(--text-muted)",
-                        fontSize: "12px",
-                        marginTop: "4px",
-                        opacity: 0.6,
-                      }}
-                    >
+                    <p className="text-text-muted text-xs mt-1 opacity-60">
                       {users.length === 0
                         ? "Users will appear here once they create an account."
                         : "Try a different search term."}
@@ -156,58 +105,25 @@ export default function UserTable({ users }: Props) {
                 </tr>
               ) : (
                 filtered.map((user: UserRow) => (
-                  <tr
-                    key={user.id}
-                    style={{ borderBottom: "0.5px solid var(--border)" }}
-                  >
-                    <td
-                      style={{
-                        padding: "14px 20px",
-                        fontWeight: "500",
-                        color: "var(--text-primary)",
-                      }}
-                    >
+                  <tr key={user.id} className="border-b border-border">
+                    <td className="px-5 py-3.5 font-medium text-text">
                       {user.full_name ?? "No name"}
                     </td>
-                    <td
-                      className="desktop-only"
-                      style={{
-                        padding: "14px 20px",
-                        color: "var(--text-secondary)",
-                      }}
-                    >
+                    <td className="desktop-only px-5 py-3.5 text-text-secondary">
                       {user.email}
                     </td>
-                    <td style={{ padding: "14px 20px" }}>
+                    <td className="px-5 py-3.5">
                       <span
-                        style={{
-                          fontSize: "11px",
-                          fontWeight: "500",
-                          padding: "3px 10px",
-                          borderRadius: "20px",
-                          ...(user.role === "admin"
-                            ? {
-                                background: "var(--accent-bg)",
-                                color: "var(--accent-text)",
-                                border: "0.5px solid var(--accent-border)",
-                              }
-                            : {
-                                background: "var(--bg-subtle)",
-                                color: "var(--text-muted)",
-                                border: "0.5px solid var(--border)",
-                              }),
-                        }}
+                        className={`text-xs font-medium px-2.5 py-[3px] rounded-full ${
+                          user.role === "admin"
+                            ? "bg-accent-bg text-accent-text border border-accent-border"
+                            : "bg-bg-subtle text-text-muted border border-border"
+                        }`}
                       >
                         {user.role}
                       </span>
                     </td>
-                    <td
-                      style={{
-                        padding: "14px 20px",
-                        color: "var(--text-muted)",
-                        fontSize: "12px",
-                      }}
-                    >
+                    <td className="px-5 py-3.5 text-text-muted text-xs">
                       {user.last_sign_in
                         ? new Date(user.last_sign_in).toLocaleDateString(
                             "en-US",

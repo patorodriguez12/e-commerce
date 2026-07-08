@@ -18,165 +18,66 @@ export default async function WishlistPage() {
 
   return (
     <div>
-      <h1
-        style={{
-          fontSize: "22px",
-          fontWeight: "500",
-          letterSpacing: "-0.5px",
-          marginBottom: "24px",
-        }}
-      >
+      <h1 className="text-[22px] font-medium tracking-[-0.5px] mb-6">
         My Wishlist
       </h1>
 
       {!items || items.length === 0 ? (
-        <div
-          style={{
-            textAlign: "center",
-            padding: "64px 24px",
-            background: "var(--surface)",
-            border: "0.5px solid var(--border)",
-            borderRadius: "12px",
-          }}
-        >
-          <p
-            style={{
-              fontSize: "28px",
-              marginBottom: "12px",
-              color: "var(--gold)",
-              opacity: 0.5,
-            }}
-          >
-            ◆
-          </p>
-          <p
-            style={{
-              color: "var(--text-muted)",
-              marginBottom: "20px",
-              fontSize: "14px",
-            }}
-          >
+        <div className="text-center py-16 px-6 bg-surface border border-border rounded-xl">
+          <p className="text-[28px] mb-3 text-gold opacity-50">◆</p>
+          <p className="text-text-muted mb-5 text-sm">
             Your wishlist is empty
           </p>
           <Link
             href="/"
-            style={{
-              background: "var(--accent)",
-              color: "#fff",
-              padding: "10px 24px",
-              borderRadius: "8px",
-              textDecoration: "none",
-              fontSize: "13px",
-              fontWeight: "500",
-            }}
+            className="bg-accent text-white px-6 py-[10px] rounded-lg no-underline text-sm font-medium transition-colors duration-150"
           >
             Browse products
           </Link>
         </div>
       ) : (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-            gap: "12px",
-          }}
-        >
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-3">
           {items.map((item: any) => (
             <div
               key={item.id}
-              className="card-hover"
-              style={{
-                display: "flex",
-                gap: "14px",
-                background: "var(--surface)",
-                border: "0.5px solid var(--border)",
-                borderRadius: "12px",
-                padding: "14px",
-              }}
+              className="card-hover flex gap-[14px] bg-surface border border-border rounded-xl p-[14px]"
             >
               <Link href={`/products/${item.products?.slug}`}>
-                <div
-                  style={{
-                    position: "relative",
-                    width: "72px",
-                    height: "72px",
-                    flexShrink: 0,
-                    borderRadius: "8px",
-                    overflow: "hidden",
-                    background: "var(--elevated)",
-                  }}
-                >
+                <div className="relative w-[72px] h-[72px] shrink-0 rounded-lg overflow-hidden bg-bg-subtle">
                   {item.products?.image_url && (
                     <Image
                       src={item.products.image_url}
                       alt={item.products.name}
                       fill
-                      style={{ objectFit: "cover" }}
+                      className="object-cover"
                     />
                   )}
                 </div>
               </Link>
 
-              <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-                <div style={{ minWidth: 0 }}>
+              <div className="flex-1 min-w-0 flex flex-col justify-between">
+                <div className="min-w-0">
                   <Link
                     href={`/products/${item.products?.slug}`}
-                    style={{ textDecoration: "none" }}
+                    className="no-underline"
                   >
-                    <p
-                      style={{
-                        fontSize: "14px",
-                        fontWeight: "500",
-                        color: "var(--text-primary)",
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
+                    <p className="text-sm font-medium text-text truncate">
                       {item.products?.name}
                     </p>
                   </Link>
-                  <p
-                    style={{
-                      fontSize: "12px",
-                      color: "var(--text-muted)",
-                      marginTop: "2px",
-                    }}
-                  >
+                  <p className="text-xs text-text-muted mt-0.5">
                     {item.products?.categories?.name}
                   </p>
                 </div>
 
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    gap: "8px",
-                    marginTop: "8px",
-                  }}
-                >
-                  <p
-                    style={{
-                      fontSize: "14px",
-                      fontWeight: "600",
-                      color: "var(--text)",
-                    }}
-                  >
+                <div className="flex items-center justify-between gap-2 mt-2">
+                  <p className="text-sm font-semibold text-text">
                     {formatPrice(item.products?.price ?? 0)}
                   </p>
-                  <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
+                  <div className="flex gap-[6px] items-center">
                     <Link
                       href={`/products/${item.products?.slug}`}
-                      className="btn-ghost"
-                      style={{
-                        fontSize: "11px",
-                        color: "var(--accent-text)",
-                        textDecoration: "none",
-                        padding: "5px 10px",
-                        borderRadius: "6px",
-                        border: "0.5px solid var(--accent-border)",
-                      }}
+                      className="btn-ghost text-[11px] text-accent-text no-underline px-[10px] py-[5px] rounded-md border border-accent-border"
                     >
                       View
                     </Link>
@@ -188,16 +89,7 @@ export default async function WishlistPage() {
                     >
                       <button
                         type="submit"
-                        className="btn-ghost-danger"
-                        style={{
-                          fontSize: "11px",
-                          color: "var(--text-muted)",
-                          background: "transparent",
-                          border: "0.5px solid var(--border)",
-                          borderRadius: "6px",
-                          padding: "5px 10px",
-                          cursor: "pointer",
-                        }}
+                        className="btn-ghost-danger text-[11px] text-text-muted bg-transparent border border-border rounded-md px-[10px] py-[5px] cursor-pointer"
                       >
                         Remove
                       </button>

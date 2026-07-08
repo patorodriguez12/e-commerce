@@ -38,102 +38,44 @@ export default function CheckoutPage() {
 
   if (items.length === 0) {
     return (
-      <div
-        style={{
-          minHeight: "60dvh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexDirection: "column",
-          gap: "16px",
-        }}
-      >
-        <p style={{ color: "var(--text-muted)", fontSize: "15px" }}>
-          Your cart is empty.
-        </p>
+      <div className="min-h-[60dvh] flex items-center justify-center flex-col gap-4">
+        <p className="text-text-muted text-base">Your cart is empty.</p>
       </div>
     );
   }
 
   return (
-    <main style={{ maxWidth: "560px", margin: "0 auto", padding: "48px 24px" }}>
-      <h1
-        style={{
-          fontSize: "22px",
-          fontWeight: "500",
-          letterSpacing: "-0.5px",
-          marginBottom: "32px",
-        }}
-      >
+    <main className="mx-auto max-w-[560px] px-6 py-12">
+      <h1 className="text-[22px] font-medium tracking-[-0.5px] mb-8">
         Order summary
       </h1>
 
       {/* Items */}
-      <div
-        style={{
-          background: "var(--bg-card)",
-          border: "0.5px solid var(--border)",
-          borderRadius: "12px",
-          overflow: "hidden",
-          marginBottom: "16px",
-        }}
-      >
+      <div className="bg-surface border border-border rounded-xl overflow-hidden mb-4">
         {items.map(({ product, quantity }, i) => (
           <div
             key={product.id}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "16px",
-              padding: "16px 20px",
-              borderBottom:
-                i < items.length - 1 ? "0.5px solid var(--border)" : "none",
-            }}
+            className={`flex items-center gap-4 px-5 py-4 ${i < items.length - 1 ? "border-b border-border" : ""}`}
           >
-            <div
-              style={{
-                position: "relative",
-                width: "52px",
-                height: "52px",
-                flexShrink: 0,
-                borderRadius: "8px",
-                overflow: "hidden",
-                background: "var(--bg-subtle)",
-              }}
-            >
+            <div className="relative w-[52px] h-[52px] shrink-0 rounded-lg overflow-hidden bg-bg-subtle">
               {product.image_url && (
                 <Image
                   src={product.image_url}
                   alt={product.name}
                   fill
-                  style={{ objectFit: "cover" }}
+                  className="object-cover"
                 />
               )}
             </div>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <p
-                style={{
-                  fontSize: "14px",
-                  fontWeight: "500",
-                  color: "var(--text-primary)",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                }}
-              >
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-text truncate">
                 {product.name}
               </p>
-              <p
-                style={{
-                  fontSize: "12px",
-                  color: "var(--text-muted)",
-                  marginTop: "2px",
-                }}
-              >
+              <p className="text-xs text-text-muted mt-0.5">
                 Qty: {quantity}
               </p>
             </div>
-            <p style={{ fontSize: "14px", fontWeight: "500", flexShrink: 0 }}>
+            <p className="text-sm font-medium shrink-0">
               {formatPrice(product.price * quantity)}
             </p>
           </div>
@@ -141,50 +83,23 @@ export default function CheckoutPage() {
       </div>
 
       {/* Total */}
-      <div
-        style={{
-          background: "var(--bg-card)",
-          border: "0.5px solid var(--border)",
-          borderRadius: "12px",
-          padding: "16px 20px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "24px",
-        }}
-      >
-        <span style={{ fontSize: "14px", color: "var(--text-secondary)" }}>
-          Total
-        </span>
-        <span style={{ fontSize: "20px", fontWeight: "500" }}>
+      <div className="bg-surface border border-border rounded-xl px-5 py-4 flex justify-between items-center mb-6">
+        <span className="text-sm text-text-secondary">Total</span>
+        <span className="text-xl font-medium">
           {formatPrice(getTotalPrice())}
         </span>
       </div>
 
       {/* Info */}
-      <div
-        style={{
-          background: "var(--bg-card)",
-          border: "0.5px solid var(--border)",
-          borderRadius: "12px",
-          padding: "16px 20px",
-          marginBottom: "24px",
-          display: "flex",
-          flexDirection: "column",
-          gap: "10px",
-        }}
-      >
+      <div className="bg-surface border border-border rounded-xl px-5 py-4 mb-6 flex flex-col gap-2.5">
         {[
           { icon: "🔒", text: "Secure checkout powered by Stripe" },
           { icon: "🚚", text: "Free shipping on orders over $99" },
           { icon: "↩️", text: "30-day return policy" },
         ].map((item) => (
-          <div
-            key={item.text}
-            style={{ display: "flex", alignItems: "center", gap: "10px" }}
-          >
-            <span style={{ fontSize: "14px" }}>{item.icon}</span>
-            <span style={{ fontSize: "12px", color: "var(--text-secondary)" }}>
+          <div key={item.text} className="flex items-center gap-2.5">
+            <span className="text-sm">{item.icon}</span>
+            <span className="text-xs text-text-secondary">
               {item.text}
             </span>
           </div>
@@ -192,17 +107,7 @@ export default function CheckoutPage() {
       </div>
 
       {error && (
-        <div
-          style={{
-            background: "var(--coral-bg)",
-            border: "0.5px solid var(--coral-border)",
-            borderRadius: "8px",
-            padding: "10px 14px",
-            fontSize: "13px",
-            color: "var(--coral-text)",
-            marginBottom: "16px",
-          }}
-        >
+        <div className="bg-coral-bg border border-coral-border rounded-lg px-[14px] py-[10px] text-sm text-coral-text mb-4">
           {error}
         </div>
       )}
@@ -210,19 +115,7 @@ export default function CheckoutPage() {
       <button
         onClick={handleCheckout}
         disabled={loading}
-        style={{
-          width: "100%",
-          background: "var(--accent)",
-          color: "#fff",
-          border: "none",
-          borderRadius: "10px",
-          padding: "14px",
-          fontSize: "15px",
-          fontWeight: "500",
-          cursor: loading ? "not-allowed" : "pointer",
-          opacity: loading ? 0.6 : 1,
-          transition: "opacity 0.15s",
-        }}
+        className="w-full bg-accent text-white border-none rounded-xl py-[14px] text-base font-medium disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer transition-opacity duration-150"
       >
         {loading ? "Redirecting to Stripe..." : "Pay now"}
       </button>

@@ -7,100 +7,22 @@ export default function Loading() {
   return (
     <>
       {/* Hero skeleton */}
-      <div
-        style={{
-          borderBottom: "0.5px solid var(--border)",
-          padding: "80px 24px 72px",
-          maxWidth: "1200px",
-          margin: "0 auto",
-          display: "flex",
-          flexDirection: "column",
-          gap: "20px",
-        }}
-      >
-        <div
-          style={{
-            height: "24px",
-            width: "140px",
-            background: "#1a1a1a",
-            borderRadius: "20px",
-            animation: "shimmer 1.5s infinite",
-            backgroundSize: "200% 100%",
-            backgroundImage:
-              "linear-gradient(90deg, #1a1a1a 25%, #222 50%, #1a1a1a 75%)",
-          }}
-        />
-        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-          <div
-            style={{
-              height: "48px",
-              width: "55%",
-              background: "#1a1a1a",
-              borderRadius: "6px",
-              backgroundImage:
-                "linear-gradient(90deg, #1a1a1a 25%, #222 50%, #1a1a1a 75%)",
-              backgroundSize: "200% 100%",
-              animation: "shimmer 1.5s infinite",
-            }}
-          />
-          <div
-            style={{
-              height: "48px",
-              width: "40%",
-              background: "#1a1a1a",
-              borderRadius: "6px",
-              backgroundImage:
-                "linear-gradient(90deg, #1a1a1a 25%, #222 50%, #1a1a1a 75%)",
-              backgroundSize: "200% 100%",
-              animation: "shimmer 1.5s infinite",
-            }}
-          />
+      <div className="border-b border-border px-6 pt-20 pb-[72px] max-w-[1200px] mx-auto flex flex-col gap-5">
+        <div className="h-6 w-[140px] rounded-full bg-[linear-gradient(90deg,#1a1a1a_25%,#222_50%,#1a1a1a_75%)] bg-[length:200%_100%] animate-[shimmer_1.5s_infinite]" />
+        <div className="flex flex-col gap-2.5">
+          <div className="h-12 w-[55%] rounded-md bg-[linear-gradient(90deg,#1a1a1a_25%,#222_50%,#1a1a1a_75%)] bg-[length:200%_100%] animate-[shimmer_1.5s_infinite]" />
+          <div className="h-12 w-[40%] rounded-md bg-[linear-gradient(90deg,#1a1a1a_25%,#222_50%,#1a1a1a_75%)] bg-[length:200%_100%] animate-[shimmer_1.5s_infinite]" />
         </div>
-        <div
-          style={{
-            height: "14px",
-            width: "320px",
-            background: "#1a1a1a",
-            borderRadius: "6px",
-            backgroundImage:
-              "linear-gradient(90deg, #1a1a1a 25%, #222 50%, #1a1a1a 75%)",
-            backgroundSize: "200% 100%",
-            animation: "shimmer 1.5s infinite",
-          }}
-        />
-        <div style={{ display: "flex", gap: "10px" }}>
-          <div
-            style={{
-              height: "40px",
-              width: "100px",
-              background: "#1a1a1a",
-              borderRadius: "8px",
-              backgroundImage:
-                "linear-gradient(90deg, #1a1a1a 25%, #222 50%, #1a1a1a 75%)",
-              backgroundSize: "200% 100%",
-              animation: "shimmer 1.5s infinite",
-            }}
-          />
-          <div
-            style={{
-              height: "40px",
-              width: "100px",
-              background: "#1a1a1a",
-              borderRadius: "8px",
-              backgroundImage:
-                "linear-gradient(90deg, #1a1a1a 25%, #222 50%, #1a1a1a 75%)",
-              backgroundSize: "200% 100%",
-              animation: "shimmer 1.5s infinite",
-            }}
-          />
+        <div className="h-[14px] w-[320px] rounded-md bg-[linear-gradient(90deg,#1a1a1a_25%,#222_50%,#1a1a1a_75%)] bg-[length:200%_100%] animate-[shimmer_1.5s_infinite]" />
+        <div className="flex gap-2.5">
+          <div className="h-10 w-[100px] rounded-lg bg-[linear-gradient(90deg,#1a1a1a_25%,#222_50%,#1a1a1a_75%)] bg-[length:200%_100%] animate-[shimmer_1.5s_infinite]" />
+          <div className="h-10 w-[100px] rounded-lg bg-[linear-gradient(90deg,#1a1a1a_25%,#222_50%,#1a1a1a_75%)] bg-[length:200%_100%] animate-[shimmer_1.5s_infinite]" />
         </div>
       </div>
 
       {/* Catalog skeleton */}
-      <div
-        style={{ maxWidth: "1200px", margin: "0 auto", padding: "48px 24px" }}
-      >
-        <div style={{ display: "flex", gap: "48px", alignItems: "flex-start" }}>
+      <div className="max-w-[1200px] mx-auto px-6 py-12">
+        <div className="flex gap-12 items-start">
           <FilterSidebarSkeleton />
           <ProductGridSkeleton />
         </div>
