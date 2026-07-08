@@ -1,35 +1,8 @@
 import { requireAdmin } from "@/lib/supabase/auth";
 import { createClient } from "@/lib/supabase/server";
 import { formatPrice } from "@/lib/utils/formatPrice";
+import { STATUS_STYLES } from "@/lib/constants";
 import Link from "next/link";
-
-const STATUS_STYLES: Record<string, React.CSSProperties> = {
-  paid: {
-    background: "var(--green-bg)",
-    color: "var(--green-text)",
-    border: "0.5px solid var(--green-border)",
-  },
-  pending: {
-    background: "#BA751718",
-    color: "#EF9F27",
-    border: "0.5px solid #BA751740",
-  },
-  shipped: {
-    background: "#185FA518",
-    color: "#378ADD",
-    border: "0.5px solid #185FA540",
-  },
-  delivered: {
-    background: "var(--accent-bg)",
-    color: "var(--accent-text)",
-    border: "0.5px solid var(--accent-border)",
-  },
-  cancelled: {
-    background: "var(--coral-bg)",
-    color: "var(--coral-text)",
-    border: "0.5px solid var(--coral-border)",
-  },
-};
 
 export default async function AdminDashboard() {
   await requireAdmin();
@@ -292,7 +265,7 @@ export default async function AdminDashboard() {
               </tr>
             </thead>
             <tbody>
-              {recentOrders.map((order: any) => (
+              {recentOrders.map((order: { id: string; total: number; status: string; created_at: string }) => (
                 <tr
                   key={order.id}
                   style={{ borderBottom: "0.5px solid var(--border)" }}
