@@ -4,3 +4,4 @@ export function formatPrice(amount: number): string {
     currency: "USD",
   }).format(amount / 100);
 }
+// Test commit work skill
