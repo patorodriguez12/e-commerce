@@ -184,25 +184,6 @@ export default function MobileSidebar({ isOpen, onClose, user, fullName, isAdmin
 
         {/* Nav links */}
         <div style={{ padding: "8px", flex: 1, overflowY: "auto" }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-            <SidebarLink href="/" onClick={onClose} isActive={pathname === "/"}>
-              Home
-            </SidebarLink>
-            <SidebarLink href="/" onClick={onClose} isActive={pathname === "/"}>
-              Products
-            </SidebarLink>
-            {user && (
-              <SidebarLink href="/dashboard" onClick={onClose} isActive={pathname.startsWith("/dashboard")}>
-                Dashboard
-              </SidebarLink>
-            )}
-            {isAdmin && (
-              <SidebarLink href="/admin" onClick={onClose} isActive={pathname.startsWith("/admin")}>
-                Admin
-              </SidebarLink>
-            )}
-          </div>
-
           {/* Account sub-links (logged in) */}
           {user && (
             <>
