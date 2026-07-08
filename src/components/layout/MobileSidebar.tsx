@@ -74,7 +74,7 @@ export default function MobileSidebar({ isOpen, onClose, user, fullName, isAdmin
 
       {/* Sidebar */}
       <div
-        className={`fixed top-0 right-0 bottom-0 w-[300px] max-w-[85vw] z-50 bg-surface border-l border-border flex flex-col transition-all duration-300 ease-out ${
+        className={`fixed top-0 right-0 bottom-0 w-75 max-w-[85vw] z-50 bg-surface border-l border-border flex flex-col transition-all duration-300 ease-out ${
           isOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"
         }`}
       >

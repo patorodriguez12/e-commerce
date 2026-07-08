@@ -28,49 +28,21 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer
-      style={{
-        borderTop: "0.5px solid var(--border)",
-        marginTop: "auto",
-        padding: "48px 24px 32px",
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-          gap: "40px",
-          marginBottom: "48px",
-        }}
-      >
-        {/* Columna 1 — Brand */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+    <footer className="border-t border-border mt-auto px-6 pb-8 pt-12">
+      <div className="max-w-[1200px] mx-auto grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-10 mb-12">
+        {/* Column 1 — Brand */}
+        <div className="flex flex-col gap-3">
           <Link
             href="/"
-            style={{
-              fontSize: "16px",
-              fontWeight: "500",
-              letterSpacing: "-0.5px",
-              color: "var(--text-primary)",
-              textDecoration: "none",
-            }}
+            className="text-base font-medium tracking-tight text-text no-underline"
           >
             Smartech
           </Link>
-          <p
-            style={{
-              fontSize: "13px",
-              color: "var(--text-muted)",
-              lineHeight: "1.7",
-              maxWidth: "220px",
-            }}
-          >
+          <p className="text-sm text-text-muted leading-relaxed max-w-[220px]">
             Premium tech gear curated for creators and builders.
           </p>
           {/* Social links */}
-          <div style={{ display: "flex", gap: "10px", marginTop: "4px" }}>
+          <div className="flex gap-2.5 mt-1">
             {SOCIAL_LINKS.map((social) => (
               <a
                 key={social.label}
@@ -78,35 +50,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 title={social.label}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: "32px",
-                  height: "32px",
-                  borderRadius: "8px",
-                  background: "var(--bg-card)",
-                  border: "0.5px solid var(--border)",
-                  color: "var(--text-muted)",
-                  transition: "all 0.15s",
-                  textDecoration: "none",
-                }}
-                onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                  (e.currentTarget as HTMLAnchorElement).style.borderColor =
-                    "var(--border-hover)";
-                  (e.currentTarget as HTMLAnchorElement).style.color =
-                    "var(--text-primary)";
-                  (e.currentTarget as HTMLAnchorElement).style.background =
-                    "var(--bg-subtle)";
-                }}
-                onMouseLeave={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                  (e.currentTarget as HTMLAnchorElement).style.borderColor =
-                    "var(--border)";
-                  (e.currentTarget as HTMLAnchorElement).style.color =
-                    "var(--text-muted)";
-                  (e.currentTarget as HTMLAnchorElement).style.background =
-                    "var(--bg-card)";
-                }}
+                className="flex items-center justify-center w-8 h-8 rounded-lg bg-surface border border-border text-text-muted transition-all duration-150 no-underline hover:border-border-hover hover:text-text hover:bg-bg-subtle"
               >
                 <social.icon size={14} />
               </a>
@@ -114,72 +58,40 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Columna 2 — Store */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-          <p
-            style={{
-              fontSize: "11px",
-              color: "var(--text-muted)",
-              textTransform: "uppercase",
-              letterSpacing: "1px",
-              fontWeight: "500",
-            }}
-          >
+        {/* Column 2 — Store */}
+        <div className="flex flex-col gap-3">
+          <p className="text-[11px] text-text-muted uppercase tracking-[1px] font-medium">
             Store
           </p>
           {STORE_LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              style={{
-                fontSize: "13px",
-                color: "var(--text-secondary)",
-                textDecoration: "none",
-                transition: "color 0.15s",
-                width: "fit-content",
-              }}
+              className="text-sm text-text-secondary no-underline transition-colors duration-150 w-fit hover:text-text"
             >
               {link.label}
             </Link>
           ))}
         </div>
 
-        {/* Columna 3 — Developer */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-          <p
-            style={{
-              fontSize: "11px",
-              color: "var(--text-muted)",
-              textTransform: "uppercase",
-              letterSpacing: "1px",
-              fontWeight: "500",
-            }}
-          >
+        {/* Column 3 — Developer */}
+        <div className="flex flex-col gap-3">
+          <p className="text-[11px] text-text-muted uppercase tracking-[1px] font-medium">
             Developer
           </p>
-          <p
-            style={{
-              fontSize: "13px",
-              color: "var(--text-secondary)",
-              lineHeight: "1.7",
-            }}
-          >
+          <p className="text-sm text-text-secondary leading-relaxed">
             Designed and built by{" "}
             <a
               href="https://github.com/patorodriguez12"
               target="_blank"
               rel="noopener noreferrer"
-              style={{
-                color: "var(--accent-text)",
-                textDecoration: "none",
-                transition: "opacity 0.15s",
-              }}
+              className="text-accent-text no-underline transition-opacity duration-150 hover:opacity-80"
             >
               Hugo Patricio Rodriguez
             </a>{" "}
             as a portfolio project.
           </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+          <div className="flex flex-col gap-1.5">
             {[
               { label: "Next.js 14", href: "https://nextjs.org" },
               { label: "Supabase", href: "https://supabase.com" },
@@ -191,13 +103,7 @@ export default function Footer() {
                 href={tech.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{
-                  fontSize: "12px",
-                  color: "var(--text-muted)",
-                  textDecoration: "none",
-                  width: "fit-content",
-                  transition: "color 0.15s",
-                }}
+                className="text-xs text-text-muted no-underline w-fit transition-colors duration-150 hover:text-text"
               >
                 {tech.label} ↗
               </a>
@@ -207,23 +113,11 @@ export default function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div
-        style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-          paddingTop: "24px",
-          borderTop: "0.5px solid var(--border)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          flexWrap: "wrap",
-          gap: "12px",
-        }}
-      >
-        <p style={{ fontSize: "12px", color: "var(--text-muted)" }}>
+      <div className="max-w-[1200px] mx-auto pt-6 border-t border-border flex items-center justify-between flex-wrap gap-3">
+        <p className="text-xs text-text-muted">
           © {currentYear} Smartech. All rights reserved.
         </p>
-        <p style={{ fontSize: "12px", color: "var(--text-muted)" }}>
+        <p className="text-xs text-text-muted">
           Built with ❤️ for learning purposes
         </p>
       </div>

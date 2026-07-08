@@ -12,22 +12,7 @@ type Props = {
   product?: Product;
 };
 
-const inputStyle: React.CSSProperties = {
-  width: "100%",
-  background: "var(--bg-subtle)",
-  padding: "9px 12px",
-  fontSize: "13px",
-  color: "var(--text-primary)",
-};
-
-const labelStyle: React.CSSProperties = {
-  display: "block",
-  fontSize: "11px",
-  color: "var(--text-muted)",
-  textTransform: "uppercase",
-  letterSpacing: "0.5px",
-  marginBottom: "6px",
-};
+const labelClass = "block text-[11px] text-text-muted uppercase tracking-[0.5px] mb-1.5";
 
 export default function ProductForm({ categories, product }: Props) {
   const router = useRouter();
@@ -76,53 +61,27 @@ export default function ProductForm({ categories, product }: Props) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full max-w-xl"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "24px",
-      }}
+      className="w-full max-w-xl flex flex-col gap-6"
     >
       {/* Image */}
       <div>
-        <label style={labelStyle}>Product image</label>
-        <div style={{ display: "flex", alignItems: "flex-start", gap: "16px" }}>
-          <div
-            style={{
-              position: "relative",
-              width: "100px",
-              height: "100px",
-              flexShrink: 0,
-              borderRadius: "10px",
-              overflow: "hidden",
-              background: "var(--bg-subtle)",
-              border: "0.5px solid var(--border)",
-            }}
-          >
+        <label className={labelClass}>Product image</label>
+        <div className="flex items-start gap-4">
+          <div className="relative w-[100px] h-[100px] shrink-0 rounded-xl overflow-hidden bg-bg-subtle border border-border">
             {imageUrl ? (
               <Image
                 src={imageUrl}
                 alt="Preview"
                 fill
-                style={{ objectFit: "cover" }}
+                className="object-cover"
               />
             ) : (
-              <div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "11px",
-                  color: "var(--text-muted)",
-                }}
-              >
+              <div className="w-full h-full flex items-center justify-center text-[11px] text-text-muted">
                 No image
               </div>
             )}
           </div>
-          <div style={{ flex: 1 }}>
+          <div className="flex-1">
             <input
               type="file"
               accept="image/*"
@@ -132,18 +91,9 @@ export default function ProductForm({ categories, product }: Props) {
             />
             <label
               htmlFor="image-upload"
-              style={{
-                display: "inline-block",
-                cursor: uploading ? "not-allowed" : "pointer",
-                background: "var(--bg-subtle)",
-                border: "0.5px solid var(--border)",
-                borderRadius: "6px",
-                padding: "7px 14px",
-                fontSize: "12px",
-                color: "var(--text-secondary)",
-                opacity: uploading ? 0.5 : 1,
-                transition: "all 0.15s",
-              }}
+              className={`inline-block cursor-pointer bg-bg-subtle border border-border rounded-md px-3.5 py-1.5 text-xs text-text-secondary transition-all duration-150 ${
+                uploading ? "opacity-50 cursor-not-allowed" : "hover:bg-bg-subtle"
+              }`}
             >
               {uploading ? "Uploading..." : "Upload image"}
             </label>
@@ -151,27 +101,12 @@ export default function ProductForm({ categories, product }: Props) {
               <button
                 type="button"
                 onClick={() => setImageUrl("")}
-                style={{
-                  display: "block",
-                  marginTop: "8px",
-                  background: "transparent",
-                  border: "none",
-                  fontSize: "12px",
-                  color: "var(--coral-text)",
-                  cursor: "pointer",
-                  padding: 0,
-                }}
+                className="block mt-2 bg-transparent border-none text-xs text-coral-text cursor-pointer p-0"
               >
                 Remove image
               </button>
             )}
-            <p
-              style={{
-                fontSize: "11px",
-                color: "var(--text-muted)",
-                marginTop: "8px",
-              }}
-            >
+            <p className="text-[11px] text-text-muted mt-2">
               PNG, JPG or WEBP. Max 5MB.
             </p>
           </div>
@@ -181,14 +116,13 @@ export default function ProductForm({ categories, product }: Props) {
       {/* Name & Slug */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label style={labelStyle}>Name</label>
+          <label className={labelClass}>Name</label>
           <input
             className="admin-input"
             name="name"
             type="text"
             required
             defaultValue={product?.name}
-            style={inputStyle}
             onChange={(e) => {
               if (slugRef.current && !product)
                 slugRef.current.value = generateSlug(e.target.value);
@@ -196,7 +130,7 @@ export default function ProductForm({ categories, product }: Props) {
           />
         </div>
         <div>
-          <label style={labelStyle}>Slug</label>
+          <label className={labelClass}>Slug</label>
           <input
             className="admin-input"
             ref={slugRef}
@@ -204,27 +138,25 @@ export default function ProductForm({ categories, product }: Props) {
             type="text"
             required
             defaultValue={product?.slug}
-            style={inputStyle}
           />
         </div>
       </div>
 
       {/* Description */}
       <div>
-        <label style={labelStyle}>Description</label>
+        <label className={labelClass}>Description</label>
         <textarea
-          className="admin-input"
+          className="admin-input resize-none"
           name="description"
           rows={4}
           defaultValue={product?.description ?? ""}
-          style={{ resize: "none", fontFamily: "inherit" }}
         />
       </div>
 
       {/* Price, Stock, Category */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
-          <label style={labelStyle}>Price (USD)</label>
+          <label className={labelClass}>Price (USD)</label>
           <input
             className="admin-input"
             name="price"
@@ -233,11 +165,10 @@ export default function ProductForm({ categories, product }: Props) {
             min="0"
             required
             defaultValue={product ? product.price / 100 : ""}
-            style={inputStyle}
           />
         </div>
         <div>
-          <label style={labelStyle}>Stock</label>
+          <label className={labelClass}>Stock</label>
           <input
             className="admin-input"
             name="stock"
@@ -245,23 +176,21 @@ export default function ProductForm({ categories, product }: Props) {
             min="0"
             required
             defaultValue={product?.stock ?? 0}
-            style={inputStyle}
           />
         </div>
         <div>
-          <label style={labelStyle}>Category</label>
+          <label className={labelClass}>Category</label>
           <select
-            className="admin-input"
+            className="admin-input cursor-pointer"
             name="category_id"
             defaultValue={product?.category_id ?? ""}
-            style={{ cursor: "pointer" }}
           >
             <option value="">No category</option>
             {categories.map((cat) => (
               <option
                 key={cat.id}
                 value={cat.id}
-                style={{ background: "#111" }}
+                className="bg-[#111]"
               >
                 {cat.name}
               </option>
@@ -271,52 +200,25 @@ export default function ProductForm({ categories, product }: Props) {
       </div>
 
       {error && (
-        <div
-          style={{
-            background: "var(--coral-bg)",
-            border: "0.5px solid var(--coral-border)",
-            borderRadius: "8px",
-            padding: "10px 14px",
-            fontSize: "13px",
-            color: "var(--coral-text)",
-          }}
-        >
+        <div className="bg-coral-bg border border-coral-border rounded-lg px-3.5 py-2.5 text-sm text-coral-text">
           {error}
         </div>
       )}
 
-      <div style={{ display: "flex", gap: "10px" }}>
+      <div className="flex gap-2.5">
         <button
           type="submit"
           disabled={loading || uploading}
-          style={{
-            background: "var(--accent)",
-            color: "#fff",
-            border: "none",
-            borderRadius: "8px",
-            padding: "9px 24px",
-            fontSize: "13px",
-            fontWeight: "500",
-            cursor: loading || uploading ? "not-allowed" : "pointer",
-            opacity: loading || uploading ? 0.6 : 1,
-            transition: "opacity 0.15s",
-          }}
+          className={`bg-accent text-white border-none rounded-lg px-6 py-2 text-sm font-medium transition-opacity duration-150 ${
+            loading || uploading ? "opacity-60 cursor-not-allowed" : "cursor-pointer"
+          }`}
         >
           {loading ? "Saving..." : product ? "Save changes" : "Create product"}
         </button>
         <button
           type="button"
           onClick={() => router.back()}
-          style={{
-            background: "transparent",
-            border: "0.5px solid var(--border)",
-            borderRadius: "8px",
-            padding: "9px 20px",
-            fontSize: "13px",
-            color: "var(--text-secondary)",
-            cursor: "pointer",
-            transition: "border-color 0.15s",
-          }}
+          className="bg-transparent border border-border rounded-lg px-5 py-2 text-sm text-text-secondary cursor-pointer transition-colors duration-150 hover:border-border-hover"
         >
           Cancel
         </button>

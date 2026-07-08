@@ -23,6 +23,8 @@
   --color-green-bg: var(--green-bg);
   --color-green-border: var(--green-border);
   --color-green-text: var(--green-text);
+  --color-text: var(--text);
+  --color-bg: var(--bg);
   --font-sora: var(--font-sora), sans-serif;
 }
 
