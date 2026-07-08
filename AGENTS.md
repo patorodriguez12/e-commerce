@@ -29,7 +29,7 @@ Checks session **only** (redirects unauthenticated users from `/dashboard`, `/ch
 
 ## Auth
 - Server Actions live in `src/lib/supabase/actions.ts` (login, register, logout, wishlist, review, OAuth)
-- OAuth callback at `src/app/auth/callback/route.ts` exchanges code for session
+- OAuth callback at `src/app/(main)/auth/callback/route.ts` exchanges code for session
 - Admin-only Server Actions in `src/lib/supabase/admin-actions.ts` (gated by `requireAdmin()`)
 
 ## Cart
@@ -61,7 +61,8 @@ Checks session **only** (redirects unauthenticated users from `/dashboard`, `/ch
 - Webhook uses `nodejs` runtime (`export const runtime = "nodejs"`)
 
 ## Products & catalog
-- Home page (`src/app/(store)/page.tsx`) is a Server Component that reads `searchParams` for filtering/sorting
+- Home page (`src/app/(main)/(store)/page.tsx`) is a Server Component that reads `searchParams` for filtering/sorting
+- Navbar/Footer rendered via `(main)/layout.tsx` — NOT applied to `/admin` routes (admin has its own sidebar layout)
 - Client-side filter state via `useFilters()` hook (URL search params)
 - Prices stored as cents in DB, passed as integers to Stripe `unit_amount`
 
@@ -80,12 +81,14 @@ Checks session **only** (redirects unauthenticated users from `/dashboard`, `/ch
 ```
 src/
   app/
-    (auth)/login, (auth)/register     — public auth pages
-    (store)/                          — catalog + home
-    admin/                            — admin panel (role-gated layout)
+    (main)/
+      (auth)/login, (main)/(auth)/register     — public auth pages (with Navbar/Footer)
+      (store)/                                  — catalog + home (with Navbar/Footer)
+      auth/callback                             — OAuth code exchange
+      checkout/, dashboard/                     — protected pages (with Navbar/Footer)
+      layout.tsx                                — wraps children with Navbar + Footer
+    admin/                            — admin panel (role-gated layout, NO Navbar/Footer)
     api/checkout/session, api/stripe/webhook  — route handlers
-    auth/callback                     — OAuth code exchange
-    checkout/, dashboard/             — protected pages
   components/
     admin/         — AdminSidebar, ProductForm, OrderStatusSelect, SearchBar, DeleteProductButton, ProductTable, OrderTable, UserTable
     auth/          — OAuthButtons
