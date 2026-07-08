@@ -61,6 +61,12 @@ export default async function AdminDashboard() {
       accent: "var(--green-text)",
       bg: "var(--green-bg)",
       border: "var(--green-border)",
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M1 16L6 10L10 13L17 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M13 4H17V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      ),
     },
     {
       label: "Orders",
@@ -68,6 +74,14 @@ export default async function AdminDashboard() {
       accent: "#378ADD",
       bg: "#185FA518",
       border: "#185FA540",
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M2 4H16L14.5 14H3.5L2 4Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+          <circle cx="6" cy="15" r="1" fill="currentColor" />
+          <circle cx="12" cy="15" r="1" fill="currentColor" />
+          <path d="M4 4V3C4 1.5 5 1 9 1C13 1 14 1.5 14 3V4" stroke="currentColor" strokeWidth="1.5" />
+        </svg>
+      ),
     },
     {
       label: "Pending",
@@ -75,6 +89,12 @@ export default async function AdminDashboard() {
       accent: "#EF9F27",
       bg: "#BA751718",
       border: "#BA751740",
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <circle cx="9" cy="9" r="7" stroke="currentColor" strokeWidth="1.5" />
+          <path d="M9 5V9L12 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+      ),
     },
     {
       label: "Products",
@@ -82,6 +102,14 @@ export default async function AdminDashboard() {
       accent: "var(--accent-text)",
       bg: "var(--accent-bg)",
       border: "var(--accent-border)",
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M2 5L9 2L16 5V13L9 16L2 13V5Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+          <path d="M9 10L16 7" stroke="currentColor" strokeWidth="1.5" />
+          <path d="M9 10L2 7" stroke="currentColor" strokeWidth="1.5" />
+          <path d="M9 10V16" stroke="currentColor" strokeWidth="1.5" />
+        </svg>
+      ),
     },
     {
       label: "Users",
@@ -89,6 +117,13 @@ export default async function AdminDashboard() {
       accent: "var(--text-secondary)",
       bg: "var(--bg-subtle)",
       border: "var(--border)",
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <circle cx="7" cy="6" r="3" stroke="currentColor" strokeWidth="1.5" />
+          <path d="M1 16C1 13 3 11 7 11C11 11 13 13 13 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          <path d="M13 6C14.5 6 16 7.5 16 9.5C16 11.5 14.5 13 13 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+      ),
     },
   ];
 
@@ -124,17 +159,28 @@ export default async function AdminDashboard() {
               padding: "16px",
             }}
           >
-            <p
+            <div
               style={{
-                fontSize: "11px",
-                color: "var(--text-muted)",
-                textTransform: "uppercase",
-                letterSpacing: "0.5px",
+                display: "flex",
+                alignItems: "center",
+                gap: "6px",
                 marginBottom: "8px",
               }}
             >
-              {m.label}
-            </p>
+              <span style={{ color: m.accent, display: "flex" }}>
+                {m.icon}
+              </span>
+              <p
+                style={{
+                  fontSize: "11px",
+                  color: "var(--text-muted)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.5px",
+                }}
+              >
+                {m.label}
+              </p>
+            </div>
             <p style={{ fontSize: "24px", fontWeight: "500", color: m.accent }}>
               {m.value}
             </p>
