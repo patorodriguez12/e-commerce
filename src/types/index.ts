@@ -73,6 +73,16 @@ export type WishlistItem = {
   products?: Product;
 };
 
+export type OrderRow = {
+  id: string;
+  user_id: string;
+  status: string;
+  total: number;
+  created_at: string;
+  profiles: { full_name: string } | null;
+  order_items: { id: string }[];
+};
+
 export type Review = {
   id: string;
   user_id: string;

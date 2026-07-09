@@ -5,16 +5,7 @@ import { formatPrice } from "@/lib/utils/formatPrice";
 import { STATUS_STYLES } from "@/lib/constants";
 import OrderStatusSelect from "@/components/admin/OrderStatusSelect";
 import SearchBar from "@/components/admin/SearchBar";
-
-type OrderRow = {
-  id: string;
-  user_id: string;
-  status: string;
-  total: number;
-  created_at: string;
-  profiles: { full_name: string } | null;
-  order_items: { id: string }[] | null;
-};
+import type { OrderRow } from "@/types";
 
 type Props = {
   orders: OrderRow[];
