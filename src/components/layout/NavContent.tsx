@@ -33,6 +33,16 @@ export default function NavContent({ user, fullName, isAdmin }: Props) {
             />
           </Link>
 
+          {/* Nav links */}
+          <div className="hidden md:flex items-center gap-6">
+            <Link
+              href="/catalog"
+              className="text-sm text-text-secondary no-underline transition-all hover:text-text"
+            >
+              Shop
+            </Link>
+          </div>
+
           {/* Right actions */}
           <div className="flex items-center gap-2">
             <CartButton />

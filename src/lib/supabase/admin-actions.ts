@@ -17,12 +17,14 @@ export async function createProduct(formData: FormData) {
     stock: Number(formData.get("stock")),
     image_url: (formData.get("image_url") as string) || null,
     category_id: (formData.get("category_id") as string) || null,
+    is_featured: formData.get("is_featured") === "on",
   });
 
   if (error) return { error: error.message };
 
   revalidatePath("/admin/products");
   revalidatePath("/");
+  revalidatePath("/catalog");
   redirect("/admin/products");
 }
 
@@ -40,6 +42,7 @@ export async function updateProduct(id: string, formData: FormData) {
       stock: Number(formData.get("stock")),
       image_url: (formData.get("image_url") as string) || null,
       category_id: (formData.get("category_id") as string) || null,
+      is_featured: formData.get("is_featured") === "on",
     })
     .eq("id", id);
 
@@ -47,6 +50,7 @@ export async function updateProduct(id: string, formData: FormData) {
 
   revalidatePath("/admin/products");
   revalidatePath("/");
+  revalidatePath("/catalog");
   redirect("/admin/products");
 }
 

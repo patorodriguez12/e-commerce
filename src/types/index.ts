@@ -15,6 +15,8 @@ export type Product = {
   image_url: string | null;
   category_id: string | null;
   created_at: string;
+  is_featured: boolean;
+  sales_count: number;
   categories?: Category;
 };
 

@@ -118,6 +118,21 @@ export default function MobileSidebar({ isOpen, onClose, user, fullName, isAdmin
 
         {/* Nav links */}
         <div className="p-2 flex-1 overflow-y-auto">
+          <div className="mx-2 mb-2 mt-3 text-xs uppercase tracking-wider font-medium text-text-muted">
+            Shopping
+          </div>
+          <div className="flex flex-col gap-0.5 mb-4">
+            <SidebarLink
+              href="/catalog"
+              onClick={onClose}
+              isActive={pathname === "/catalog"}
+            >
+              <span className="flex items-center gap-2.5">
+                <ShoppingBag size={14} className="shrink-0" />
+                Shop
+              </span>
+            </SidebarLink>
+          </div>
           {user && (
             <>
               <div className="mx-2 mb-2 mt-3 text-xs uppercase tracking-wider font-medium text-text-muted">

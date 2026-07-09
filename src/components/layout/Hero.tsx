@@ -27,13 +27,13 @@ export default function Hero() {
 
         <div className="flex gap-2.5 flex-wrap">
           <Link
-            href="#catalog"
+            href="/catalog"
             className="text-sm text-white bg-accent no-underline px-7 py-2.5 rounded-lg font-medium transition-all duration-200"
           >
             Shop now
           </Link>
           <Link
-            href="#catalog"
+            href="/catalog"
             className="text-sm text-text-secondary no-underline px-7 py-2.5 rounded-lg border border-border-hover transition-all duration-200"
           >
             View deals

@@ -1,7 +1,4 @@
-import {
-  FilterSidebarSkeleton,
-  ProductGridSkeleton,
-} from "@/components/ui/Skeleton";
+import { ProductCardSkeleton } from "@/components/ui/Skeleton";
 
 export default function Loading() {
   return (
@@ -20,11 +17,29 @@ export default function Loading() {
         </div>
       </div>
 
-      {/* Catalog skeleton */}
-      <div className="max-w-[1200px] mx-auto px-6 py-12">
-        <div className="flex gap-12 items-start">
-          <FilterSidebarSkeleton />
-          <ProductGridSkeleton />
+      {/* Featured skeleton */}
+      <div className="max-w-[1200px] mx-auto px-6 py-16">
+        <div className="h-5 w-[200px] rounded-md bg-[linear-gradient(90deg,#1a1a1a_25%,#222_50%,#1a1a1a_75%)] bg-[length:200%_100%] animate-[shimmer_1.5s_infinite] mb-8" />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <ProductCardSkeleton key={i} />
+          ))}
+        </div>
+      </div>
+
+      {/* Category skeleton */}
+      <div className="max-w-[1200px] mx-auto px-6 py-16">
+        <div className="h-5 w-[180px] rounded-md bg-[linear-gradient(90deg,#1a1a1a_25%,#222_50%,#1a1a1a_75%)] bg-[length:200%_100%] animate-[shimmer_1.5s_infinite] mb-8" />
+        <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div
+              key={i}
+              className="bg-surface border border-border rounded-xl p-6 flex flex-col items-center gap-3"
+            >
+              <div className="w-8 h-8 rounded-full bg-[linear-gradient(90deg,#1a1a1a_25%,#222_50%,#1a1a1a_75%)] bg-[length:200%_100%] animate-[shimmer_1.5s_infinite]" />
+              <div className="h-3 w-16 rounded-md bg-[linear-gradient(90deg,#1a1a1a_25%,#222_50%,#1a1a1a_75%)] bg-[length:200%_100%] animate-[shimmer_1.5s_infinite]" />
+            </div>
+          ))}
         </div>
       </div>
     </>
