@@ -133,6 +133,38 @@ export default function MobileSidebar({ isOpen, onClose, user, fullName, isAdmin
               </span>
             </SidebarLink>
           </div>
+
+          <div className="mx-2 mb-2 mt-3 text-xs uppercase tracking-wider font-medium text-text-muted">
+            Info
+          </div>
+          <div className="flex flex-col gap-0.5 mb-4">
+            <SidebarLink
+              href="/about"
+              onClick={onClose}
+              isActive={pathname === "/about"}
+            >
+              <span className="flex items-center gap-2.5">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="shrink-0">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 16v-4M12 8h.01" />
+                </svg>
+                About
+              </span>
+            </SidebarLink>
+            <SidebarLink
+              href="/contact"
+              onClick={onClose}
+              isActive={pathname === "/contact"}
+            >
+              <span className="flex items-center gap-2.5">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="shrink-0">
+                  <rect x="2" y="4" width="20" height="16" rx="2" />
+                  <path d="M22 7l-10 7L2 7" />
+                </svg>
+                Contact
+              </span>
+            </SidebarLink>
+          </div>
           {user && (
             <>
               <div className="mx-2 mb-2 mt-3 text-xs uppercase tracking-wider font-medium text-text-muted">

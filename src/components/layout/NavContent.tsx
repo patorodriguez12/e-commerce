@@ -41,6 +41,18 @@ export default function NavContent({ user, fullName, isAdmin }: Props) {
             >
               Shop
             </Link>
+            <Link
+              href="/about"
+              className="text-sm text-text-secondary no-underline transition-all hover:text-text"
+            >
+              About
+            </Link>
+            <Link
+              href="/contact"
+              className="text-sm text-text-secondary no-underline transition-all hover:text-text"
+            >
+              Contact
+            </Link>
           </div>
 
           {/* Right actions */}

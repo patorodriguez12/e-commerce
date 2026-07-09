@@ -5,9 +5,9 @@ import { CiLinkedin, CiInstagram } from "react-icons/ci";
 import { FaGithub } from "react-icons/fa";
 
 const STORE_LINKS = [
-  { href: "/", label: "Catalog" },
-  { href: "/login", label: "Sign in" },
-  { href: "/register", label: "Sign up" },
+  { href: "/catalog", label: "Catalog" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
 ];
 
 const SOCIAL_LINKS = [
