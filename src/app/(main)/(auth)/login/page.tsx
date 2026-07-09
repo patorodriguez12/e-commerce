@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import Link from "next/link";
 import { login } from "@/lib/supabase/actions";
 import OAuthButtons from "@/components/auth/OAuthButtons";
+import PasswordInput from "@/components/ui/PasswordInput";
 
 function Spinner() {
   return (
@@ -62,13 +63,9 @@ export default function LoginPage() {
 
             <div>
               <label className="block text-xs text-text-secondary mb-1.5">Password</label>
-              <input
+              <PasswordInput
                 name="password"
-                type="password"
-                required
-                placeholder="••••••••"
                 disabled={pending}
-                className="admin-input disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
 

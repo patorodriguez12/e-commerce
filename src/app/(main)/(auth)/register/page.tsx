@@ -1,9 +1,10 @@
 "use client";
 
-import { useActionState } from "react";
+import { useState, useActionState } from "react";
 import Link from "next/link";
 import { register } from "@/lib/supabase/actions";
 import OAuthButtons from "@/components/auth/OAuthButtons";
+import PasswordInput from "@/components/ui/PasswordInput";
 
 function Spinner() {
   return (
@@ -12,8 +13,10 @@ function Spinner() {
 }
 
 export default function RegisterPage() {
+  const [matchError, setMatchError] = useState<string | null>(null);
   const [error, formAction, pending] = useActionState(
     async (_prev: unknown, formData: FormData) => {
+      setMatchError(null);
       const result = await register(formData);
       return result?.error ?? null;
     },
@@ -47,7 +50,19 @@ export default function RegisterPage() {
             <div className="flex-1 h-[0.5px] bg-border" />
           </div>
 
-          <form action={formAction} className="flex flex-col gap-3.5">
+          <form
+            action={formAction}
+            onSubmit={(e) => {
+              const formData = new FormData(e.currentTarget);
+              const pw = formData.get("password") as string;
+              const confirm = formData.get("confirm_password") as string;
+              if (pw !== confirm) {
+                e.preventDefault();
+                setMatchError("Passwords do not match");
+              }
+            }}
+            className="flex flex-col gap-3.5"
+          >
             <div>
               <label className="block text-xs text-text-secondary mb-1.5">Full name</label>
               <input
@@ -74,20 +89,27 @@ export default function RegisterPage() {
 
             <div>
               <label className="block text-xs text-text-secondary mb-1.5">Password</label>
-              <input
+              <PasswordInput
                 name="password"
-                type="password"
-                required
-                minLength={6}
                 placeholder="At least 6 characters"
+                minLength={6}
                 disabled={pending}
-                className="admin-input disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
 
-            {error && (
+            <div>
+              <label className="block text-xs text-text-secondary mb-1.5">Confirm password</label>
+              <PasswordInput
+                name="confirm_password"
+                placeholder="Re-enter your password"
+                minLength={6}
+                disabled={pending}
+              />
+            </div>
+
+            {(error || matchError) && (
               <div className="bg-coral-bg border border-coral-border rounded-lg px-3.5 py-2.5 text-sm text-coral-text">
-                {error}
+                {matchError ?? error}
               </div>
             )}
 
