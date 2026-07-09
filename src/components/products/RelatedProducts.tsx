@@ -28,7 +28,7 @@ export default async function RelatedProducts({
       <h2 className="text-lg font-medium mb-6 tracking-[-0.3px]">
         Related products
       </h2>
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {products.map((product: Product) => (
           <ProductCard key={product.id} product={product} />
         ))}
