@@ -1,15 +1,10 @@
 import { requireAdmin } from "@/lib/supabase/auth";
-import { createClient } from "@/lib/supabase/server";
+import { getAdminOrders } from "@/lib/queries/orders";
 import OrderTable from "@/components/admin/OrderTable";
 
 export default async function AdminOrdersPage() {
   await requireAdmin();
-  const supabase = await createClient();
-
-  const { data: orders } = await supabase
-    .from("orders")
-    .select("*, profiles(full_name), order_items(id)")
-    .order("created_at", { ascending: false });
+  const orders = await getAdminOrders();
 
   return (
     <div>
@@ -17,12 +12,10 @@ export default async function AdminOrdersPage() {
         <h1 className="text-[22px] font-medium tracking-[-0.5px]">
           Orders
         </h1>
-        <p className="text-xs text-text-muted">
-          {orders?.length ?? 0} total
-        </p>
+        <p className="text-xs text-text-muted">{orders.length} total</p>
       </div>
 
-      <OrderTable orders={orders ?? []} />
+      <OrderTable orders={orders} />
     </div>
   );
 }

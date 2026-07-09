@@ -111,6 +111,21 @@ export async function POST(request: NextRequest) {
           stockError,
         );
       }
+
+      const { error: salesError } = await supabase.rpc(
+        "increment_sales_count",
+        {
+          product_id: item.product_id,
+          quantity: item.quantity,
+        },
+      );
+
+      if (salesError) {
+        console.error(
+          `Error incrementando sales_count de ${item.product_id}:`,
+          salesError,
+        );
+      }
     }
   }
 

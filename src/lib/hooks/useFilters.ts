@@ -33,7 +33,7 @@ export function useFilters() {
       } else {
         params.set(key, value);
       }
-      router.push(`/?${params.toString()}`, { scroll: false });
+      router.push(`/catalog?${params.toString()}`, { scroll: false });
     },
     [router, searchParams],
   );
@@ -48,13 +48,13 @@ export function useFilters() {
           params.set(key, value);
         }
       });
-      router.push(`/?${params.toString()}`, { scroll: false });
+      router.push(`/catalog?${params.toString()}`, { scroll: false });
     },
     [router, searchParams],
   );
 
   const clearAll = useCallback(() => {
-    router.push("/", { scroll: false });
+    router.push("/catalog", { scroll: false });
   }, [router]);
 
   const hasActiveFilters =

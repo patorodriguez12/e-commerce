@@ -122,21 +122,35 @@ export default async function ProductPage({
             </div>
 
             <div className="flex flex-col gap-2.5 p-4 bg-surface border border-border rounded-xl">
-              {[
-                { icon: "🚚", text: "Free shipping on orders over $99" },
-                { icon: "↩️", text: "30-day return policy" },
-                { icon: "🔒", text: "Secure checkout with Stripe" },
-              ].map((item) => (
-                <div
-                  key={item.text}
-                  className="flex items-center gap-2.5"
-                >
-                  <span className="text-sm">{item.icon}</span>
-                  <span className="text-xs text-text-secondary">
-                    {item.text}
-                  </span>
-                </div>
-              ))}
+              <div className="flex items-center gap-2.5">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-text-muted shrink-0">
+                  <rect x="1" y="3" width="15" height="13" />
+                  <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+                  <circle cx="5.5" cy="18.5" r="2.5" />
+                  <circle cx="18.5" cy="18.5" r="2.5" />
+                </svg>
+                <span className="text-xs text-text-secondary">
+                  Free shipping on orders over $99
+                </span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-text-muted shrink-0">
+                  <polyline points="1 4 1 10 7 10" />
+                  <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+                </svg>
+                <span className="text-xs text-text-secondary">
+                  30-day return policy
+                </span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-text-muted shrink-0">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+                <span className="text-xs text-text-secondary">
+                  Secure checkout with Stripe
+                </span>
+              </div>
             </div>
           </div>
         </div>

@@ -19,7 +19,7 @@ export default function NavContent({ user, fullName, isAdmin }: Props) {
 
   return (
     <>
-      <nav className="border-b border-border sticky top-0 z-30 backdrop-blur-2xl">
+      <nav className="border-b border-border fixed top-0 left-0 right-0 z-30 backdrop-blur-2xl">
         <div className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center no-underline">
@@ -32,6 +32,28 @@ export default function NavContent({ user, fullName, isAdmin }: Props) {
               className="h-10 w-auto"
             />
           </Link>
+
+          {/* Nav links */}
+          <div className="hidden md:flex items-center gap-6">
+            <Link
+              href="/catalog"
+              className="text-sm text-text-secondary no-underline transition-all hover:text-text"
+            >
+              Shop
+            </Link>
+            <Link
+              href="/about"
+              className="text-sm text-text-secondary no-underline transition-all hover:text-text"
+            >
+              About
+            </Link>
+            <Link
+              href="/contact"
+              className="text-sm text-text-secondary no-underline transition-all hover:text-text"
+            >
+              Contact
+            </Link>
+          </div>
 
           {/* Right actions */}
           <div className="flex items-center gap-2">

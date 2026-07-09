@@ -153,6 +153,20 @@ export default function ProductForm({ categories, product }: Props) {
         />
       </div>
 
+      {/* Featured toggle */}
+      <div className="flex items-center gap-3">
+        <label className="relative inline-flex items-center cursor-pointer">
+          <input
+            type="checkbox"
+            name="is_featured"
+            defaultChecked={product?.is_featured ?? false}
+            className="sr-only peer"
+          />
+          <div className="w-9 h-5 bg-bg-subtle border border-border rounded-full peer-checked:bg-accent peer-checked:border-accent transition-all duration-200 after:content-[''] after:absolute after:top-[3px] after:left-[3px] after:w-3.5 after:h-3.5 after:rounded-full after:bg-white after:transition-all peer-checked:after:translate-x-4" />
+        </label>
+        <span className="text-xs text-text-secondary">Feature this product</span>
+      </div>
+
       {/* Price, Stock, Category */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>

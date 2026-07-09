@@ -15,6 +15,8 @@ export type Product = {
   image_url: string | null;
   category_id: string | null;
   created_at: string;
+  is_featured: boolean;
+  sales_count: number;
   categories?: Category;
 };
 
@@ -71,6 +73,16 @@ export type WishlistItem = {
   product_id: string;
   created_at: string;
   products?: Product;
+};
+
+export type OrderRow = {
+  id: string;
+  user_id: string;
+  status: string;
+  total: number;
+  created_at: string;
+  profiles: { full_name: string } | null;
+  order_items: { id: string }[];
 };
 
 export type Review = {
