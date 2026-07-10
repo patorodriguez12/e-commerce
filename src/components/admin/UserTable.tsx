@@ -114,7 +114,7 @@ export default function UserTable({ users }: Props) {
                     </td>
                     <td className="px-5 py-3.5">
                       <span
-                        className={`text-xs font-medium px-2.5 py-[3px] rounded-full ${
+                        className={`text-xs font-medium px-2.5 py-0.75 rounded-full ${
                           user.role === "admin"
                             ? "bg-accent-bg text-accent-text border border-accent-border"
                             : "bg-bg-subtle text-text-muted border border-border"

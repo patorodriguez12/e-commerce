@@ -1,4 +1,4 @@
-import Hero from "@/components/layout/Hero";
+import Hero from "@/components/home/Hero";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
 import CategoryShowcase from "@/components/home/CategoryShowcase";
 import PromoBanner from "@/components/home/PromoBanner";
@@ -15,7 +15,7 @@ export default function HomePage() {
       <PromoBanner />
       <BestSellers />
       <TestimonialsSection />
-      <section className="max-w-[1200px] mx-auto px-6 py-20 text-center">
+      <section className="max-w-300 mx-auto px-6 py-20 text-center">
         <h2 className="text-2xl font-medium font-sora text-text tracking-tight mb-3">
           Explore everything
         </h2>

@@ -2,8 +2,8 @@ import Link from "next/link";
 
 export default function PromoBanner() {
   return (
-    <section className="max-w-[1200px] mx-auto px-6 py-8">
-      <div className="relative rounded-2xl overflow-hidden bg-gradient-to-r from-accent/10 via-accent/5 to-transparent border border-accent-border/30 px-8 py-12 md:py-14">
+    <section className="max-w-300 mx-auto px-6 py-8">
+      <div className="relative rounded-2xl overflow-hidden bg-linear-to-r from-accent/10 via-accent/5 to-transparent border border-accent-border/30 px-8 py-12 md:py-14">
         <div className="relative z-10">
           <p className="text-[10px] text-gold uppercase tracking-[1px] font-medium mb-3">
             Limited offer
@@ -22,7 +22,7 @@ export default function PromoBanner() {
           </Link>
         </div>
         <div className="absolute right-0 top-0 bottom-0 w-1/3 hidden md:block">
-          <div className="w-full h-full bg-gradient-to-l from-accent/5 to-transparent" />
+          <div className="w-full h-full bg-linear-to-l from-accent/5 to-transparent" />
         </div>
       </div>
     </section>

@@ -3,17 +3,9 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="border-b border-border pt-24 pb-20 px-6 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12">
+    <section className="px-6 pt-8 pb-8 md:pt-20 md:pb-16 md:px-8 lg:pt-28 lg:pb-24 lg:px-8 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-8 md:gap-12">
       {/* Left column: text content */}
       <div className="flex-1">
-        {/* Gold diamond + label */}
-        <div className="inline-flex items-center gap-2 text-xs text-gold uppercase tracking-wider mb-8">
-          <span className="text-xs opacity-70">◆</span>
-          New arrivals 2026
-        </div>
-
-        {/* Copper accent line */}
-        <div className="w-12 h-0.5 bg-accent rounded-sm mb-7" />
 
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium leading-tight tracking-tight mb-6 max-w-2xl font-sora">
           The gear that{" "}
@@ -42,10 +34,10 @@ export default function Hero() {
       </div>
 
       {/* Right column: image */}
-      <div className="flex-1 flex justify-center relative">
+      <div className="flex-1 flex justify-center relative pt-8">
         {/* Soft glow behind the product */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="w-72 h-72 rounded-full bg-accent opacity-10 blur-3xl" />
+          <div className="w-40 h-40 rounded-full bg-accent opacity-10 blur-3xl" />
         </div>
         <Image
           src="/hero-image.png"
@@ -53,7 +45,7 @@ export default function Hero() {
           width={436}
           height={572}
           priority
-          className="relative z-10 w-72 h-auto max-w-md object-contain"
+          className="relative z-10 w-40 md:w-64 lg-w-72 h-auto max-w-md object-contain"
         />
       </div>
     </section>

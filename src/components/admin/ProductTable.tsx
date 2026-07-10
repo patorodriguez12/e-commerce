@@ -142,7 +142,7 @@ export default function ProductTable({ products }: Props) {
                     </td>
                     <td className="px-5 py-3.5">
                       <span
-                        className={`text-xs font-medium px-2.5 py-[3px] rounded-full ${
+                        className={`text-xs font-medium px-2.5 py-0.75 rounded-full ${
                           product.stock > 0
                             ? "bg-green-bg text-green-text border border-green-border"
                             : "bg-coral-bg text-coral-text border border-coral-border"

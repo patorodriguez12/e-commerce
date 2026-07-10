@@ -14,7 +14,7 @@ export default async function BestSellers() {
   if (!products || products.length === 0) return null;
 
   return (
-    <section className="max-w-[1200px] mx-auto px-6 py-16">
+    <section className="max-w-300 mx-auto px-6 py-16">
       <div className="flex items-center gap-3 mb-8">
         <span className="text-accent-text text-lg">◆</span>
         <h2 className="text-xl font-medium font-sora text-text tracking-tight">

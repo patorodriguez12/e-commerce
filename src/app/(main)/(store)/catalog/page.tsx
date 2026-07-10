@@ -51,7 +51,7 @@ export default async function CatalogPage({ searchParams }: Props) {
     : (products ?? []);
 
   return (
-    <div className="max-w-[1200px] mx-auto px-6 py-12">
+    <div className="max-w-300 mx-auto px-6 py-12">
       <CatalogLayout
         categories={categories ?? []}
         products={filtered as Product[]}
