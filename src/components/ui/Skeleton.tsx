@@ -39,7 +39,7 @@ export function ProductCardSkeleton() {
 export function ProductGridSkeleton() {
   return (
     <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4 flex-1">
-      {Array.from({ length: 6 }).map((_, i) => (
+      {Array.from({ length: 8 }).map((_, i) => (
         <ProductCardSkeleton key={i} />
       ))}
     </div>
