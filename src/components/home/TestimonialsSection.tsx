@@ -47,7 +47,7 @@ export default async function TestimonialsSection() {
   const reviews = rows as Row[];
 
   return (
-    <section className="max-w-[1200px] mx-auto px-6 py-16">
+    <section className="max-w-300 mx-auto px-6 py-16">
       <div className="flex items-center gap-3 mb-8">
         <div className="w-6 h-px bg-accent" />
         <h2 className="text-xl font-medium font-sora text-text tracking-tight">

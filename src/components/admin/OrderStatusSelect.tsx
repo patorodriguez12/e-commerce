@@ -38,7 +38,7 @@ export default function OrderStatusSelect({
       value={status}
       onChange={(e) => handleChange(e.target.value)}
       disabled={loading}
-      className={`text-xs font-medium px-2.5 py-[3px] rounded-full cursor-pointer outline-none transition-opacity duration-150 ${
+      className={`text-xs font-medium px-2.5 py-0.75 rounded-full cursor-pointer outline-none transition-opacity duration-150 ${
         loading ? "opacity-50" : ""
       }`}
       style={{

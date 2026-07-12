@@ -1,29 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import Link from "next/link";
-import {
-  Headphones,
-  Laptop,
-  Keyboard,
-  Music,
-  Smartphone,
-  Package,
-  Monitor,
-} from "lucide-react";
-
-const CATEGORY_ICONS: Record<string, React.ElementType> = {
-  headphones: Headphones,
-  laptops: Laptop,
-  accessories: Keyboard,
-  audio: Music,
-  smartphones: Smartphone,
-  default: Package,
-  monitors: Monitor,
-};
-
-function CategoryIcon({ slug }: { slug: string }) {
-  const Icon = CATEGORY_ICONS[slug] ?? CATEGORY_ICONS.default;
-  return <Icon size={22} strokeWidth={1.5} className="text-text-secondary" />;
-}
+import CategoryCard from "./CategoryCard";
 
 export default async function CategoryShowcase() {
   const supabase = await createClient();
@@ -46,16 +22,12 @@ export default async function CategoryShowcase() {
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
         {categories.map((cat) => (
-          <Link
+          <CategoryCard
             key={cat.id}
             href={`/catalog?category=${cat.slug}`}
-            className="flex flex-col items-center gap-3 bg-surface border border-border rounded-xl px-4 py-6 no-underline transition-all duration-200 hover:border-accent-border hover:-translate-y-0.5"
-          >
-            <CategoryIcon slug={cat.slug} />
-            <span className="text-xs text-text-secondary font-medium text-center">
-              {cat.name}
-            </span>
-          </Link>
+            name={cat.name}
+            slug={cat.slug}
+          />
         ))}
       </div>
     </section>

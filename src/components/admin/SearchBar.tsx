@@ -39,7 +39,7 @@ export default function SearchBar({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full bg-surface border border-border rounded-lg px-3 py-[9px] pl-[34px] text-sm text-text outline-none transition-colors duration-150 focus:border-accent"
+        className="w-full bg-surface border border-border rounded-lg px-3 py-2.25 pl-8.5 text-sm text-text outline-none transition-colors duration-150 focus:border-accent"
       />
     </div>
   );

@@ -8,7 +8,7 @@ import PasswordInput from "@/components/ui/PasswordInput";
 
 function Spinner() {
   return (
-    <span className="size-[14px] border-2 border-white/25 border-t-white rounded-full inline-block animate-spin" />
+    <span className="size-3.5 border-2 border-white/25 border-t-white rounded-full inline-block animate-spin" />
   );
 }
 
@@ -23,7 +23,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-dvh flex items-center justify-center p-6">
-      <div className="w-full max-w-[400px]">
+      <div className="w-full max-w-100">
         <div className="text-center mb-8">
           <Link
             href="/"
@@ -78,7 +78,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={pending}
-              className={`w-full bg-accent text-white border-0 rounded-lg p-[11px] text-sm font-medium mt-1 flex items-center justify-center gap-2 transition-opacity duration-150 ${pending ? "opacity-60 cursor-not-allowed" : "opacity-100 cursor-pointer"}`}
+              className={`w-full bg-accent text-white border-0 rounded-lg p-2.75 text-sm font-medium mt-1 flex items-center justify-center gap-2 transition-opacity duration-150 ${pending ? "opacity-60 cursor-not-allowed" : "opacity-100 cursor-pointer"}`}
             >
               {pending ? (
                 <>

@@ -84,7 +84,7 @@ export default function ProductCard({ product }: Props) {
             {product.name}
           </p>
 
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <span className="text-[15px] font-medium text-text">
               {formatPrice(product.price)}
             </span>
@@ -92,7 +92,7 @@ export default function ProductCard({ product }: Props) {
             <button
               onClick={handleAdd}
               disabled={isOutOfStock || isMaxReached}
-              className={`text-[11px] bg-bg-subtle border border-border rounded-md px-3 py-1 transition-all duration-200 ${
+              className={`w-full sm:w-auto text-[11px] bg-bg-subtle border border-border rounded-md px-3 py-1.5 sm:py-1 transition-all duration-200 ${
                 isOutOfStock || isMaxReached
                   ? "text-text-muted cursor-not-allowed"
                   : "text-text-secondary cursor-pointer hover:bg-accent-bg hover:border-accent-border hover:text-accent-text"

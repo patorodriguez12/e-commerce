@@ -67,7 +67,7 @@ export default function ProductForm({ categories, product }: Props) {
       <div>
         <label className={labelClass}>Product image</label>
         <div className="flex items-start gap-4">
-          <div className="relative w-[100px] h-[100px] shrink-0 rounded-xl overflow-hidden bg-bg-subtle border border-border">
+          <div className="relative w-25 h-25 shrink-0 rounded-xl overflow-hidden bg-bg-subtle border border-border">
             {imageUrl ? (
               <Image
                 src={imageUrl}
@@ -162,7 +162,7 @@ export default function ProductForm({ categories, product }: Props) {
             defaultChecked={product?.is_featured ?? false}
             className="sr-only peer"
           />
-          <div className="w-9 h-5 bg-bg-subtle border border-border rounded-full peer-checked:bg-accent peer-checked:border-accent transition-all duration-200 after:content-[''] after:absolute after:top-[3px] after:left-[3px] after:w-3.5 after:h-3.5 after:rounded-full after:bg-white after:transition-all peer-checked:after:translate-x-4" />
+          <div className="w-9 h-5 bg-bg-subtle border border-border rounded-full peer-checked:bg-accent peer-checked:border-accent transition-all duration-200 after:content-[''] after:absolute after:top-0.75 after:left-0.75 after:w-3.5 after:h-3.5 after:rounded-full after:bg-white after:transition-all peer-checked:after:translate-x-4" />
         </label>
         <span className="text-xs text-text-secondary">Feature this product</span>
       </div>
