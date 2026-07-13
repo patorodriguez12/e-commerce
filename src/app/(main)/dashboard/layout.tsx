@@ -23,7 +23,7 @@ export default async function DashboardLayout({
 
   return (
     <div className="mx-auto max-w-250 px-6 py-12">
-      <div className="flex flex-col md:flex-row gap-6 md:gap-12 items-start">
+      <div className="flex flex-col md:flex-row gap-6 md:gap-12 md:items-start">
         <DashboardNav fullName={fullName} />
 
         <main className="flex-1 min-w-0">{children}</main>
