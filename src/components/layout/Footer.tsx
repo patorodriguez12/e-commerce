@@ -49,8 +49,8 @@ export default function Footer() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                title={social.label}
-                className="flex items-center justify-center w-8 h-8 rounded-lg bg-surface border border-border text-text-muted transition-all duration-150 no-underline hover:border-border-hover hover:text-text hover:bg-bg-subtle"
+                aria-label={social.label}
+                className="flex items-center justify-center w-8 h-8 rounded-lg bg-surface border border-border text-text-secondary transition-all duration-150 no-underline hover:border-border-hover hover:text-text hover:bg-bg-subtle"
               >
                 <social.icon size={14} />
               </a>
@@ -93,7 +93,7 @@ export default function Footer() {
           </p>
           <div className="flex flex-col gap-1.5">
             {[
-              { label: "Next.js 14", href: "https://nextjs.org" },
+              { label: "Next.js 16", href: "https://nextjs.org" },
               { label: "Supabase", href: "https://supabase.com" },
               { label: "Stripe", href: "https://stripe.com" },
               { label: "Vercel", href: "https://vercel.com" },

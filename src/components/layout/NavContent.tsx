@@ -22,7 +22,7 @@ export default function NavContent({ user, fullName, isAdmin }: Props) {
       <nav className="border-b border-border fixed top-0 left-0 right-0 z-30 backdrop-blur-2xl">
         <div className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center no-underline">
+          <Link href="/" className="flex items-center no-underline" aria-label="Smartech home">
             <Image
               src="/navbar-logo.png"
               alt="Smartech"
@@ -37,19 +37,19 @@ export default function NavContent({ user, fullName, isAdmin }: Props) {
           <div className="hidden md:flex items-center gap-6">
             <Link
               href="/catalog"
-              className="text-sm text-text-secondary no-underline transition-all hover:text-text"
+              className="text-sm text-text-secondary no-underline transition-all hover:text-text py-2"
             >
               Shop
             </Link>
             <Link
               href="/about"
-              className="text-sm text-text-secondary no-underline transition-all hover:text-text"
+              className="text-sm text-text-secondary no-underline transition-all hover:text-text py-2"
             >
               About
             </Link>
             <Link
               href="/contact"
-              className="text-sm text-text-secondary no-underline transition-all hover:text-text"
+              className="text-sm text-text-secondary no-underline transition-all hover:text-text py-2"
             >
               Contact
             </Link>
@@ -67,13 +67,13 @@ export default function NavContent({ user, fullName, isAdmin }: Props) {
                 <>
                   <Link
                     href="/login"
-                    className="text-sm text-text-secondary no-underline px-3.5 py-1.5 rounded-md transition-all hover:text-accent-text hover:bg-accent-bg"
+                    className="text-sm text-text-secondary no-underline px-3.5 py-2 rounded-md transition-all hover:text-accent-text hover:bg-accent-bg"
                   >
                     Sign in
                   </Link>
                   <Link
                     href="/register"
-                    className="text-sm text-white bg-accent no-underline px-3.5 py-1.5 rounded-md font-medium transition-all hover:brightness-110"
+                    className="text-sm text-white bg-accent no-underline px-3.5 py-2 rounded-md font-medium transition-all hover:brightness-110"
                   >
                     Sign up
                   </Link>

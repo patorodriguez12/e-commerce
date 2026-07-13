@@ -21,7 +21,8 @@ export default function CartButton() {
   return (
     <button
       onClick={openDrawer}
-      className="relative bg-transparent border border-border rounded-md px-3 py-1.5 text-text-secondary cursor-pointer text-sm transition-colors duration-150 flex items-center gap-1.5 hover:border-border-hover"
+      aria-label="Open cart"
+      className="relative bg-transparent border border-border rounded-md px-3 py-2 text-text-secondary cursor-pointer text-sm transition-colors duration-150 flex items-center gap-1.5 hover:border-border-hover min-h-[44px]"
     >
       <svg
         width="15"

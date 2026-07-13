@@ -26,7 +26,7 @@ const SORT_OPTIONS: { value: SortOption; label: string }[] = [
 function filterBtnClasses(active: boolean): string {
   return `w-full text-left px-3 py-2.25 rounded-md text-sm cursor-pointer transition-all duration-150 ${
     active
-      ? "bg-accent-bg text-accent-text border border-accent-border font-medium"
+      ? "bg-accent/10 text-text border border-accent-border font-medium"
       : "bg-transparent text-text-secondary border border-transparent font-normal"
   }`;
 }

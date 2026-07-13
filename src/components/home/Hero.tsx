@@ -45,7 +45,7 @@ export default function Hero() {
           width={436}
           height={572}
           priority
-          className="relative z-10 w-40 md:w-64 lg-w-72 h-auto max-w-md object-contain"
+          className="relative z-10 w-40 md:w-64 lg:w-72 h-auto max-w-md object-contain"
         />
       </div>
     </section>

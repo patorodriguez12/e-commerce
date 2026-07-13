@@ -92,7 +92,7 @@ export default function ProductCard({ product }: Props) {
             <button
               onClick={handleAdd}
               disabled={isOutOfStock || isMaxReached}
-              className={`w-full sm:w-auto text-[11px] bg-bg-subtle border border-border rounded-md px-3 py-1.5 sm:py-1 transition-all duration-200 ${
+              className={`w-full sm:w-auto text-[11px] bg-bg-subtle border border-border rounded-md px-3 py-2.5 sm:py-2 transition-all duration-200 min-h-[44px] ${
                 isOutOfStock || isMaxReached
                   ? "text-text-muted cursor-not-allowed"
                   : "text-text-secondary cursor-pointer hover:bg-accent-bg hover:border-accent-border hover:text-accent-text"
