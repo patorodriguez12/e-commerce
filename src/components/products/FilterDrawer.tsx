@@ -24,7 +24,7 @@ const SORT_OPTIONS: { value: SortOption; label: string }[] = [
 ];
 
 function filterBtnClasses(active: boolean): string {
-  return `w-full text-left px-3 py-[9px] rounded-md text-sm cursor-pointer transition-all duration-150 ${
+  return `w-full text-left px-3 py-2.25 rounded-md text-sm cursor-pointer transition-all duration-150 ${
     active
       ? "bg-accent-bg text-accent-text border border-accent-border font-medium"
       : "bg-transparent text-text-secondary border border-transparent font-normal"
@@ -82,18 +82,20 @@ export default function FilterDrawer({
     <>
       <div
         onClick={onClose}
-        className={`fixed inset-0 bg-black/70 z-[998] transition-opacity duration-[250ms] ${
-          isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        className={`fixed inset-0 bg-black/70 z-998 transition-opacity duration-250 ${
+          isOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
         }`}
       />
 
       <div
-        className={`fixed bottom-0 left-0 right-0 bg-[#0f0f0f] border-t border-border rounded-t-[16px] z-[999] max-h-[85dvh] flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] ${
+        className={`fixed bottom-0 left-0 right-0 bg-[#0f0f0f] border-t border-border rounded-t-2xl z-999 max-h-[85dvh] flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] ${
           isOpen ? "translate-y-0" : "translate-y-full"
         }`}
       >
         <div className="p-3 flex justify-center">
-          <div className="w-9 h-1 bg-border-hover rounded-[2px]" />
+          <div className="w-9 h-1 bg-border-hover rounded-xs" />
         </div>
 
         <div className="flex items-center justify-between px-5 pb-4 border-b border-border shrink-0">
@@ -102,7 +104,7 @@ export default function FilterDrawer({
             {hasActiveFilters && (
               <button
                 onClick={handleClearAll}
-                className="bg-transparent border border-coral-border text-coral-text rounded-md px-3 py-[5px] text-xs cursor-pointer"
+                className="bg-transparent border border-coral-border text-coral-text rounded-md px-3 py-1.25 text-xs cursor-pointer"
               >
                 Clear all
               </button>
@@ -118,18 +120,22 @@ export default function FilterDrawer({
 
         <div className="flex-1 overflow-y-auto p-5 flex flex-col gap-7 overscroll-contain">
           <div>
-            <span className="text-[10px] text-text-muted uppercase tracking-[1px] mb-[10px] block">Search</span>
+            <span className="text-2.5 text-text-muted uppercase tracking-[1px] mb-2.5 block">
+              Search
+            </span>
             <input
               type="text"
               placeholder="Search products..."
               value={searchInput}
               onChange={handleSearchChange}
-              className="w-full bg-bg-subtle border border-border rounded-md px-3 py-[10px] text-sm text-text outline-none"
+              className="w-full bg-bg-subtle border border-border rounded-md px-3 py-2.5 text-sm text-text outline-none"
             />
           </div>
 
           <div>
-            <span className="text-[10px] text-text-muted uppercase tracking-[1px] mb-[10px] block">Category</span>
+            <span className="text-2.5 text-text-muted uppercase tracking-[1px] mb-2.5 block">
+              Category
+            </span>
             <div className="flex flex-col gap-0.5">
               <button
                 onClick={() => setFilter("category", null)}
@@ -150,7 +156,9 @@ export default function FilterDrawer({
           </div>
 
           <div>
-            <span className="text-[10px] text-text-muted uppercase tracking-[1px] mb-[10px] block">Sort by</span>
+            <span className="text-2.5 text-text-muted uppercase tracking-[1px] mb-2.5 block">
+              Sort by
+            </span>
             <div className="flex flex-col gap-0.5">
               {SORT_OPTIONS.map((option) => (
                 <button
@@ -165,34 +173,36 @@ export default function FilterDrawer({
           </div>
 
           <div>
-            <span className="text-[10px] text-text-muted uppercase tracking-[1px] mb-[10px] block">Price range (USD)</span>
-            <div className="flex gap-2 mb-[10px]">
+            <span className="text-2.5 text-text-muted uppercase tracking-[1px] mb-2.5 block">
+              Price range (USD)
+            </span>
+            <div className="flex gap-2 mb-2.5">
               <input
                 type="number"
                 placeholder="Min"
                 value={minInput}
                 onChange={(e) => setMinInput(e.target.value)}
-                className="w-1/2 bg-bg-subtle border border-border rounded-md px-3 py-[10px] text-sm text-text outline-none"
+                className="w-1/2 bg-bg-subtle border border-border rounded-md px-3 py-2.5 text-sm text-text outline-none"
               />
               <input
                 type="number"
                 placeholder="Max"
                 value={maxInput}
                 onChange={(e) => setMaxInput(e.target.value)}
-                className="w-1/2 bg-bg-subtle border border-border rounded-md px-3 py-[10px] text-sm text-text outline-none"
+                className="w-1/2 bg-bg-subtle border border-border rounded-md px-3 py-2.5 text-sm text-text outline-none"
               />
             </div>
             <div className="flex gap-2">
               <button
                 onClick={handlePriceApply}
-                className="flex-1 bg-accent text-white border-none rounded-md p-[9px] text-sm font-medium cursor-pointer"
+                className="flex-1 bg-accent text-white border-none rounded-md p-2.25 text-sm font-medium cursor-pointer"
               >
                 Apply
               </button>
               {(filters.min || filters.max) && (
                 <button
                   onClick={handlePriceClear}
-                  className="bg-transparent border border-border rounded-md text-text-muted px-3 py-[9px] text-xs cursor-pointer"
+                  className="bg-transparent border border-border rounded-md text-text-muted px-3 py-2.25 text-xs cursor-pointer"
                 >
                   ✕
                 </button>
@@ -204,7 +214,7 @@ export default function FilterDrawer({
         <div className="px-5 py-4 border-t border-border shrink-0">
           <button
             onClick={onClose}
-            className="w-full bg-accent text-white border-none rounded-lg p-[13px] text-sm font-medium cursor-pointer"
+            className="w-full bg-accent text-white border-none rounded-lg p-3.25 text-sm font-medium cursor-pointer"
           >
             Show results
           </button>
