@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { Product } from "@/types";
 import { useCartStore } from "@/lib/store/cartStore";
 import { formatPrice } from "@/lib/utils/formatPrice";
 import { toast } from "sonner";
+import ProductImage from "./ProductImage";
 
 type Props = {
   product: Product;
@@ -51,18 +51,12 @@ export default function ProductCard({ product }: Props) {
       <div className="bg-surface border border-border rounded-xl overflow-hidden transition-all duration-200 cursor-pointer hover:border-accent-border hover:-translate-y-0.5">
         {/* Image */}
         <div className="aspect-square bg-bg-subtle relative overflow-hidden">
-          {product.image_url ? (
-            <Image
-              src={product.image_url}
-              alt={product.name}
-              fill
-              className="object-cover transition-transform duration-300 hover:scale-[1.04]"
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center text-sm text-text-muted">
-              No image
-            </div>
-          )}
+          <ProductImage
+            src={product.image_url}
+            alt={product.name}
+            fill
+            className="object-cover transition-transform duration-300 hover:scale-[1.04]"
+          />
 
           {badge && (
             <div
