@@ -16,7 +16,7 @@ export default function PromoBanner() {
           </p>
           <Link
             href="/catalog"
-            className="inline-block bg-accent text-white text-sm no-underline px-6 py-2.5 rounded-lg font-medium transition-all duration-200 hover:brightness-110"
+            className="inline-flex items-center bg-accent text-white text-sm no-underline px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:brightness-110 min-h-[44px]"
           >
             Shop now
           </Link>

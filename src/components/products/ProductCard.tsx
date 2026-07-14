@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { Product } from "@/types";
 import { useCartStore } from "@/lib/store/cartStore";
 import { formatPrice } from "@/lib/utils/formatPrice";
 import { toast } from "sonner";
+import ProductImage from "./ProductImage";
 
 type Props = {
   product: Product;
@@ -51,18 +51,13 @@ export default function ProductCard({ product }: Props) {
       <div className="bg-surface border border-border rounded-xl overflow-hidden transition-all duration-200 cursor-pointer hover:border-accent-border hover:-translate-y-0.5">
         {/* Image */}
         <div className="aspect-square bg-bg-subtle relative overflow-hidden">
-          {product.image_url ? (
-            <Image
-              src={product.image_url}
-              alt={product.name}
-              fill
-              className="object-cover transition-transform duration-300 hover:scale-[1.04]"
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center text-sm text-text-muted">
-              No image
-            </div>
-          )}
+          <ProductImage
+            src={product.image_url}
+            alt={product.name}
+            fill
+            sizes="(max-width: 640px) 100vw, 50vw"
+            className="object-cover transition-transform duration-300 hover:scale-[1.04]"
+          />
 
           {badge && (
             <div
@@ -92,7 +87,7 @@ export default function ProductCard({ product }: Props) {
             <button
               onClick={handleAdd}
               disabled={isOutOfStock || isMaxReached}
-              className={`w-full sm:w-auto text-[11px] bg-bg-subtle border border-border rounded-md px-3 py-1.5 sm:py-1 transition-all duration-200 ${
+              className={`w-full sm:w-auto text-[11px] bg-bg-subtle border border-border rounded-md px-3 py-2.5 sm:py-2 transition-all duration-200 min-h-[44px] ${
                 isOutOfStock || isMaxReached
                   ? "text-text-muted cursor-not-allowed"
                   : "text-text-secondary cursor-pointer hover:bg-accent-bg hover:border-accent-border hover:text-accent-text"

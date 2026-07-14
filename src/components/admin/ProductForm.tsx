@@ -65,7 +65,7 @@ export default function ProductForm({ categories, product }: Props) {
     >
       {/* Image */}
       <div>
-        <label className={labelClass}>Product image</label>
+        <label htmlFor="image-upload" className={labelClass}>Product image</label>
         <div className="flex items-start gap-4">
           <div className="relative w-25 h-25 shrink-0 rounded-xl overflow-hidden bg-bg-subtle border border-border">
             {imageUrl ? (
@@ -116,8 +116,9 @@ export default function ProductForm({ categories, product }: Props) {
       {/* Name & Slug */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className={labelClass}>Name</label>
+          <label htmlFor="product-name" className={labelClass}>Name</label>
           <input
+            id="product-name"
             className="admin-input"
             name="name"
             type="text"
@@ -130,8 +131,9 @@ export default function ProductForm({ categories, product }: Props) {
           />
         </div>
         <div>
-          <label className={labelClass}>Slug</label>
+          <label htmlFor="product-slug" className={labelClass}>Slug</label>
           <input
+            id="product-slug"
             className="admin-input"
             ref={slugRef}
             name="slug"
@@ -144,8 +146,9 @@ export default function ProductForm({ categories, product }: Props) {
 
       {/* Description */}
       <div>
-        <label className={labelClass}>Description</label>
+        <label htmlFor="product-description" className={labelClass}>Description</label>
         <textarea
+          id="product-description"
           className="admin-input resize-none"
           name="description"
           rows={4}
@@ -170,8 +173,9 @@ export default function ProductForm({ categories, product }: Props) {
       {/* Price, Stock, Category */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
-          <label className={labelClass}>Price (USD)</label>
+          <label htmlFor="product-price" className={labelClass}>Price (USD)</label>
           <input
+            id="product-price"
             className="admin-input"
             name="price"
             type="number"
@@ -182,8 +186,9 @@ export default function ProductForm({ categories, product }: Props) {
           />
         </div>
         <div>
-          <label className={labelClass}>Stock</label>
+          <label htmlFor="product-stock" className={labelClass}>Stock</label>
           <input
+            id="product-stock"
             className="admin-input"
             name="stock"
             type="number"
@@ -193,8 +198,9 @@ export default function ProductForm({ categories, product }: Props) {
           />
         </div>
         <div>
-          <label className={labelClass}>Category</label>
+          <label htmlFor="product-category" className={labelClass}>Category</label>
           <select
+            id="product-category"
             className="admin-input cursor-pointer"
             name="category_id"
             defaultValue={product?.category_id ?? ""}

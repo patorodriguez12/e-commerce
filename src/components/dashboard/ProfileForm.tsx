@@ -67,8 +67,9 @@ export default function ProfileForm({ profile, userId, email }: Props) {
       {/* Fields */}
       <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4">
         <div>
-          <label className="block text-xs text-text-secondary mb-1.5">Full name</label>
+          <label htmlFor="profile-name" className="block text-xs text-text-secondary mb-1.5">Full name</label>
           <input
+            id="profile-name"
             name="full_name"
             type="text"
             defaultValue={profile?.full_name ?? ""}
@@ -76,8 +77,9 @@ export default function ProfileForm({ profile, userId, email }: Props) {
           />
         </div>
         <div>
-          <label className="block text-xs text-text-secondary mb-1.5">Phone</label>
+          <label htmlFor="profile-phone" className="block text-xs text-text-secondary mb-1.5">Phone</label>
           <input
+            id="profile-phone"
             name="phone"
             type="text"
             defaultValue={profile?.phone ?? ""}
@@ -87,8 +89,9 @@ export default function ProfileForm({ profile, userId, email }: Props) {
       </div>
 
       <div>
-        <label className="block text-xs text-text-secondary mb-1.5">Address</label>
+        <label htmlFor="profile-address" className="block text-xs text-text-secondary mb-1.5">Address</label>
         <textarea
+          id="profile-address"
           name="address"
           rows={3}
           defaultValue={profile?.address ?? ""}

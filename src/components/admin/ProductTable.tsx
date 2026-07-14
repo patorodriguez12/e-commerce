@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import ProductImage from "@/components/products/ProductImage";
 import { formatPrice } from "@/lib/utils/formatPrice";
 import DeleteProductButton from "@/components/admin/DeleteProductButton";
 import SearchBar from "@/components/admin/SearchBar";
@@ -120,14 +120,13 @@ export default function ProductTable({ products }: Props) {
                     <td className="px-5 py-3.5">
                       <div className="flex items-center gap-3">
                         <div className="relative w-9 h-9 shrink-0 rounded-md overflow-hidden bg-bg-subtle">
-                          {product.image_url && (
-                            <Image
-                              src={product.image_url}
-                              alt={product.name}
-                              fill
-                              className="object-cover"
-                            />
-                          )}
+                          <ProductImage
+                            src={product.image_url}
+                            alt={product.name}
+                            fill
+                            sizes="36px"
+                            className="object-cover"
+                          />
                         </div>
                         <span className="font-medium text-text">
                           {product.name}

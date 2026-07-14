@@ -1,10 +1,10 @@
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import AddToCartButton from "@/components/products/AddToCartButton";
 import WishlistButton from "@/components/products/WishlistButton";
 import RelatedProducts from "@/components/products/RelatedProducts";
 import ReviewsSection from "@/components/products/ReviewsSection";
+import ProductImage from "@/components/products/ProductImage";
 import { formatPrice } from "@/lib/utils/formatPrice";
 
 export async function generateMetadata({
@@ -65,19 +65,14 @@ export default async function ProductPage({
       <main className="max-w-[1200px] mx-auto px-6 py-12">
         <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-16 items-start">
           <div className="relative aspect-square rounded-2xl overflow-hidden bg-bg-subtle border border-border">
-            {product.image_url ? (
-              <Image
-                src={product.image_url}
-                alt={product.name}
-                fill
-                className="object-cover"
-                priority
-              />
-            ) : (
-              <div className="size-full flex items-center justify-center text-text-muted text-sm">
-                No image
-              </div>
-            )}
+            <ProductImage
+              src={product.image_url}
+              alt={product.name}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover"
+              priority
+            />
           </div>
 
           <div className="flex flex-col gap-6">

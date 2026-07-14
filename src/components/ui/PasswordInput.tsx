@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 type Props = {
+  id?: string;
   name: string;
   placeholder?: string;
   disabled?: boolean;
@@ -11,6 +12,7 @@ type Props = {
 };
 
 export default function PasswordInput({
+  id,
   name,
   placeholder = "••••••••",
   disabled,
@@ -22,6 +24,7 @@ export default function PasswordInput({
   return (
     <div className="relative">
       <input
+        id={id}
         name={name}
         type={visible ? "text" : "password"}
         required={required}

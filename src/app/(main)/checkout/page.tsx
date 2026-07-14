@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useCartStore } from "@/lib/store/cartStore";
 import { formatPrice } from "@/lib/utils/formatPrice";
-import Image from "next/image";
+import ProductImage from "@/components/products/ProductImage";
 
 export default function CheckoutPage() {
   const { items, getTotalPrice } = useCartStore();
@@ -58,14 +58,13 @@ export default function CheckoutPage() {
             className={`flex items-center gap-4 px-5 py-4 ${i < items.length - 1 ? "border-b border-border" : ""}`}
           >
             <div className="relative w-[52px] h-[52px] shrink-0 rounded-lg overflow-hidden bg-bg-subtle">
-              {product.image_url && (
-                <Image
-                  src={product.image_url}
-                  alt={product.name}
-                  fill
-                  className="object-cover"
-                />
-              )}
+              <ProductImage
+                src={product.image_url}
+                alt={product.name}
+                fill
+                sizes="52px"
+                className="object-cover"
+              />
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-text truncate">

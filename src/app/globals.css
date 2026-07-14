@@ -36,11 +36,11 @@
   --border-hover: #3a3732;
   --text: #ece9e2;
   --text-secondary: #95928a;
-  --text-muted: #5a5750;
-  --accent: #ce7a54;
-  --accent-bg: #ce7a5412;
-  --accent-border: #ce7a542e;
-  --accent-text: #e8a482;
+  --text-muted: #7a7770;
+  --accent: #a85c38;
+  --accent-bg: #a85c3812;
+  --accent-border: #a85c382e;
+  --accent-text: #d4916e;
   --gold: #b38d5a;
   --gold-bg: #b38d5a14;
   --gold-border: #b38d5a2e;
@@ -191,5 +191,16 @@ body {
 @media (max-width: 767px) {
   .desktop-only {
     display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

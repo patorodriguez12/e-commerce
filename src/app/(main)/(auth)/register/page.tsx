@@ -64,8 +64,9 @@ export default function RegisterPage() {
             className="flex flex-col gap-3.5"
           >
             <div>
-              <label className="block text-xs text-text-secondary mb-1.5">Full name</label>
+              <label htmlFor="register-name" className="block text-xs text-text-secondary mb-1.5">Full name</label>
               <input
+                id="register-name"
                 name="full_name"
                 type="text"
                 required
@@ -76,8 +77,9 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label className="block text-xs text-text-secondary mb-1.5">Email</label>
+              <label htmlFor="register-email" className="block text-xs text-text-secondary mb-1.5">Email</label>
               <input
+                id="register-email"
                 name="email"
                 type="email"
                 required
@@ -88,8 +90,9 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label className="block text-xs text-text-secondary mb-1.5">Password</label>
+              <label htmlFor="register-password" className="block text-xs text-text-secondary mb-1.5">Password</label>
               <PasswordInput
+                id="register-password"
                 name="password"
                 placeholder="At least 6 characters"
                 minLength={6}
@@ -98,8 +101,9 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label className="block text-xs text-text-secondary mb-1.5">Confirm password</label>
+              <label htmlFor="register-confirm" className="block text-xs text-text-secondary mb-1.5">Confirm password</label>
               <PasswordInput
+                id="register-confirm"
                 name="confirm_password"
                 placeholder="Re-enter your password"
                 minLength={6}

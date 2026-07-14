@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { formatPrice } from "@/lib/utils/formatPrice";
 import { removeFromWishlist } from "@/lib/supabase/actions";
-import Image from "next/image";
+import ProductImage from "@/components/products/ProductImage";
 import Link from "next/link";
 
 export default async function WishlistPage() {
@@ -44,14 +44,13 @@ export default async function WishlistPage() {
             >
               <Link href={`/products/${item.products?.slug}`}>
                 <div className="relative w-[72px] h-[72px] shrink-0 rounded-lg overflow-hidden bg-bg-subtle">
-                  {item.products?.image_url && (
-                    <Image
-                      src={item.products.image_url}
-                      alt={item.products.name}
-                      fill
-                      className="object-cover"
-                    />
-                  )}
+                  <ProductImage
+                    src={item.products?.image_url}
+                    alt={item.products?.name ?? ""}
+                    fill
+                    sizes="72px"
+                    className="object-cover"
+                  />
                 </div>
               </Link>
 

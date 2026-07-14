@@ -20,13 +20,13 @@ export default function Hero() {
         <div className="flex gap-2.5 flex-wrap">
           <Link
             href="/catalog"
-            className="text-sm text-white bg-accent no-underline px-7 py-2.5 rounded-lg font-medium transition-all duration-200"
+            className="text-sm text-white bg-accent no-underline px-7 py-3 rounded-lg font-medium transition-all duration-200 min-h-[44px] flex items-center"
           >
             Shop now
           </Link>
           <Link
             href="/catalog"
-            className="text-sm text-text-secondary no-underline px-7 py-2.5 rounded-lg border border-border-hover transition-all duration-200"
+            className="text-sm text-text-secondary no-underline px-7 py-3 rounded-lg border border-border-hover transition-all duration-200 min-h-[44px] flex items-center"
           >
             View deals
           </Link>
@@ -45,7 +45,7 @@ export default function Hero() {
           width={436}
           height={572}
           priority
-          className="relative z-10 w-40 md:w-64 lg-w-72 h-auto max-w-md object-contain"
+          className="relative z-10 w-40 md:w-64 lg:w-72 h-auto max-w-md object-contain"
         />
       </div>
     </section>

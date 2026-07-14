@@ -96,7 +96,7 @@ export default function CatalogLayout({ categories, products, total }: Props) {
             </svg>
             Filters
             {activeCount > 0 && (
-              <span className="bg-accent text-white text-[10px] rounded-[10px] px-[6px] py-[1px] font-medium">
+              <span className="bg-accent text-white text-[10px] rounded-[10px] px-1.5 py-px font-medium">
                 {activeCount}
               </span>
             )}

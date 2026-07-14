@@ -23,7 +23,7 @@ function SubmitButton({
     <button
       type="submit"
       disabled={isDisabled}
-      className="w-full flex items-center justify-center gap-2.5 bg-bg-subtle border border-border rounded-lg px-4 py-2.5 text-sm font-medium text-text-secondary cursor-pointer transition-all duration-150 hover:border-border-hover hover:text-text disabled:opacity-50 disabled:cursor-not-allowed"
+      className="w-full flex items-center justify-center gap-2.5 bg-bg-subtle border border-border rounded-lg px-4 py-2.5 text-sm font-medium text-text cursor-pointer transition-all duration-150 hover:border-border-hover disabled:opacity-50 disabled:cursor-not-allowed"
     >
       {pending ? <Spinner /> : children}
     </button>
