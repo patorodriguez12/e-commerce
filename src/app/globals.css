@@ -204,3 +204,7 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+dialog[open] {
+  margin: auto;
+}
