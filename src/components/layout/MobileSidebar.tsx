@@ -80,7 +80,7 @@ export default function MobileSidebar({ isOpen, onClose, user, fullName, isAdmin
       >
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-border">
-          <Link href="/" onClick={onClose} className="flex items-center no-underline">
+          <Link href="/" onClick={onClose} className="flex items-center no-underline py-1 -my-1">
             <Image
               src="/navbar-logo.png"
               alt="Smartech"
@@ -93,7 +93,7 @@ export default function MobileSidebar({ isOpen, onClose, user, fullName, isAdmin
           <button
             onClick={onClose}
             aria-label="Close menu"
-            className="bg-transparent border-none text-text-secondary cursor-pointer p-1 flex"
+            className="bg-transparent border-none text-text-secondary cursor-pointer p-2 flex min-w-[44px] min-h-[44px] items-center justify-center"
           >
             <X size={20} />
           </button>
@@ -209,14 +209,14 @@ export default function MobileSidebar({ isOpen, onClose, user, fullName, isAdmin
               <Link
                 href="/login"
                 onClick={onClose}
-                className="w-full text-center text-sm text-text-secondary no-underline px-2.5 py-2.5 rounded-lg border border-border transition-all duration-150 hover:border-border-hover hover:text-text"
+                className="w-full text-center text-sm text-text-secondary no-underline px-2.5 py-3 rounded-lg border border-border transition-all duration-150 hover:border-border-hover hover:text-text"
               >
                 Sign in
               </Link>
               <Link
                 href="/register"
                 onClick={onClose}
-                className="w-full text-center text-sm text-white no-underline px-2.5 py-2.5 rounded-lg bg-accent font-medium transition-all duration-150 hover:brightness-110"
+                className="w-full text-center text-sm text-white no-underline px-2.5 py-3 rounded-lg bg-accent font-medium transition-all duration-150 hover:brightness-110"
               >
                 Sign up
               </Link>
@@ -243,7 +243,7 @@ function SidebarLink({
     <Link
       href={href}
       onClick={onClick}
-      className={`flex items-center px-3 py-2.5 rounded-lg text-sm no-underline transition-all duration-150 ${
+      className={`flex items-center px-3 py-3 rounded-lg text-sm no-underline transition-all duration-150 ${
         isActive
           ? "bg-bg-subtle text-text font-medium"
           : "text-text-secondary font-normal hover:bg-bg-subtle hover:text-text"

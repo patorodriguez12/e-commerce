@@ -24,7 +24,7 @@ export default function HomePage() {
         </p>
         <Link
           href="/catalog"
-          className="inline-flex items-center gap-2 bg-accent text-white text-sm no-underline px-7 py-2.5 rounded-lg font-medium transition-all duration-200 hover:brightness-110"
+          className="inline-flex items-center gap-2 bg-accent text-white text-sm no-underline px-7 py-3 rounded-lg font-medium transition-all duration-200 hover:brightness-110 min-h-[44px]"
         >
           View full catalog
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

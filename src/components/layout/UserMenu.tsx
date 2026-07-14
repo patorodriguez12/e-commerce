@@ -17,7 +17,7 @@ const MENU_ITEMS = [
   { href: "/dashboard/wishlist", label: "My Wishlist", icon: Heart },
 ];
 
-const linkClass = "flex items-center gap-2.5 px-2.5 py-2 rounded-md text-sm text-text-secondary no-underline transition-all duration-100 hover:bg-bg-subtle hover:text-text";
+const linkClass = "flex items-center gap-2.5 px-2.5 py-2.5 rounded-md text-sm text-text-secondary no-underline transition-all duration-100 hover:bg-bg-subtle hover:text-text";
 
 export default function UserMenu({ fullName, isAdmin }: Props) {
   const [isOpen, setIsOpen] = useState(false);
@@ -55,7 +55,7 @@ export default function UserMenu({ fullName, isAdmin }: Props) {
       {/* Trigger */}
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className={`flex items-center gap-1.5 border rounded-lg px-3 py-1.5 text-sm font-medium cursor-pointer transition-all duration-150 ${
+        className={`flex items-center gap-1.5 border rounded-lg px-3 py-2.5 text-sm font-medium cursor-pointer transition-all duration-150 min-h-[44px] ${
           isOpen
             ? "bg-bg-subtle border-border-hover text-text-secondary"
             : "bg-transparent border-border text-text-secondary hover:bg-bg-subtle hover:border-border-hover"
@@ -111,7 +111,7 @@ export default function UserMenu({ fullName, isAdmin }: Props) {
             <Link
               href="/admin"
               onClick={() => setIsOpen(false)}
-              className="flex items-center gap-2.5 px-2.5 py-2 rounded-md text-sm text-gold no-underline transition-all duration-100 hover:bg-gold-bg"
+              className="flex items-center gap-2.5 px-2.5 py-2.5 rounded-md text-sm text-gold no-underline transition-all duration-100 hover:bg-gold-bg"
             >
               <Shield size={14} className="shrink-0" />
               Admin panel
@@ -124,7 +124,7 @@ export default function UserMenu({ fullName, isAdmin }: Props) {
           <button
             onClick={handleLogout}
             disabled={pending}
-            className={`flex items-center gap-2.5 w-full px-2.5 py-2 rounded-md text-sm text-text-muted bg-transparent border-none cursor-pointer transition-all duration-100 text-left ${
+            className={`flex items-center gap-2.5 w-full px-2.5 py-2.5 rounded-md text-sm text-text-muted bg-transparent border-none cursor-pointer transition-all duration-100 text-left ${
               pending
                 ? "opacity-50 cursor-not-allowed"
                 : "hover:bg-coral-bg hover:text-coral-text"

@@ -111,7 +111,8 @@ export default function FilterDrawer({
             )}
             <button
               onClick={onClose}
-              className="bg-bg-subtle border border-border rounded-md text-text-secondary cursor-pointer w-8 h-8 flex items-center justify-center text-lg"
+              aria-label="Close filters"
+              className="bg-bg-subtle border border-border rounded-md text-text-secondary cursor-pointer w-11 h-11 flex items-center justify-center text-lg transition-colors hover:border-border-hover"
             >
               ×
             </button>

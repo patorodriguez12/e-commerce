@@ -42,15 +42,17 @@ export default function CartItem({ item }: Props) {
         <div className="flex items-center gap-2 mt-2">
           <button
             onClick={() => updateQuantity(product.id, quantity - 1)}
-            className="w-6 h-6 rounded border flex items-center justify-center text-sm hover:bg-gray-100"
+            aria-label="Decrease quantity"
+            className="w-8 h-8 rounded border border-border flex items-center justify-center text-sm text-text-secondary hover:bg-bg-subtle transition-colors"
           >
             −
           </button>
-          <span className="text-sm w-4 text-center">{quantity}</span>
+          <span className="text-sm w-6 text-center text-text">{quantity}</span>
           <button
             onClick={() => updateQuantity(product.id, quantity + 1)}
             disabled={quantity >= product.stock}
-            className="w-6 h-6 rounded border flex items-center justify-center text-sm hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed"
+            aria-label="Increase quantity"
+            className="w-8 h-8 rounded border border-border flex items-center justify-center text-sm text-text-secondary hover:bg-bg-subtle transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           >
             +
           </button>
@@ -60,7 +62,8 @@ export default function CartItem({ item }: Props) {
       {/* Eliminar */}
       <button
         onClick={() => removeItem(product.id)}
-        className="text-gray-400 hover:text-red-500 transition-colors text-lg leading-none mt-1"
+        aria-label={`Remove ${product.name} from cart`}
+        className="text-text-muted hover:text-coral-text transition-colors text-lg leading-none mt-1 w-8 h-8 flex items-center justify-center"
       >
         ×
       </button>

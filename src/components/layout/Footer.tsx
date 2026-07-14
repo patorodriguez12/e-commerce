@@ -34,7 +34,7 @@ export default function Footer() {
         <div className="flex flex-col gap-3">
           <Link
             href="/"
-            className="text-base font-medium tracking-tight text-text no-underline"
+            className="text-base font-medium tracking-tight text-text no-underline py-3"
           >
             Smartech
           </Link>
@@ -50,7 +50,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={social.label}
-                className="flex items-center justify-center w-8 h-8 rounded-lg bg-surface border border-border text-text-secondary transition-all duration-150 no-underline hover:border-border-hover hover:text-text hover:bg-bg-subtle"
+                className="flex items-center justify-center w-11 h-11 rounded-lg bg-surface border border-border text-text-secondary transition-all duration-150 no-underline hover:border-border-hover hover:text-text hover:bg-bg-subtle"
               >
                 <social.icon size={14} />
               </a>
@@ -67,7 +67,7 @@ export default function Footer() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm text-text-secondary no-underline transition-colors duration-150 w-fit hover:text-text"
+              className="text-sm text-text-secondary no-underline transition-colors duration-150 w-fit py-3 hover:text-text"
             >
               {link.label}
             </Link>
@@ -85,7 +85,7 @@ export default function Footer() {
               href="https://github.com/patorodriguez12"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-accent-text no-underline transition-opacity duration-150 hover:opacity-80"
+              className="text-accent-text no-underline transition-opacity duration-150 py-3 hover:opacity-80"
             >
               Hugo Patricio Rodriguez
             </a>{" "}
@@ -103,7 +103,7 @@ export default function Footer() {
                 href={tech.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs text-text-muted no-underline w-fit transition-colors duration-150 hover:text-text"
+                className="text-xs text-text-muted no-underline w-fit py-3.5 transition-colors duration-150 hover:text-text"
               >
                 {tech.label} ↗
               </a>

@@ -54,7 +54,8 @@ export default function CartDrawer() {
           </div>
           <button
             onClick={close}
-            className="bg-bg-subtle border border-border rounded-md text-text-secondary cursor-pointer w-8 h-8 flex items-center justify-center text-xl leading-none"
+            aria-label="Close cart"
+            className="bg-bg-subtle border border-border rounded-md text-text-secondary cursor-pointer w-11 h-11 flex items-center justify-center text-xl leading-none transition-colors hover:border-border-hover"
           >
             ×
           </button>
@@ -106,7 +107,7 @@ export default function CartDrawer() {
             </Link>
             <button
               onClick={clearCart}
-              className="bg-transparent border-none text-text-muted text-xs cursor-pointer p-1 transition-colors duration-150 hover:text-[#E24B4A]"
+              className="bg-transparent border-none text-text-muted text-xs cursor-pointer p-2 transition-colors duration-150 hover:text-coral-text min-h-[44px] w-full text-center"
             >
               Clear cart
             </button>
