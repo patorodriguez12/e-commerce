@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Image, { ImageProps } from "next/image";
 
-type Props = Omit<ImageProps, "onError"> & {
+type Props = Omit<ImageProps, "onError" | "src"> & {
+  src: string | null | undefined;
   fallbackClassName?: string;
 };
 
