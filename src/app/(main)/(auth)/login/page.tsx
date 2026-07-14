@@ -50,8 +50,9 @@ export default function LoginPage() {
 
           <form action={formAction} className="flex flex-col gap-3.5">
             <div>
-              <label className="block text-xs text-text-secondary mb-1.5">Email</label>
+              <label htmlFor="login-email" className="block text-xs text-text-secondary mb-1.5">Email</label>
               <input
+                id="login-email"
                 name="email"
                 type="email"
                 required
@@ -62,8 +63,9 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <label className="block text-xs text-text-secondary mb-1.5">Password</label>
+              <label htmlFor="login-password" className="block text-xs text-text-secondary mb-1.5">Password</label>
               <PasswordInput
+                id="login-password"
                 name="password"
                 disabled={pending}
               />

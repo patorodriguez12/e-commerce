@@ -54,15 +54,18 @@ export default function ReviewForm({ productId, existingReview }: Props) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="block text-sm font-medium mb-2">Your rating</label>
-        <StarRating value={rating} onChange={setRating} size="lg" />
+        <label htmlFor="review-rating" className="block text-sm font-medium mb-2">Your rating</label>
+        <div id="review-rating">
+          <StarRating value={rating} onChange={setRating} size="lg" />
+        </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1">
+        <label htmlFor="review-comment" className="block text-sm font-medium mb-1">
           Comment <span className="text-gray-400 font-normal">(optional)</span>
         </label>
         <textarea
+          id="review-comment"
           name="comment"
           rows={3}
           defaultValue={existingReview?.comment ?? ""}
