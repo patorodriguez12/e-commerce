@@ -10,6 +10,7 @@ import {
   Smartphone,
   Package,
   Monitor,
+  Mouse,
 } from "lucide-react";
 
 const ICON_MAP: Record<string, typeof Package> = {
@@ -19,6 +20,7 @@ const ICON_MAP: Record<string, typeof Package> = {
   audio: Music,
   smartphones: Smartphone,
   monitors: Monitor,
+  peripherals: Mouse,
 };
 
 type Props = {
