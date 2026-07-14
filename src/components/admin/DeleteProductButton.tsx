@@ -23,6 +23,7 @@ export default function DeleteProductButton({ productId }: Props) {
       <dialog
         ref={dialogRef}
         className="rounded-xl border border-border bg-surface text-text p-0 backdrop:bg-black/60 backdrop:backdrop-blur-sm"
+        style={{ margin: "auto" }}
       >
         <div className="p-6 w-full max-w-sm">
           <h2 className="text-base font-medium mb-2">Delete product</h2>
