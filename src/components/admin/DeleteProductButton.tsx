@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useTransition } from "react";
 import { deleteProduct } from "@/lib/supabase/admin-actions";
 
 type Props = {
@@ -9,6 +9,7 @@ type Props = {
 
 export default function DeleteProductButton({ productId }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const [pending, startTransition] = useTransition();
 
   return (
     <>
@@ -34,22 +35,26 @@ export default function DeleteProductButton({ productId }: Props) {
             <button
               type="button"
               onClick={() => dialogRef.current?.close()}
-              className="px-4 py-2 text-sm text-text-secondary border border-border rounded-lg cursor-pointer transition-colors hover:border-border-hover"
+              disabled={pending}
+              className="px-4 py-2 text-sm text-text-secondary border border-border rounded-lg cursor-pointer transition-colors hover:border-border-hover disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Cancel
             </button>
-            <form
-              action={async () => {
-                await deleteProduct(productId);
+            <button
+              type="button"
+              disabled={pending}
+              onClick={() => {
+                startTransition(async () => {
+                  await deleteProduct(productId);
+                });
               }}
+              className="px-4 py-2 text-sm text-white bg-coral border border-coral-border rounded-lg cursor-pointer transition-opacity hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed flex items-center gap-2"
             >
-              <button
-                type="submit"
-                className="px-4 py-2 text-sm text-white bg-coral border border-coral-border rounded-lg cursor-pointer transition-opacity hover:opacity-90"
-              >
-                Delete
-              </button>
-            </form>
+              {pending && (
+                <span className="size-3.5 border-2 border-white/25 border-t-white rounded-full inline-block animate-spin" />
+              )}
+              {pending ? "Deleting..." : "Delete"}
+            </button>
           </div>
         </div>
       </dialog>
