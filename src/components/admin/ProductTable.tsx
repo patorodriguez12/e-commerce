@@ -124,6 +124,7 @@ export default function ProductTable({ products }: Props) {
                             src={product.image_url}
                             alt={product.name}
                             fill
+                            sizes="36px"
                             className="object-cover"
                           />
                         </div>

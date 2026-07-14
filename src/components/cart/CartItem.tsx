@@ -23,6 +23,7 @@ export default function CartItem({ item }: Props) {
           src={product.image_url}
           alt={product.name}
           fill
+          sizes="80px"
           className="object-cover"
           fallbackClassName="w-full h-full flex items-center justify-center text-gray-400 text-xs"
         />

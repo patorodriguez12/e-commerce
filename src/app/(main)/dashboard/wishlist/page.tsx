@@ -48,6 +48,7 @@ export default async function WishlistPage() {
                     src={item.products?.image_url}
                     alt={item.products?.name ?? ""}
                     fill
+                    sizes="72px"
                     className="object-cover"
                   />
                 </div>

@@ -55,6 +55,7 @@ export default function ProductCard({ product }: Props) {
             src={product.image_url}
             alt={product.name}
             fill
+            sizes="(max-width: 640px) 100vw, 50vw"
             className="object-cover transition-transform duration-300 hover:scale-[1.04]"
           />
 
