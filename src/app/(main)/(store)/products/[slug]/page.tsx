@@ -77,9 +77,9 @@ export default async function ProductPage({
 
           <div className="flex flex-col gap-6">
             <div>
-              {(product.categories as any) && (
+              {product.categories && (
                 <p className="text-[11px] text-accent-text uppercase tracking-[1px] mb-2.5 bg-accent-bg border border-accent-border rounded-full px-3 py-[3px] inline-block">
-                  {(product.categories as any).name}
+                  {product.categories.name}
                 </p>
               )}
               <h1 className="text-[clamp(24px,4vw,36px)] font-medium tracking-tight leading-[1.1] text-text">

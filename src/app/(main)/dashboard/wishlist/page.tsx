@@ -3,6 +3,7 @@ import { formatPrice } from "@/lib/utils/formatPrice";
 import { removeFromWishlist } from "@/lib/supabase/actions";
 import ProductImage from "@/components/products/ProductImage";
 import Link from "next/link";
+import type { WishlistItem } from "@/types";
 
 export default async function WishlistPage() {
   const supabase = await createClient();
@@ -37,7 +38,7 @@ export default async function WishlistPage() {
         </div>
       ) : (
         <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-3">
-          {items.map((item: any) => (
+          {items.map((item: WishlistItem) => (
             <div
               key={item.id}
               className="card-hover flex gap-[14px] bg-surface border border-border rounded-xl p-[14px]"

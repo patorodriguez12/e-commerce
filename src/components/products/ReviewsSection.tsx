@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { Review } from "@/types";
+import { Review, Profile } from "@/types";
 import StarRating from "./StarRating";
 import ReviewForm from "./ReviewForm";
 
@@ -106,7 +106,7 @@ export default async function ReviewsSection({ productId }: Props) {
         </div>
       ) : (
         <div className="flex flex-col">
-          {reviewsWithProfiles.map((review: Review & { profiles: any }) => (
+          {reviewsWithProfiles.map((review: Review & { profiles: Pick<Profile, "full_name"> | null }) => (
             <div
               key={review.id}
               className="group py-5 border-b border-border last:border-b-0 transition-colors hover:bg-white/[0.015] -mx-3 px-3 rounded-lg"

@@ -210,7 +210,7 @@ export async function getCart(): Promise<CartItem[]> {
   }));
 }
 
-export async function signInWithGoogle(formData: FormData) {
+export async function signInWithGoogle() {
   const supabase = await createClient();
 
   const { data, error } = await supabase.auth.signInWithOAuth({
@@ -228,7 +228,7 @@ export async function signInWithGoogle(formData: FormData) {
   if (data.url) redirect(data.url);
 }
 
-export async function signInWithGitHub(formData: FormData) {
+export async function signInWithGitHub() {
   const supabase = await createClient();
 
   const { data, error } = await supabase.auth.signInWithOAuth({
