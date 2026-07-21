@@ -4,7 +4,7 @@ import AddToCartButton from "@/components/products/AddToCartButton";
 import WishlistButton from "@/components/products/WishlistButton";
 import RelatedProducts from "@/components/products/RelatedProducts";
 import ReviewsSection from "@/components/products/ReviewsSection";
-import ProductImage from "@/components/products/ProductImage";
+import ProductZoom from "@/components/products/ProductZoom";
 import { formatPrice } from "@/lib/utils/formatPrice";
 
 export async function generateMetadata({
@@ -64,16 +64,13 @@ export default async function ProductPage({
     <>
       <main className="max-w-[1200px] mx-auto px-6 py-12">
         <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-16 items-start">
-          <div className="relative aspect-square rounded-2xl overflow-hidden bg-bg-subtle border border-border">
-            <ProductImage
-              src={product.image_url}
-              alt={product.name}
-              fill
-              sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-cover"
-              priority
-            />
-          </div>
+          {product.image_url ? (
+            <ProductZoom src={product.image_url} alt={product.name} />
+          ) : (
+            <div className="relative aspect-square rounded-2xl overflow-hidden bg-bg-subtle border border-border flex items-center justify-center text-sm text-text-muted">
+              No image
+            </div>
+          )}
 
           <div className="flex flex-col gap-6">
             <div>
