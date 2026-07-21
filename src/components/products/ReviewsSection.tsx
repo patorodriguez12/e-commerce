@@ -59,12 +59,14 @@ export default async function ReviewsSection({ productId }: Props) {
     <section className="max-w-[1200px] mx-auto px-6 py-12 border-t border-border">
       {/* Header */}
       <div className="flex items-center gap-4 mb-8">
-        <h2 className="text-xl font-medium">Reviews</h2>
+        <h2 className="text-xl font-medium heading-signature">Reviews</h2>
         {reviewsWithProfiles.length > 0 && (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <StarRating value={Math.round(averageRating)} readonly size="sm" />
-            <span className="text-sm text-text-muted">
-              {averageRating.toFixed(1)} · {reviewsWithProfiles.length}{" "}
+            <span className="text-sm text-text-secondary">
+              {averageRating.toFixed(1)}
+              <span className="text-text-muted mx-1.5">·</span>
+              {reviewsWithProfiles.length}{" "}
               {reviewsWithProfiles.length === 1 ? "review" : "reviews"}
             </span>
           </div>
@@ -84,35 +86,50 @@ export default async function ReviewsSection({ productId }: Props) {
         </div>
       )}
 
-      {user && !hasPurchased && !userReview && (
-        <div className="bg-surface border border-border rounded-xl px-5 py-4 mb-8 text-sm text-text-muted">
-          Only verified buyers can leave a review.
-        </div>
-      )}
-
       {/* Lista */}
       {reviewsWithProfiles.length === 0 ? (
-        <p className="text-text-muted text-sm text-center py-8">
-          No reviews yet.
-        </p>
+        <div className="flex flex-col items-center justify-center py-16 text-center">
+          <svg
+            width="40"
+            height="40"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="var(--text-muted)"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="mb-4 opacity-40"
+          >
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          </svg>
+          <p className="text-sm text-text-muted">No reviews yet.</p>
+        </div>
       ) : (
         <div className="flex flex-col">
           {reviewsWithProfiles.map((review: Review & { profiles: any }) => (
             <div
               key={review.id}
-              className="py-5 border-b border-border"
+              className="group py-5 border-b border-border last:border-b-0 transition-colors hover:bg-white/[0.015] -mx-3 px-3 rounded-lg"
             >
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-[10px]">
-                  <div className="w-7 h-7 rounded-full bg-accent-bg border border-accent-border flex items-center justify-center text-xs text-accent-text font-medium">
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-accent-bg border border-accent-border flex items-center justify-center text-xs text-accent-text font-medium shrink-0">
                     {(review.profiles?.full_name ?? "A")[0].toUpperCase()}
                   </div>
-                  <span className="text-sm font-medium">
-                    {review.profiles?.full_name ?? "Anonymous"}
-                  </span>
-                  <StarRating value={review.rating} readonly size="sm" />
+                  <div className="flex flex-col gap-1">
+                    <div className="flex items-center gap-2.5">
+                      <span className="text-sm font-medium text-text">
+                        {review.profiles?.full_name ?? "Anonymous"}
+                      </span>
+                      <StarRating
+                        value={review.rating}
+                        readonly
+                        size="sm"
+                      />
+                    </div>
+                  </div>
                 </div>
-                <span className="text-xs text-text-muted">
+                <span className="text-xs text-text-muted shrink-0 mt-0.5">
                   {new Date(review.created_at).toLocaleDateString("en-US", {
                     month: "short",
                     day: "numeric",
@@ -121,7 +138,7 @@ export default async function ReviewsSection({ productId }: Props) {
                 </span>
               </div>
               {review.comment && (
-                <p className="text-sm text-text-secondary leading-relaxed pl-[38px]">
+                <p className="text-sm text-text-secondary leading-relaxed mt-3 pl-11">
                   {review.comment}
                 </p>
               )}
