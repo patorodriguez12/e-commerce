@@ -72,7 +72,7 @@ export default function ProductCard({ product }: Props) {
         <div className="p-3.5">
           {product.categories && (
             <p className="text-[10px] text-text-muted uppercase tracking-[0.5px] mb-1">
-              {(product.categories as any).name}
+              {product.categories.name}
             </p>
           )}
           <p className="text-sm font-medium font-sora text-text mb-3 truncate">

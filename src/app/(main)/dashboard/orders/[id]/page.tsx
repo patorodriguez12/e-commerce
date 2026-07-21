@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { formatPrice } from "@/lib/utils/formatPrice";
 import ProductImage from "@/components/products/ProductImage";
 import Link from "next/link";
+import type { OrderItem } from "@/types";
 
 function statusClasses(status: string) {
   const map: Record<string, string> = {
@@ -85,7 +86,7 @@ export default async function OrderDetailPage({
           </p>
         </div>
         <div>
-          {order.order_items?.map((item: any, i: number) => (
+          {order.order_items?.map((item: OrderItem, i: number) => (
             <div
               key={item.id}
               className={`flex items-center gap-4 px-5 py-4 ${i < order.order_items.length - 1 ? "border-b border-border" : ""}`}

@@ -6,6 +6,9 @@ import ProductImage from "@/components/products/ProductImage";
 import { formatPrice } from "@/lib/utils/formatPrice";
 import DeleteProductButton from "@/components/admin/DeleteProductButton";
 import SearchBar from "@/components/admin/SearchBar";
+import Pagination from "@/components/admin/Pagination";
+
+const PAGE_SIZE = 10;
 
 type ProductRow = {
   id: string;
@@ -22,6 +25,7 @@ type Props = {
 
 export default function ProductTable({ products }: Props) {
   const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const filtered = useMemo(() => {
     if (!search) return products;
@@ -33,11 +37,23 @@ export default function ProductTable({ products }: Props) {
     );
   }, [products, search]);
 
+  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+
+  const paginated = useMemo(() => {
+    const start = (currentPage - 1) * PAGE_SIZE;
+    return filtered.slice(start, start + PAGE_SIZE);
+  }, [filtered, currentPage]);
+
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
+    setCurrentPage(1);
+  };
+
   return (
     <div>
       <SearchBar
         value={search}
-        onChange={setSearch}
+        onChange={handleSearchChange}
         placeholder="Search products..."
       />
       <div className="bg-surface border border-border rounded-xl">
@@ -115,7 +131,7 @@ export default function ProductTable({ products }: Props) {
                   </td>
                 </tr>
               ) : (
-                filtered.map((product: ProductRow) => (
+                paginated.map((product: ProductRow) => (
                   <tr key={product.id} className="border-b border-border">
                     <td className="px-5 py-3.5">
                       <div className="flex items-center gap-3">
@@ -170,6 +186,11 @@ export default function ProductTable({ products }: Props) {
           </table>
         </div>
       </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
     </div>
   );
 }

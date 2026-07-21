@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function ContactPage() {
   return (
     <div className="max-w-[640px] mx-auto px-6 py-20">
@@ -66,12 +68,12 @@ export default function ContactPage() {
             <h2 className="text-sm font-medium text-text mb-1">Support</h2>
             <p className="text-xs text-text-muted">
               For order inquiries, visit your{" "}
-              <a
+              <Link
                 href="/dashboard/orders"
                 className="text-accent-text no-underline hover:opacity-80"
               >
                 order dashboard
-              </a>{" "}
+              </Link>{" "}
               or email us directly.
             </p>
           </div>

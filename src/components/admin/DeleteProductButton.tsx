@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useTransition } from "react";
+import { useRef, useTransition } from "react";
 import { deleteProduct } from "@/lib/supabase/admin-actions";
 
 type Props = {
